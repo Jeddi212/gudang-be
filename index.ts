@@ -1,5 +1,4 @@
 import { app } from './src/application/web'
-import express from 'express'
 
 const port = 3000
 
