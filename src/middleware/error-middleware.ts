@@ -11,11 +11,7 @@ function errorMiddleware(err: Error, _req: Request, res: Response, _next: NextFu
     const status = err.status || 500
     const message = err.message || 'Internal Server Error'
 
-    if (err instanceof ResponseError) {
-        res.status(status).json({
-            error: message
-        }).end()
-    }
+    res.status(status).json({ error: message }).end()
 }
 
 export {
