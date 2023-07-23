@@ -1,8 +1,7 @@
-import { JWTPayload } from '../dto/payload';
-import { ResponseError } from '../dto/response-error'
-import { UserAuthDTO } from '../dto/user-dto';
-import userRepository from '../repositories/user-repository';
 import { generateJWT } from '../utils/jwt';
+import { ResponseError } from '../dto/response-error'
+import { UserAuthDTO, UserDTO } from '../dto/user-dto';
+import userRepository from '../repositories/user-repository';
 
 const register = async (dto: UserAuthDTO) => {
     const isUser = await userRepository.findUserByName(dto.name)
@@ -10,7 +9,8 @@ const register = async (dto: UserAuthDTO) => {
         throw new ResponseError(409, 'Username is already in use')
     }
 
-    return await userRepository.register(dto.mapToModel())
+    const user = await userRepository.createNewUser(dto.mapToModel())
+    return new UserDTO(user.id, user.name, user.level)
 }
 
 const login = async (dto: UserAuthDTO) => {
@@ -23,7 +23,7 @@ const login = async (dto: UserAuthDTO) => {
         throw new ResponseError(401, `Invalid credentials`)
     }
 
-    return generateJWT(new JWTPayload(isUser.name, isUser.id, isUser.level))
+    return generateJWT(new UserDTO(isUser.id, isUser.name, isUser.level))
 }
 
 export default {

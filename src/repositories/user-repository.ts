@@ -5,11 +5,11 @@ const findUserByName = async (name: string) => {
     return prisma.user.findFirst({ where: { name: name } })
 }
 
-const register = async (user: UserModel) => {
+const createNewUser = async (user: UserModel) => {
     return prisma.user.create({ data: user })
 }
 
 export default {
     findUserByName,
-    register
+    createNewUser
 }

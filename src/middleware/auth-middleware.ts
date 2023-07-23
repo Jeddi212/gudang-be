@@ -1,5 +1,5 @@
-import { JWTPayload } from '../dto/payload'
 import { Request, Response, NextFunction } from 'express'
+import { UserDTO } from '../dto/user-dto'
 import jwt from 'jsonwebtoken'
 
 const secretKey = process.env.JWT_SECRET_KEY || ''
@@ -7,7 +7,7 @@ const secretKey = process.env.JWT_SECRET_KEY || ''
 declare global {
     namespace Express {
         interface Request {
-            payload?: JWTPayload
+            payload?: UserDTO
         }
     }
 }
@@ -20,7 +20,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
     }
 
     try {
-        const decoded = jwt.verify(token, secretKey) as { payload: JWTPayload }
+        const decoded = jwt.verify(token, secretKey) as { payload: UserDTO }
         req.payload = decoded.payload
         next()
     } catch (err) {

@@ -1,5 +1,5 @@
-import { Payload, JWTPayload } from '../dto/payload'
-import { UserAuthDTO } from '../dto/user-dto'
+import { Payload } from '../dto/payload'
+import { UserAuthDTO, UserDTO } from '../dto/user-dto'
 import userService from '../services/user-service'
 import { Request, Response, NextFunction } from 'express'
 import validation from '../utils/validation'
@@ -10,11 +10,8 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 
         const dto: UserAuthDTO = new UserAuthDTO(req.body.name, req.body.password)
 
-        const user: JWTPayload = await userService.register(dto)
-        const payload: Payload = new Payload(
-            'Register success',
-            new JWTPayload(user.name, user.id, user.level)
-        )
+        const user: UserDTO = await userService.register(dto)
+        const payload: Payload = new Payload('Register success', user)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -29,10 +26,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         const dto: UserAuthDTO = new UserAuthDTO(req.body.name, req.body.password)
 
         const token: string = await userService.login(dto)
-        const payload: Payload = new Payload(
-            'Login success',
-            token
-        )
+        const payload: Payload = new Payload('Login success', token)
 
         res.status(200).json(payload)
     } catch (e) {
