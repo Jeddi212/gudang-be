@@ -1,6 +1,6 @@
 import { Role } from '@prisma/client';
 
-class UserModel {
+class User {
     id?: number
     name: string
     level?: Role
@@ -15,5 +15,5 @@ class UserModel {
 }
 
 export {
-    UserModel
+    User
 }

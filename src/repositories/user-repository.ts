@@ -1,11 +1,11 @@
 import { prisma } from '../utils/database'
-import { UserModel } from '../models/user-model'
+import { User } from '../models/user'
 
 const findUserByName = async (name: string) => {
     return prisma.user.findFirst({ where: { name: name } })
 }
 
-const createNewUser = async (user: UserModel) => {
+const createNewUser = async (user: User) => {
     return prisma.user.create({ data: user })
 }
 

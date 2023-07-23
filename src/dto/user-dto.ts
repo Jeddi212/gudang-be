@@ -1,4 +1,4 @@
-import { UserModel } from "../models/user-model"
+import { User } from '../models/user'
 import { Role } from '@prisma/client';
 
 class UserAuthDTO {
@@ -10,7 +10,7 @@ class UserAuthDTO {
         this.password = password
     }
 
-    mapToModel(): UserModel { return new UserModel(this.name, this.password) }
+    mapToModel(): User { return new User(this.name, this.password) }
 }
 
 class UserDTO {
