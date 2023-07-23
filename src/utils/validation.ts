@@ -1,6 +1,7 @@
 import { ResponseError } from '../dto/response-error'
-import { body, validationResult } from 'express-validator';
 import { Request } from 'express'
+import { Role } from '@prisma/client';
+import { body, validationResult } from 'express-validator';
 
 const validateAuth = async (req: Request) => {
     await Promise.all([
@@ -14,6 +15,25 @@ const validateAuth = async (req: Request) => {
     }
 }
 
+const validateWarehouse = async (req: Request) => {
+    await Promise.all([
+        body('location').notEmpty().trim().escape().run(req),
+    ]);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array())
+    }
+}
+
+const validateAdminRole = (role: Role = Role.STAFF) => {
+    if (!(role === Role.ADMIN)) {
+        throw new ResponseError(403, "forbidden access");
+    }
+}
+
 export default {
-    validateAuth
+    validateAuth,
+    validateWarehouse,
+    validateAdminRole
 }

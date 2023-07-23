@@ -1,9 +1,11 @@
 import express from 'express'
-import userController from '../controllers/user-controller'
+import whController from '../controllers/warehouse-controller'
 import { authMiddleware } from '../middleware/auth-middleware'
 
 const privateRouter = express.Router()
 privateRouter.use(authMiddleware)
+
+privateRouter.post('/api/warehouse', whController.createWarehouse)
 
 export {
     privateRouter
