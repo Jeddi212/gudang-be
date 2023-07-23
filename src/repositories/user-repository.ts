@@ -1,4 +1,4 @@
-import { prisma } from '../application/database'
+import { prisma } from '../utils/database'
 import { UserModel } from '../models/user-model'
 
 const findUserByName = async (name: string) => {
