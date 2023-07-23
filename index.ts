@@ -1,4 +1,4 @@
-import { app } from './src/application/web'
+import { app } from './src/utils/web'
 
 const port = 3000
 
