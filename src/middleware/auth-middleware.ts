@@ -1,9 +1,6 @@
 import { JWTPayload } from '../dto/payload'
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 const secretKey = process.env.JWT_SECRET_KEY || ''
 
