@@ -1,11 +1,18 @@
 import { Role } from '@prisma/client';
 
-class JWTPayload {
+class Payload {
+    message: string
+
+    constructor(message: string) { this.message = message }
+}
+
+class JWTPayload extends Payload {
     id?: number
     name: string
     level?: Role
 
-    constructor(name: string, id?: number, level?: Role) {
+    constructor(message: string, name: string, id?: number, level?: Role) {
+        super(message)
         this.name = name
         this.id = id
         this.level = level
