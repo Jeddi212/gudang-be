@@ -20,6 +20,21 @@ const createWarehouse = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
+const readWarehouses = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        validation.validateAdminRole(req.payload?.level)
+        const location = req.query.location
+
+        const wh: Warehouse[] = await whService.readWarehouses(location)
+        const payload: Payload = new Payload('Read all warehouse success', wh)
+
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
-    createWarehouse
+    createWarehouse,
+    readWarehouses
 }

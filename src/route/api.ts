@@ -6,6 +6,7 @@ const privateRouter = express.Router()
 privateRouter.use(authMiddleware)
 
 privateRouter.post('/api/warehouse', whController.createWarehouse)
+privateRouter.get('/api/warehouse', whController.readWarehouses)
 
 export {
     privateRouter

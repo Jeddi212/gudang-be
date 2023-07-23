@@ -8,6 +8,12 @@ const createWarehouse = async (dto: WarehouseDTO) => {
     return new Warehouse(wh.location, wh.id)
 }
 
+const readWarehouses = async (location: any) => {
+    const wh = await whRepository.readWarehouses(location)
+    return wh.map(w => new Warehouse(w.location, w.id))
+}
+
 export default {
-    createWarehouse
+    createWarehouse,
+    readWarehouses
 }
