@@ -4,14 +4,6 @@ import jwt from 'jsonwebtoken'
 
 const secretKey = process.env.JWT_SECRET_KEY || ''
 
-declare global {
-    namespace Express {
-        interface Request {
-            payload?: UserDTO
-        }
-    }
-}
-
 function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const token = req.header('Authorization')?.replace('Bearer ', '')
 
