@@ -4,13 +4,14 @@ import { Role } from '@prisma/client';
 class UserAuthDTO {
     name: string
     password: string
+    level: Role = Role.STAFF
 
     constructor(name: string, password: string) {
         this.name = name
         this.password = password
     }
 
-    mapToModel(): User { return new User(this.name, this.password) }
+    mapToModel(): User { return new User(this.name, this.password, this.level) }
 }
 
 class UserDTO {
