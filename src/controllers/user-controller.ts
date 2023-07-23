@@ -22,6 +22,25 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+const login = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        validation.validateAuth(req)
+
+        const dto: UserAuthDTO = new UserAuthDTO(req.body.name, req.body.password)
+
+        const token: string = await userService.login(dto)
+        const payload: Payload = new Payload(
+            'Login success',
+            token
+        )
+
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
-    register
+    register,
+    login
 }
