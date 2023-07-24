@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,11 +22,11 @@ model User {
 model Product {
   id         Int          @id @default(autoincrement())
   name       String       @unique
-  quantity   Int?
+  stock      Int
   History    History[]
   Production Production[]
-  Needs      Product[]    @relation("BOM")
-  UsedBy     Product[]    @relation("BOM")
+  Needs      BOM[]        @relation("materials")
+  UsedBy     BOM[]        @relation("product")
 
   @@index([name])
 }
@@ -41,29 +38,34 @@ model Warehouse {
 }
 
 model History {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  product     Product   @relation(fields: [productId], references: [id])
-  productId   Int
-  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
-  warehouseId Int
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  quantity     Int
+  production   Production? @relation(fields: [productionId], references: [id])
+  productionId Int?
+  product      Product     @relation(fields: [productId], references: [id])
+  productId    Int
+  warehouse    Warehouse   @relation(fields: [warehouseId], references: [id])
+  warehouseId  Int
 }
 
 model Production {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  product   Product  @relation(fields: [productId], references: [id])
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  product   Product   @relation(fields: [productId], references: [id])
   productId Int
   quantity  Int
+  History   History[]
 }
 
-// model BOM {
-//   product    Product @relation("product", fields: [productId], references: [id])
-//   productId  Int
-//   material   Product @relation("materials", fields: [materialId], references: [id])
-//   materialId Int
+model BOM {
+  product    Product @relation("product", fields: [productId], references: [id])
+  productId  Int
+  material   Product @relation("materials", fields: [materialId], references: [id])
+  materialId Int
+  quantity   Int
 
-//   @@id([productId, materialId])
-// }
+  @@id([productId, materialId])
+}
