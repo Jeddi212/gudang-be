@@ -11,7 +11,15 @@ const readWarehouses = async (location: any) => {
     })
 }
 
+const updateWarehouse = async (wh: Warehouse) => {
+    return prisma.warehouse.update({
+        where: { id: wh.id },
+        data: { location: wh.location }
+    })
+}
+
 export default {
     createNewWarehouse,
-    readWarehouses
+    readWarehouses,
+    updateWarehouse,
 }

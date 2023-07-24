@@ -3,6 +3,12 @@ import { Request } from 'express'
 import { Role } from '@prisma/client';
 import { body, validationResult } from 'express-validator';
 
+const validateAdminRole = (role: Role = Role.STAFF) => {
+    if (!(role === Role.ADMIN)) {
+        throw new ResponseError(403, "forbidden access");
+    }
+}
+
 const validateAuth = async (req: Request) => {
     await Promise.all([
         body('name').notEmpty().trim().escape().run(req),
@@ -26,14 +32,21 @@ const validateWarehouse = async (req: Request) => {
     }
 }
 
-const validateAdminRole = (role: Role = Role.STAFF) => {
-    if (!(role === Role.ADMIN)) {
-        throw new ResponseError(403, "forbidden access");
+const validateUpdateWarehouse = async (req: Request) => {
+    await Promise.all([
+        body('location').notEmpty().trim().escape().run(req),
+        body('id').notEmpty().trim().run(req),
+    ]);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array())
     }
 }
 
 export default {
+    validateAdminRole,
     validateAuth,
     validateWarehouse,
-    validateAdminRole
+    validateUpdateWarehouse,
 }

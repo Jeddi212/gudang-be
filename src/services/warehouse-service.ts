@@ -13,7 +13,12 @@ const readWarehouses = async (location: any) => {
     return wh.map(w => new Warehouse(w.location, w.id))
 }
 
+const updateWarehouse = async (wh: Warehouse) => {
+    return await whRepository.updateWarehouse(wh)
+}
+
 export default {
     createWarehouse,
-    readWarehouses
+    readWarehouses,
+    updateWarehouse,
 }
