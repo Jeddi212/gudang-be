@@ -1,7 +1,7 @@
 import { Payload } from '../dto/payload'
+import { Request, Response, NextFunction } from 'express'
 import { UserAuthDTO, UserDTO } from '../dto/user-dto'
 import userService from '../services/user-service'
-import { Request, Response, NextFunction } from 'express'
 import validation from '../utils/validation'
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
