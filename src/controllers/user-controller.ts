@@ -6,7 +6,7 @@ import validation from '../utils/validation'
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        validation.validateAuth(req)
+        await validation.validateAuth(req)
 
         const dto: UserAuthDTO = new UserAuthDTO(req.body.name, req.body.password)
 
@@ -21,7 +21,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        validation.validateAuth(req)
+        await validation.validateAuth(req)
 
         const dto: UserAuthDTO = new UserAuthDTO(req.body.name, req.body.password)
 
