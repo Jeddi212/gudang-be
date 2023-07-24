@@ -1,23 +1,28 @@
 import { Product } from "./product"
+import { History } from "./history"
+import { Warehouse } from "./warehouse"
 
-class Production {
-    product: Product
+class Inventory {
     quantity: number
+    history: History
+    product: Product
+    warehouse: Warehouse
     id?: number
-    history?: History[]
     createdAt?: Date
     updatedAt?: Date
 
     constructor(
-        product: Product,
         quantity: number,
-        history: History[],
+        history: History,
+        product: Product,
+        warehouse: Warehouse,
         id?: number,
         createdAt?: Date,
         updatedAt?: Date) {
-        this.product = product
         this.quantity = quantity
         this.history = history
+        this.product = product
+        this.warehouse = warehouse
         this.id = id
         this.createdAt = createdAt
         this.updatedAt = updatedAt
@@ -25,5 +30,5 @@ class Production {
 }
 
 export {
-    Production
+    Inventory
 }

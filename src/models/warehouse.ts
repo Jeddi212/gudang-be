@@ -1,10 +1,14 @@
-class Warehouse {
-    id?: number
-    location: string
+import { Inventory } from "./inventory"
 
-    constructor(location: string, id?: number) {
+class Warehouse {
+    location: string
+    id?: number
+    inventory?: Inventory[]
+
+    constructor(location: string, id?: number, inventory?: Inventory[]) {
         this.location = location
         this.id = id
+        this.inventory = inventory
     }
 }
 

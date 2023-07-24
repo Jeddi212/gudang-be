@@ -1,28 +1,25 @@
-import { Product } from "./product"
-import { Production } from "./production"
-import { Warehouse } from "./warehouse"
+import { Event } from "@prisma/client"
+import { Inventory } from "./inventory"
+import { User } from "./user"
 
 class History {
-    quantity: number
-    production: Production
-    product: Product
-    warehouse: Warehouse
+    event: Event
+    user: User
+    inventory?: Inventory[]
     id?: number
     createdAt?: Date
     updatedAt?: Date
 
     constructor(
-        quantity: number,
-        production: Production,
-        product: Product,
-        warehouse: Warehouse,
+        event: Event,
+        user: User,
+        inventory?: Inventory[],
         id?: number,
         createdAt?: Date,
         updatedAt?: Date) {
-        this.quantity = quantity
-        this.production = production
-        this.product = product
-        this.warehouse = warehouse
+        this.event = event
+        this.user = user
+        this.inventory = inventory
         this.id = id
         this.createdAt = createdAt
         this.updatedAt = updatedAt
