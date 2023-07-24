@@ -38,7 +38,7 @@ const updateWarehouse = async (req: Request, res: Response, next: NextFunction) 
     try {
         validation.validateAdminRole(req.payload?.level)
         await validation.validateUpdateWarehouse(req)
-        const dto: Warehouse = new Warehouse(req.body.location, parseInt(req.body.id))
+        const dto: Warehouse = new Warehouse(req.body.location, parseInt(req.params.id))
 
         const wh: Warehouse = await whService.updateWarehouse(dto)
         const payload: Payload = new Payload('Warehouse successfully updated', wh)

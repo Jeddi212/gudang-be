@@ -35,7 +35,7 @@ const validateWarehouse = async (req: Request) => {
 const validateUpdateWarehouse = async (req: Request) => {
     await Promise.all([
         body('location').notEmpty().trim().escape().run(req),
-        body('id').notEmpty().trim().isInt().run(req),
+        param('id').notEmpty().trim().isInt().run(req),
     ]);
 
     const errors = validationResult(req);
