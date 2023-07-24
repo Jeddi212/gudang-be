@@ -1,7 +1,7 @@
 import { ResponseError } from '../dto/response-error'
 import { Request } from 'express'
 import { Role } from '@prisma/client';
-import { body, validationResult } from 'express-validator';
+import { body, param, validationResult } from 'express-validator';
 
 const validateAdminRole = (role: Role = Role.STAFF) => {
     if (!(role === Role.ADMIN)) {
@@ -35,7 +35,18 @@ const validateWarehouse = async (req: Request) => {
 const validateUpdateWarehouse = async (req: Request) => {
     await Promise.all([
         body('location').notEmpty().trim().escape().run(req),
-        body('id').notEmpty().trim().run(req),
+        body('id').notEmpty().trim().isInt().run(req),
+    ]);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array())
+    }
+}
+
+const validateDeleteWarehouse = async (req: Request) => {
+    await Promise.all([
+        param('id').notEmpty().trim().isInt().run(req),
     ]);
 
     const errors = validationResult(req);
@@ -49,4 +60,5 @@ export default {
     validateAuth,
     validateWarehouse,
     validateUpdateWarehouse,
+    validateDeleteWarehouse,
 }

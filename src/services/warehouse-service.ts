@@ -17,8 +17,13 @@ const updateWarehouse = async (wh: Warehouse) => {
     return await whRepository.updateWarehouse(wh)
 }
 
+const deleteWarehouse = async (id: number) => {
+    return await whRepository.deleteWarehouseById(id)
+}
+
 export default {
     createWarehouse,
     readWarehouses,
     updateWarehouse,
+    deleteWarehouse,
 }

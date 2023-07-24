@@ -41,7 +41,22 @@ const updateWarehouse = async (req: Request, res: Response, next: NextFunction) 
         const dto: Warehouse = new Warehouse(req.body.location, parseInt(req.body.id))
 
         const wh: Warehouse = await whService.updateWarehouse(dto)
-        const payload: Payload = new Payload('Warehouse updated successfully', wh)
+        const payload: Payload = new Payload('Warehouse successfully updated', wh)
+
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
+const deleteWarehouse = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        validation.validateAdminRole(req.payload?.level)
+        await validation.validateDeleteWarehouse(req)
+        const id: number = parseInt(req.params.id)
+
+        const wh: Warehouse = await whService.deleteWarehouse(id)
+        const payload: Payload = new Payload('Warehouse successfully deleted', wh)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -53,4 +68,5 @@ export default {
     createWarehouse,
     readWarehouses,
     updateWarehouse,
+    deleteWarehouse,
 }

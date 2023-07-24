@@ -18,8 +18,15 @@ const updateWarehouse = async (wh: Warehouse) => {
     })
 }
 
+const deleteWarehouseById = async (id: number) => {
+    return prisma.warehouse.delete({
+        where: { id: id }
+    })
+}
+
 export default {
     createNewWarehouse,
     readWarehouses,
     updateWarehouse,
+    deleteWarehouseById,
 }
