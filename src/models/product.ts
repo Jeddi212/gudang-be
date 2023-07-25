@@ -1,13 +1,12 @@
 import { BOM } from "./bom"
-import { History } from "./history"
 import { Inventory } from "./inventory"
 
 class Product {
     name: string
     stock: number
-    inventory?: Inventory[]
     needs?: BOM[]
     usedBy?: BOM[]
+    inventory?: Inventory[]
     id?: number
 
     constructor(
@@ -19,9 +18,9 @@ class Product {
         id?: number) {
         this.name = name
         this.stock = stock
-        this.inventory = inventory
         this.needs = needs
         this.usedBy = usedBy
+        this.inventory = inventory
         this.id = id
     }
 }
