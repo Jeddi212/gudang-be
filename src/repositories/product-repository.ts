@@ -3,6 +3,10 @@ import { Product } from '../models/product'
 import { ResponseError } from '../dto/response-error'
 import { BomMany } from '../models/bom'
 
+const findProductByName = async (name: string) => {
+    return await prisma.product.findFirst({ where: { name: name } })
+}
+
 const createProduct = async (product: Product) => {
     return await prisma.product.create({
         data: {
@@ -29,14 +33,15 @@ const upsertManyProductByName = async (products: Product[]) => {
     }
 }
 
-const addMaterials = async (boms: BomMany[]) => {
+const connectMaterials = async (boms: BomMany[]) => {
     return await prisma.bOM.createMany({
         data: boms
     })
 }
 
 export default {
+    findProductByName,
     createProduct,
     upsertManyProductByName,
-    addMaterials,
+    connectMaterials,
 }

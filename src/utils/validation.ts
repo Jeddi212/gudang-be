@@ -55,10 +55,27 @@ const validateDeleteWarehouse = async (req: Request) => {
     }
 }
 
+const validateProduct = async (req: Request) => {
+    await Promise.all([
+        body('name').notEmpty().trim().escape().run(req),
+        body('materials.*.name').notEmpty().trim()
+            .withMessage('material name can\'t be empty')
+            .escape().run(req),
+    ]);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array());
+    }
+};
+
+
+
 export default {
     validateAdminRole,
     validateAuth,
     validateWarehouse,
     validateUpdateWarehouse,
     validateDeleteWarehouse,
+    validateProduct,
 }

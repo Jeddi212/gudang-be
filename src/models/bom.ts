@@ -1,5 +1,5 @@
-import { Prisma } from "@prisma/client"
 import { Product } from "./product"
+import { Material } from "../dto/product-dto"
 
 class BOM {
     product: Product
@@ -14,18 +14,18 @@ class BOM {
 }
 
 class BomMany {
-    productId: number
-    materialId: number
+    productName: string
+    materialName: string
     quantity: number
 
-    constructor(productId: number, materialId: number, quantity: number) {
-        this.productId = productId
-        this.materialId = materialId
+    constructor(productName: string, materialName: string, quantity: number) {
+        this.productName = productName
+        this.materialName = materialName
         this.quantity = quantity
     }
 
-    public static createBOMs(productId: number, materials: any[]) {
-        return materials.map(m => new BomMany(productId, m.id, m.quantity))
+    public static createBOMs(productName: string, materials: Material[]) {
+        return materials.map(m => new BomMany(productName, m.name, m.quantity))
     }
 }
 

@@ -6,14 +6,16 @@ import validation from '../utils/validation'
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await validation.validateAuth(req)
+        validation.validateAdminRole(req.payload?.level)
+        await validation.validateProduct(req)
 
+        const materials = req.body.materials ?? [];
         const dto: CreateProductDTO = new CreateProductDTO(
             req.body.name,
-            req.body.materials.map((m: Material) => new Material(m.name, m.quantity)))
+            materials.map((m: Material) => new Material(m.name, m.quantity)))
 
-        const user = await productService.createProduct(dto)
-        const payload: Payload = new Payload('Register success', user)
+        const product = await productService.createProduct(dto)
+        const payload: Payload = new Payload('Product successfully created', product)
 
         res.status(200).json(payload)
     } catch (e) {

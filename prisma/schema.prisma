@@ -43,13 +43,13 @@ model Product {
 }
 
 model BOM {
-  product    Product @relation("product", fields: [productId], references: [id])
-  productId  Int
-  material   Product @relation("materials", fields: [materialId], references: [id])
-  materialId Int
-  quantity   Int
+  product      Product @relation("product", fields: [productName], references: [name])
+  productName  String
+  material     Product @relation("materials", fields: [materialName], references: [name])
+  materialName String
+  quantity     Int
 
-  @@id([productId, materialId])
+  @@id([productName, materialName])
 }
 
 model History {
