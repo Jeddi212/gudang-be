@@ -22,7 +22,7 @@ const createWarehouse = async (req: Request, res: Response, next: NextFunction) 
 
 const readWarehouses = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        validation.validateAdminRole(req.payload?.level)
+        // validation.validateAdminRole(req.payload?.level)eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJuYW1lIjoiQWRtaW4iLCJsZXZlbCI6IkFETUlOIn0sImlhdCI6MTY5MDM1NzU2NSwiZXhwIjoxNjkwMzYxMTY1fQ.ps-FlSNyHduDsA1NGJnZYfvhN_ZXhX_6wgWauPkWm34
         const location = req.query.location
 
         const wh: Warehouse[] = await whService.readWarehouses(location)
