@@ -39,7 +39,23 @@ const readAllProducts = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
+const readProductDetails = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateProductNameParam(req)
+
+        const name: string = req.params.name
+
+        const product = await productService.readProductDetails(name)
+        const payload: Payload = new Payload('Product successfully created', product)
+
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
     createProduct,
     readAllProducts,
+    readProductDetails,
 }

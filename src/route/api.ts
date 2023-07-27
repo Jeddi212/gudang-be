@@ -13,6 +13,7 @@ privateRouter.delete('/api/warehouse/:id', whController.deleteWarehouse)
 
 privateRouter.post('/api/product', prController.createProduct)
 privateRouter.get('/api/product', prController.readAllProducts)
+privateRouter.get('/api/product/:name', prController.readProductDetails)
 
 export {
     privateRouter

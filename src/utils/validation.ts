@@ -80,6 +80,17 @@ const validateProductNameQuery = async (req: Request) => {
     }
 };
 
+const validateProductNameParam = async (req: Request) => {
+    await Promise.all([
+        param('name').notEmpty().trim().escape().run(req),
+    ]);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array());
+    }
+};
+
 export default {
     validateAdminRole,
     validateAuth,
@@ -88,4 +99,5 @@ export default {
     validateDeleteWarehouse,
     validateProduct,
     validateProductNameQuery,
+    validateProductNameParam,
 }

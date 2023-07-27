@@ -31,7 +31,17 @@ const readAllProducts = async (name: string) => {
     return await productRepository.readAllProducts(name)
 }
 
+const readProductDetails = async (name: string) => {
+    const product = productRepository.readProductDetails(name)
+    if (!product) {
+        throw new ResponseError(404, `Product ${name} not found`);
+    }
+
+    return product
+}
+
 export default {
     createProduct,
     readAllProducts,
+    readProductDetails,
 }
