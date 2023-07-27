@@ -1,18 +1,18 @@
 import { CreateProductDTO } from '../dto/product-dto';
 import { ResponseError } from '../dto/response-error';
 import { BomMany } from '../models/bom';
+import { prisma } from '../utils/database';
 import productRepository from '../repositories/product-repository';
 
 const createProduct = async (dto: CreateProductDTO) => {
-    let needs: any
-
-    if (dto.needs) {
-        needs = await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
-    }
-
     let isProduct = await productRepository.findProductByName(dto.name)
     if (isProduct) {
         throw new ResponseError(409, `Product is already exist`, dto.mapToProduct())
+    }
+
+    let needs: any
+    if (dto.needs) {
+        needs = await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
     }
 
     const product = await productRepository.createProduct(dto.mapToProduct())
@@ -40,8 +40,40 @@ const readProductDetails = async (name: string) => {
     return product
 }
 
+const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
+    const originalProduct = await productRepository.findProductByName(originalName)
+    if (!originalProduct) {
+        throw new ResponseError(409, `Product ${originalName} is not exist`)
+    }
+
+    const isProduct = await productRepository.findProductByName(dto.name)
+    if (isProduct && isProduct.name != originalName) {
+        throw new ResponseError(409, `Product is already exist`, dto.mapToProduct())
+    }
+
+    let updatedProduct = await productRepository.updateProductByName(originalName, dto.mapToProduct())
+
+    let needs: any
+    let deleted: any
+    let connectMaterial: any
+    if (dto.needs) {
+        deleted = await productRepository.disconnectMaterial(dto.name)
+        if (deleted.count < 1) {
+            throw new ResponseError(500, 'Failed disconnect material');
+        }
+
+        needs = await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
+        connectMaterial = await productRepository.connectMaterials(
+            dto.needs.map(m => new BomMany(dto.name, m.name, m.quantity)))
+    }
+
+    (updatedProduct as any).needs = needs
+    return updatedProduct
+}
+
 export default {
     createProduct,
     readAllProducts,
     readProductDetails,
+    updateProduct,
 }

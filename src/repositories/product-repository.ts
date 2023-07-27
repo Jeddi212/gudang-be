@@ -63,6 +63,22 @@ const readProductDetails = async (name: string) => {
     })
 }
 
+const updateProductByName = async (originalName: string, product: Product) => {
+    return await prisma.product.update({
+        where: { name: originalName },
+        data: {
+            name: product.name,
+            // stock: product.stock,
+        }
+    })
+}
+
+const disconnectMaterial = async (productName: string) => {
+    return await prisma.bOM.deleteMany({
+        where: { productName: productName }
+    })
+}
+
 export default {
     findProductByName,
     createProduct,
@@ -70,4 +86,6 @@ export default {
     connectMaterials,
     readAllProducts,
     readProductDetails,
+    updateProductByName,
+    disconnectMaterial,
 }
