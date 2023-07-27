@@ -2,7 +2,6 @@ import { prisma } from '../utils/database'
 import { Product } from '../models/product'
 import { ResponseError } from '../dto/response-error'
 import { BomMany } from '../models/bom'
-import { Prisma, PrismaClient } from '@prisma/client'
 
 const findProductByName = async (name: string) => {
     return await prisma.product.findFirst({ where: { name: name } })

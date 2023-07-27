@@ -32,7 +32,7 @@ const readAllProducts = async (name: string) => {
 }
 
 const readProductDetails = async (name: string) => {
-    const product = productRepository.readProductDetails(name)
+    const product = await productRepository.readProductDetails(name)
     if (!product) {
         throw new ResponseError(404, `Product ${name} not found`);
     }

@@ -31,7 +31,7 @@ const readAllProducts = async (req: Request, res: Response, next: NextFunction) 
         const name: string = req.query.name as string || ''
 
         const product = await productService.readAllProducts(name)
-        const payload: Payload = new Payload('Product successfully created', product)
+        const payload: Payload = new Payload('Products successfully fetched', product)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -46,7 +46,7 @@ const readProductDetails = async (req: Request, res: Response, next: NextFunctio
         const name: string = req.params.name
 
         const product = await productService.readProductDetails(name)
-        const payload: Payload = new Payload('Product successfully created', product)
+        const payload: Payload = new Payload('Product successfully fetched', product)
 
         res.status(200).json(payload)
     } catch (e) {
