@@ -1,7 +1,6 @@
 import { CreateProductDTO } from '../dto/product-dto';
 import { ResponseError } from '../dto/response-error';
 import { BomMany } from '../models/bom';
-import { prisma } from '../utils/database';
 import productRepository from '../repositories/product-repository';
 
 const createProduct = async (dto: CreateProductDTO) => {
@@ -10,16 +9,12 @@ const createProduct = async (dto: CreateProductDTO) => {
         throw new ResponseError(409, `Product is already exist`, dto.mapToProduct())
     }
 
+    const product = await productRepository.createProduct(dto.mapToProduct())
+
     let needs: any
     if (dto.needs) {
         needs = await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
-    }
-
-    const product = await productRepository.createProduct(dto.mapToProduct())
-
-    let final
-    if (dto.needs) {
-        final = await productRepository.connectMaterials(
+        await productRepository.connectMaterials(
             dto.needs.map(m => new BomMany(product.name, m.name, m.quantity)))
     }
 
