@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import { CreateProductDTO, Material } from '../dto/product-dto'
 import productService from '../services/product-service'
 import validation from '../utils/validation'
+import { Product } from '../models/product'
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -23,6 +24,22 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+const readAllProducts = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateProductNameQuery(req)
+
+        const name: string = req.query.name as string || ''
+
+        const product = await productService.readAllProducts(name)
+        const payload: Payload = new Payload('Product successfully created', product)
+
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
-    createProduct
+    createProduct,
+    readAllProducts,
 }

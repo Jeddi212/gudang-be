@@ -27,6 +27,11 @@ const createProduct = async (dto: CreateProductDTO) => {
     return product
 }
 
+const readAllProducts = async (name: string) => {
+    return productRepository.readAllProducts(name)
+}
+
 export default {
-    createProduct
+    createProduct,
+    readAllProducts,
 }

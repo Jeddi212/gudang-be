@@ -3,6 +3,12 @@ import { Product } from '../models/product'
 import { ResponseError } from '../dto/response-error'
 import { BomMany } from '../models/bom'
 
+const readAllProducts = async (name: string) => {
+    return prisma.product.findMany({
+        where: { name: { contains: name } }
+    })
+}
+
 const findProductByName = async (name: string) => {
     return await prisma.product.findFirst({ where: { name: name } })
 }
@@ -40,6 +46,7 @@ const connectMaterials = async (boms: BomMany[]) => {
 }
 
 export default {
+    readAllProducts,
     findProductByName,
     createProduct,
     upsertManyProductByName,
