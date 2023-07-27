@@ -35,8 +35,8 @@ model Product {
   id        Int         @id @default(autoincrement())
   name      String      @unique
   stock     Int
-  Needs     BOM[]       @relation("materials")
-  UsedBy    BOM[]       @relation("product")
+  Needs     BOM[]       @relation("product")
+  UsedBy    BOM[]       @relation("materials")
   Inventory Inventory[]
 
   @@index([name])
