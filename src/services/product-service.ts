@@ -28,7 +28,7 @@ const createProduct = async (dto: CreateProductDTO) => {
 }
 
 const readAllProducts = async (name: string) => {
-    return productRepository.readAllProducts(name)
+    return await productRepository.readAllProducts(name)
 }
 
 export default {
