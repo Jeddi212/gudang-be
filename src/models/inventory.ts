@@ -4,18 +4,18 @@ import { Warehouse } from "./warehouse"
 
 class Inventory {
     quantity: number
-    history: History
     product: Product
     warehouse: Warehouse
+    history?: History
     id?: number
     createdAt?: Date
     updatedAt?: Date
 
     constructor(
         quantity: number,
-        history: History,
         product: Product,
         warehouse: Warehouse,
+        history?: History,
         id?: number,
         createdAt?: Date,
         updatedAt?: Date) {

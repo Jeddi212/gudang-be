@@ -18,15 +18,16 @@ enum Event {
 }
 
 model User {
-  name     String    @id
-  password String
-  level    Role      @default(STAFF)
-  History  History[]
+  name        String        @id
+  password    String
+  level       Role          @default(STAFF)
+  Transaction Transaction[]
 }
 
 model Warehouse {
   location  String      @id
   Inventory Inventory[]
+  History   History[]
 }
 
 model Product {
@@ -35,39 +36,50 @@ model Product {
   Needs     BOM[]       @relation("product")
   UsedBy    BOM[]       @relation("materials")
   Inventory Inventory[]
-
-  @@index([name])
+  History   History[]
 }
 
 model BOM {
-  product      Product @relation("product", fields: [productName], references: [name], onDelete: Cascade)
+  Product      Product @relation("product", fields: [productName], references: [name], onDelete: Cascade)
   productName  String
-  material     Product @relation("materials", fields: [materialName], references: [name], onDelete: Cascade)
+  Material     Product @relation("materials", fields: [materialName], references: [name], onDelete: Cascade)
   materialName String
   quantity     Int
 
   @@id([productName, materialName])
 }
 
-model History {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+model Transaction {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   event     Event
-  user      User        @relation(fields: [userName], references: [name], onDelete: Cascade)
-  userName  String
-  Inventory Inventory[]
+  user      User      @relation(fields: [username], references: [name], onDelete: Cascade)
+  username  String
+  History   History[]
+}
+
+model History {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  transactionId Int
+  Product       Product     @relation(fields: [productId], references: [name], onDelete: Cascade)
+  productId     String
+  Warehouse     Warehouse   @relation(fields: [warehouseId], references: [location], onDelete: Cascade)
+  warehouseId   String
+  quantity      Int
 }
 
 model Inventory {
-  id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  quantity    Int
-  history     History   @relation(fields: [historyId], references: [id], onDelete: Cascade)
-  historyId   Int
-  product     Product   @relation(fields: [productId], references: [name], onDelete: Cascade)
+  Product     Product   @relation(fields: [productId], references: [name], onDelete: Cascade)
   productId   String
-  warehouse   Warehouse @relation(fields: [warehouseId], references: [location], onDelete: Cascade)
+  Warehouse   Warehouse @relation(fields: [warehouseId], references: [location], onDelete: Cascade)
   warehouseId String
+  quantity    Int
+
+  @@id([productId, warehouseId])
 }

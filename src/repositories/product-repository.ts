@@ -2,6 +2,7 @@ import { prisma } from '../utils/database'
 import { Product } from '../models/product'
 import { ResponseError } from '../dto/response-error'
 import { BomMany } from '../models/bom'
+import { InventoryDTO } from '../dto/inventory-dto'
 
 const findProductByName = async (name: string) => {
     return await prisma.product.findFirst({ where: { name: name } })
@@ -28,7 +29,7 @@ const upsertManyProductByName = async (products: Product[]) => {
             })
         )
     } catch (error) {
-        await prisma.$queryRaw`ROLLBACK;`
+        await prisma.$queryRaw`ROLLBACK;`;
         throw new ResponseError(500, 'Error during transaction upsert many product by name')
     }
 }
@@ -102,6 +103,20 @@ const deleteProductByName = async (name: string) => {
     })
 }
 
+const updateManyProductStock = async (tx: any, products: InventoryDTO[]) => {
+    try {
+        for (const p of products) {
+            await tx.product.update({
+                where: { name: p.product },
+                data: { stock: { increment: p.quantity } },
+            });
+        }
+    } catch (error) {
+        await tx.$queryRaw`ROLLBACK;`;
+        throw new ResponseError(500, 'Error during transaction update product stock', error);
+    }
+};
+
 export default {
     findProductByName,
     createProduct,
@@ -113,4 +128,5 @@ export default {
     disconnectMaterial,
     findMaterials,
     deleteProductByName,
+    updateManyProductStock,
 }

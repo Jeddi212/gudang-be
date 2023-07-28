@@ -91,6 +91,20 @@ const validateProductNameParam = async (req: Request) => {
     }
 };
 
+const validateCreateHistory = async (req: Request) => {
+    await Promise.all([
+        body('event').notEmpty().trim().escape().run(req),
+        body('inventory.*.quantity').notEmpty().isInt().run(req),
+        body('inventory.*.product').notEmpty().trim().escape().run(req),
+        body('inventory.*.warehouse').notEmpty().trim().escape().run(req),
+    ]);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array());
+    }
+};
+
 export default {
     validateAdminRole,
     validateAuth,
@@ -100,4 +114,5 @@ export default {
     validateProduct,
     validateProductNameQuery,
     validateProductNameParam,
+    validateCreateHistory,
 }
