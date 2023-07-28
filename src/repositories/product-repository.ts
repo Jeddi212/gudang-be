@@ -29,7 +29,7 @@ const upsertManyProductByName = async (products: Product[]) => {
             })
         )
     } catch (error) {
-        await prisma.$queryRaw`ROLLBACK;`;
+        await prisma.$queryRaw`ROLLBACK;`
         throw new ResponseError(500, 'Error during transaction upsert many product by name')
     }
 }
@@ -112,7 +112,7 @@ const updateManyProductStock = async (tx: any, products: HistoryDTO[]) => {
             })
         }
     } catch (error) {
-        await tx.$queryRaw`ROLLBACK;`;
+        await tx.$queryRaw`ROLLBACK;`
         throw new ResponseError(500, 'Error during transaction update product stock', error);
     }
 }

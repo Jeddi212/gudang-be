@@ -1,4 +1,3 @@
-import { prisma } from '../utils/database'
 import { TransactionDTO } from '../dto/transaction-dto'
 import { ResponseError } from '../dto/response-error'
 
@@ -21,7 +20,7 @@ const createTransaction = async (tx: any, transaction: TransactionDTO) => {
             include: { History: true },
         })
     } catch (error) {
-        await tx.$queryRaw`ROLLBACK;`;
+        await tx.$queryRaw`ROLLBACK;`
         throw new ResponseError(500, 'Error during transaction create transaction', error);
     }
 };
