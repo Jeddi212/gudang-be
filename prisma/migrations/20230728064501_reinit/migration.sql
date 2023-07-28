@@ -6,12 +6,11 @@ CREATE TYPE "Event" AS ENUM ('PRODUCTION', 'INPUT');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "level" "Role" NOT NULL DEFAULT 'STAFF',
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("name")
 );
 
 -- CreateTable
@@ -45,7 +44,7 @@ CREATE TABLE "History" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "event" "Event" NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userName" TEXT NOT NULL,
 
     CONSTRAINT "History_pkey" PRIMARY KEY ("id")
 );
@@ -64,12 +63,6 @@ CREATE TABLE "Inventory" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Warehouse_location_key" ON "Warehouse"("location");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
 
 -- CreateIndex
@@ -82,7 +75,7 @@ ALTER TABLE "BOM" ADD CONSTRAINT "BOM_productName_fkey" FOREIGN KEY ("productNam
 ALTER TABLE "BOM" ADD CONSTRAINT "BOM_materialName_fkey" FOREIGN KEY ("materialName") REFERENCES "Product"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "History" ADD CONSTRAINT "History_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "History" ADD CONSTRAINT "History_userName_fkey" FOREIGN KEY ("userName") REFERENCES "User"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_historyId_fkey" FOREIGN KEY ("historyId") REFERENCES "History"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

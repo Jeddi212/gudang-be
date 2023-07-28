@@ -4,14 +4,12 @@ class User {
     name: string
     password: string
     level: Role
-    id?: number
     history?: History[]
 
-    constructor(name: string, password: string, level: Role, id?: number, history?: History[]) {
+    constructor(name: string, password: string, level: Role, history?: History[]) {
         this.name = name
         this.password = password
         this.level = level
-        this.id = id
         this.history = history
     }
 }

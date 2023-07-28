@@ -18,15 +18,14 @@ enum Event {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
+  name     String    @id
   password String
   level    Role      @default(STAFF)
   History  History[]
 }
 
 model Warehouse {
-  location  String      @id @unique
+  location  String      @id
   Inventory Inventory[]
 }
 
@@ -56,8 +55,8 @@ model History {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   event     Event
-  user      User        @relation(fields: [userId], references: [id])
-  userId    Int
+  user      User        @relation(fields: [userName], references: [name])
+  userName  String
   Inventory Inventory[]
 }
 

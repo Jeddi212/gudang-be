@@ -15,12 +15,10 @@ class UserAuthDTO {
 }
 
 class UserDTO {
-    id: number
     name: string
     level: Role
 
-    constructor(id: number, name: string, level: Role) {
-        this.id = id
+    constructor(name: string, level: Role) {
         this.name = name
         this.level = level
     }

@@ -4,13 +4,12 @@ import { UserAuthDTO, UserDTO } from '../dto/user-dto';
 import userRepository from '../repositories/user-repository';
 
 const register = async (dto: UserAuthDTO) => {
-    const isUser = await userRepository.findUserByName(dto.name)
-    if (isUser) {
+    if (await userRepository.findUserByName(dto.name)) {
         throw new ResponseError(409, 'Username is already in use')
     }
 
     const user = await userRepository.createNewUser(dto.mapToModel())
-    return new UserDTO(user.id, user.name, user.level)
+    return new UserDTO(user.name, user.level)
 }
 
 const login = async (dto: UserAuthDTO) => {
@@ -23,7 +22,7 @@ const login = async (dto: UserAuthDTO) => {
         throw new ResponseError(401, `Invalid credentials`)
     }
 
-    return generateJWT(new UserDTO(isUser.id, isUser.name, isUser.level))
+    return generateJWT(new UserDTO(isUser.name, isUser.level))
 }
 
 export default {
