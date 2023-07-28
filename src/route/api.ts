@@ -16,7 +16,7 @@ privateRouter.post('/api/product', prController.createProduct)
 privateRouter.put('/api/product/:name', prController.updateProduct)
 privateRouter.delete('/api/product/:name', prController.deleteProduct)
 
-privateRouter.post('/api/history', trController.createTransaction)
+privateRouter.post('/api/transaction', trController.createTransaction)
 
 export {
     privateRouter

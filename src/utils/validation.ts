@@ -67,7 +67,7 @@ const validateProduct = async (req: Request) => {
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array());
     }
-};
+}
 
 const validateProductNameQuery = async (req: Request) => {
     await Promise.all([
@@ -78,7 +78,7 @@ const validateProductNameQuery = async (req: Request) => {
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array());
     }
-};
+}
 
 const validateProductNameParam = async (req: Request) => {
     await Promise.all([
@@ -89,7 +89,7 @@ const validateProductNameParam = async (req: Request) => {
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array());
     }
-};
+}
 
 const validateCreateHistory = async (req: Request) => {
     await Promise.all([
@@ -103,7 +103,18 @@ const validateCreateHistory = async (req: Request) => {
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array());
     }
-};
+}
+
+const validateTransactionId = async (req: Request) => {
+    await Promise.all([
+        param('id').notEmpty().isInt().run(req),
+    ]);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array())
+    }
+}
 
 export default {
     validateAdminRole,
@@ -115,4 +126,5 @@ export default {
     validateProductNameQuery,
     validateProductNameParam,
     validateCreateHistory,
+    validateTransactionId,
 }

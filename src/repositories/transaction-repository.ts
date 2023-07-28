@@ -1,6 +1,7 @@
 import { TransactionDTO } from '../dto/transaction-dto'
 import { ResponseError } from '../dto/response-error'
-import { PrismaClient } from '@prisma/client';
+import { Event, PrismaClient } from '@prisma/client';
+import { prisma } from '../utils/database';
 
 const createTransaction = async (tx: PrismaClient, transaction: TransactionDTO) => {
     try {
@@ -22,10 +23,37 @@ const createTransaction = async (tx: PrismaClient, transaction: TransactionDTO) 
         })
     } catch (error) {
         await tx.$queryRaw`ROLLBACK;`
-        throw new ResponseError(500, 'Error during transaction create transaction', error);
+        throw new ResponseError(500, 'Error during transaction create transaction', error)
     }
-};
+}
+
+const findAllTransactions = async () => {
+    return await prisma.transaction.findMany()
+}
+
+const findTransactionsByEvent = async (event: Event) => {
+    return await prisma.transaction.findMany({
+        where: { event: event }
+    })
+}
+
+const findTransactionsByUser = async (username: string) => {
+    return await prisma.transaction.findMany({
+        where: { username: username }
+    })
+}
+
+const findTransactionById = async (id: number) => {
+    return await prisma.transaction.findUnique({
+        where: { id: id },
+        include: { History: true },
+    })
+}
 
 export default {
     createTransaction,
+    findAllTransactions,
+    findTransactionsByEvent,
+    findTransactionsByUser,
+    findTransactionById,
 }
