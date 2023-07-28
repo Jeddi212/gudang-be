@@ -109,13 +109,13 @@ const updateManyProductStock = async (tx: any, products: HistoryDTO[]) => {
             await tx.product.update({
                 where: { name: p.product },
                 data: { stock: { increment: p.quantity } },
-            });
+            })
         }
     } catch (error) {
         await tx.$queryRaw`ROLLBACK;`;
         throw new ResponseError(500, 'Error during transaction update product stock', error);
     }
-};
+}
 
 export default {
     findProductByName,
