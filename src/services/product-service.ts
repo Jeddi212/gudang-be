@@ -2,7 +2,6 @@ import { CreateProductDTO } from '../dto/product-dto';
 import { ResponseError } from '../dto/response-error';
 import { BomMany } from '../models/bom';
 import productRepository from '../repositories/product-repository';
-import { prisma } from '../utils/database';
 
 const createProduct = async (dto: CreateProductDTO) => {
     if (await productRepository.findProductByName(dto.name)) {
