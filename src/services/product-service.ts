@@ -2,11 +2,11 @@ import { CreateProductDTO } from '../dto/product-dto';
 import { ResponseError } from '../dto/response-error';
 import { BomMany } from '../models/bom';
 import productRepository from '../repositories/product-repository';
+import { prisma } from '../utils/database';
 
 const createProduct = async (dto: CreateProductDTO) => {
-    let isProduct = await productRepository.findProductByName(dto.name)
-    if (isProduct) {
-        throw new ResponseError(409, `Product is already exist`, dto.mapToProduct())
+    if (await productRepository.findProductByName(dto.name)) {
+        throw new ResponseError(409, `Product is already exist`, dto)
     }
 
     const product = await productRepository.createProduct(dto.mapToProduct())
@@ -43,7 +43,7 @@ const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
 
     const isProduct = await productRepository.findProductByName(dto.name)
     if (isProduct && isProduct.name != originalName) {
-        throw new ResponseError(409, `Product is already exist`, dto.mapToProduct())
+        throw new ResponseError(409, `Product ${originalName} is already exist`)
     }
 
     let updatedProduct = await productRepository.updateProductByName(originalName, dto.mapToProduct())
@@ -53,7 +53,7 @@ const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
     let connectMaterial: any
     if (dto.needs) {
         deleted = await productRepository.disconnectMaterial(dto.name)
-        if (deleted.count < 1) {
+        if (deleted.count < 1 && (await productRepository.findMaterials(originalName)).length > 0) {
             throw new ResponseError(500, 'Failed disconnect material');
         }
 
@@ -62,7 +62,7 @@ const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
             dto.needs.map(m => new BomMany(dto.name, m.name, m.quantity)))
     }
 
-    (updatedProduct as any).needs = needs
+    (updatedProduct as any).needs = dto.needs
     return updatedProduct
 }
 

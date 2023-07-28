@@ -22,11 +22,10 @@ CREATE TABLE "Warehouse" (
 
 -- CreateTable
 CREATE TABLE "Product" (
-    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "stock" INTEGER NOT NULL,
 
-    CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Product_pkey" PRIMARY KEY ("name")
 );
 
 -- CreateTable
@@ -56,14 +55,11 @@ CREATE TABLE "Inventory" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "quantity" INTEGER NOT NULL,
     "historyId" INTEGER NOT NULL,
-    "productId" INTEGER NOT NULL,
+    "productId" TEXT NOT NULL,
     "warehouseId" TEXT NOT NULL,
 
     CONSTRAINT "Inventory_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
 
 -- CreateIndex
 CREATE INDEX "Product_name_idx" ON "Product"("name");
@@ -81,7 +77,7 @@ ALTER TABLE "History" ADD CONSTRAINT "History_userName_fkey" FOREIGN KEY ("userN
 ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_historyId_fkey" FOREIGN KEY ("historyId") REFERENCES "History"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_warehouseId_fkey" FOREIGN KEY ("warehouseId") REFERENCES "Warehouse"("location") ON DELETE RESTRICT ON UPDATE CASCADE;

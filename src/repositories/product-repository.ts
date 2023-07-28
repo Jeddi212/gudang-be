@@ -79,6 +79,12 @@ const disconnectMaterial = async (productName: string) => {
     })
 }
 
+const findMaterials = async (productName: string) => {
+    return await prisma.bOM.findMany({
+        where: { productName: productName }
+    })
+}
+
 export default {
     findProductByName,
     createProduct,
@@ -88,4 +94,5 @@ export default {
     readProductDetails,
     updateProductByName,
     disconnectMaterial,
+    findMaterials,
 }
