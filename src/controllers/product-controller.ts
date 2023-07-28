@@ -15,7 +15,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
             materials.map((m: Material) => new Material(m.name, m.quantity)))
 
         const product = await productService.createProduct(dto)
-        const payload: Payload = new Payload('Product successfully created', product)
+        const payload: Payload = new Payload(`Product ${req.body.name} successfully created`, product)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -30,7 +30,7 @@ const readAllProducts = async (req: Request, res: Response, next: NextFunction) 
         const name: string = req.query.name as string || ''
 
         const product = await productService.readAllProducts(name)
-        const payload: Payload = new Payload('Products successfully fetched', product)
+        const payload: Payload = new Payload(`Products successfully fetched`, product)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -45,7 +45,7 @@ const readProductDetails = async (req: Request, res: Response, next: NextFunctio
         const name: string = req.params.name
 
         const product = await productService.readProductDetails(name)
-        const payload: Payload = new Payload('Product successfully fetched', product)
+        const payload: Payload = new Payload(`Product ${name} successfully fetched`, product)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -67,7 +67,23 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
             materials.map((m: Material) => new Material(m.name, m.quantity)))
 
         const product = await productService.updateProduct(name, dto)
-        const payload: Payload = new Payload('Product successfully updated', product)
+        const payload: Payload = new Payload(`Product ${name} successfully updated`, product)
+
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
+const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateProductNameParam(req)
+        const name: string = req.params.name
+
+        validation.validateAdminRole(req.payload?.level)
+
+        const product = await productService.deleteProduct(name)
+        const payload: Payload = new Payload(`Product ${name} successfully deleted`, product)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -80,4 +96,5 @@ export default {
     readAllProducts,
     readProductDetails,
     updateProduct,
+    deleteProduct,
 }

@@ -6,7 +6,7 @@ import { prisma } from '../utils/database';
 
 const createProduct = async (dto: CreateProductDTO) => {
     if (await productRepository.findProductByName(dto.name)) {
-        throw new ResponseError(409, `Product is already exist`, dto)
+        throw new ResponseError(409, `Product ${dto.name} is already exist`, dto)
     }
 
     const product = await productRepository.createProduct(dto.mapToProduct())
@@ -63,9 +63,14 @@ const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
     return updatedProduct
 }
 
+const deleteProduct = async (name: string) => {
+    return await productRepository.deleteProductByName(name)
+}
+
 export default {
     createProduct,
     readAllProducts,
     readProductDetails,
     updateProduct,
+    deleteProduct,
 }

@@ -13,6 +13,7 @@ privateRouter.delete('/api/warehouse/:location', whController.deleteWarehouse)
 
 privateRouter.post('/api/product', prController.createProduct)
 privateRouter.put('/api/product/:name', prController.updateProduct)
+privateRouter.delete('/api/product/:name', prController.deleteProduct)
 
 export {
     privateRouter

@@ -56,9 +56,9 @@ const readProductDetails = async (name: string) => {
                 orderBy: { updatedAt: 'desc' },
                 take: 25
             },
-            // UsedBy: {
-            //     select: { productName: true }
-            // },
+            UsedBy: {
+                select: { productName: true }
+            },
         }
     })
 }
@@ -85,6 +85,23 @@ const findMaterials = async (productName: string) => {
     })
 }
 
+const deleteProductByName = async (name: string) => {
+    return await prisma.product.delete({
+        where: { name: name },
+        include: {
+            Needs: {
+                select: { materialName: true, quantity: true }
+            },
+            Inventory: {
+                orderBy: { updatedAt: 'desc' },
+            },
+            UsedBy: {
+                select: { productName: true }
+            },
+        }
+    })
+}
+
 export default {
     findProductByName,
     createProduct,
@@ -95,4 +112,5 @@ export default {
     updateProductByName,
     disconnectMaterial,
     findMaterials,
+    deleteProductByName,
 }
