@@ -46,7 +46,7 @@ const validateUpdateWarehouse = async (req: Request) => {
 
 const validateDeleteWarehouse = async (req: Request) => {
     await Promise.all([
-        param('location').notEmpty().trim().isInt().run(req),
+        param('location').notEmpty().trim().run(req),
     ]);
 
     const errors = validationResult(req);
