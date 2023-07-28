@@ -16,10 +16,9 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Warehouse" (
-    "id" SERIAL NOT NULL,
     "location" TEXT NOT NULL,
 
-    CONSTRAINT "Warehouse_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Warehouse_pkey" PRIMARY KEY ("location")
 );
 
 -- CreateTable
@@ -59,7 +58,7 @@ CREATE TABLE "Inventory" (
     "quantity" INTEGER NOT NULL,
     "historyId" INTEGER NOT NULL,
     "productId" INTEGER NOT NULL,
-    "warehouseId" INTEGER NOT NULL,
+    "warehouseId" TEXT NOT NULL,
 
     CONSTRAINT "Inventory_pkey" PRIMARY KEY ("id")
 );
@@ -92,4 +91,4 @@ ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_historyId_fkey" FOREIGN KEY ("
 ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_warehouseId_fkey" FOREIGN KEY ("warehouseId") REFERENCES "Warehouse"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Inventory" ADD CONSTRAINT "Inventory_warehouseId_fkey" FOREIGN KEY ("warehouseId") REFERENCES "Warehouse"("location") ON DELETE RESTRICT ON UPDATE CASCADE;
