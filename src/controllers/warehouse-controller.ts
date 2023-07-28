@@ -53,7 +53,7 @@ const deleteWarehouse = async (req: Request, res: Response, next: NextFunction) 
     try {
         validation.validateAdminRole(req.payload?.level)
         await validation.validateDeleteWarehouse(req)
-        const location: string = req.params.id
+        const location: string = req.params.location
 
         const wh: Warehouse = await whService.deleteWarehouse(location)
         const payload: Payload = new Payload('Warehouse successfully deleted', wh)

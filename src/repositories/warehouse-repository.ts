@@ -5,7 +5,7 @@ const createNewWarehouse = async (wh: Warehouse) => {
     return prisma.warehouse.create({ data: wh })
 }
 
-const readWarehouses = async (location: any) => {
+const readWarehouses = async (location: string) => {
     return prisma.warehouse.findMany({
         where: { location: { contains: location } }
     })
@@ -18,8 +18,14 @@ const updateWarehouse = async (original: string, wh: Warehouse) => {
     })
 }
 
-const deleteWarehouseById = async (location: string) => {
+const deleteWarehouseByLocation = async (location: string) => {
     return prisma.warehouse.delete({
+        where: { location: location }
+    });
+}
+
+const findWarehouseByLocation = async (location: string) => {
+    return prisma.warehouse.findUnique({
         where: { location: location }
     })
 }
@@ -28,5 +34,6 @@ export default {
     createNewWarehouse,
     readWarehouses,
     updateWarehouse,
-    deleteWarehouseById,
+    deleteWarehouseByLocation,
+    findWarehouseByLocation,
 }
