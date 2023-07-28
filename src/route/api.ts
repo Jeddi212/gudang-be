@@ -1,5 +1,5 @@
 import express from 'express'
-import hyController from '../controllers/history-controller'
+import trController from '../controllers/transaction-controller'
 import prController from '../controllers/product-controller'
 import whController from '../controllers/warehouse-controller'
 import { authMiddleware } from '../middleware/auth-middleware'
@@ -16,7 +16,7 @@ privateRouter.post('/api/product', prController.createProduct)
 privateRouter.put('/api/product/:name', prController.updateProduct)
 privateRouter.delete('/api/product/:name', prController.deleteProduct)
 
-privateRouter.post('/api/history', hyController.createHistory)
+privateRouter.post('/api/history', trController.createTransaction)
 
 export {
     privateRouter

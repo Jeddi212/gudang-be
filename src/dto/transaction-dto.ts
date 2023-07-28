@@ -1,7 +1,7 @@
 import { Event } from "@prisma/client"
 import { InventoryDTO } from "./inventory-dto"
 
-class HistoryDTO {
+class TransactionDTO {
     event: Event
     username: string
     inventory: InventoryDTO[]
@@ -18,5 +18,5 @@ class HistoryDTO {
 }
 
 export {
-    HistoryDTO
+    TransactionDTO
 }

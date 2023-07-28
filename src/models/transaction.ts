@@ -2,7 +2,7 @@ import { Event } from "@prisma/client"
 import { Inventory } from "./inventory"
 import { User } from "./user"
 
-class History {
+class Transaction {
     event: Event
     user: User
     inventory?: Inventory[]
@@ -27,5 +27,5 @@ class History {
 }
 
 export {
-    History
+    Transaction
 }

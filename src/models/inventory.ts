@@ -1,12 +1,12 @@
 import { Product } from "./product"
-import { History } from "./history"
+import { Transaction } from "./transaction"
 import { Warehouse } from "./warehouse"
 
 class Inventory {
     quantity: number
     product: Product
     warehouse: Warehouse
-    history?: History
+    transaction?: Transaction
     id?: number
     createdAt?: Date
     updatedAt?: Date
@@ -15,12 +15,12 @@ class Inventory {
         quantity: number,
         product: Product,
         warehouse: Warehouse,
-        history?: History,
+        transaction?: Transaction,
         id?: number,
         createdAt?: Date,
         updatedAt?: Date) {
         this.quantity = quantity
-        this.history = history
+        this.transaction = transaction
         this.product = product
         this.warehouse = warehouse
         this.id = id

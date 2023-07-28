@@ -1,17 +1,15 @@
 import { prisma } from '../utils/database'
-// import { History } from '../models/history'
-import { HistoryDTO } from '../dto/history-dto'
+import { TransactionDTO } from '../dto/transaction-dto'
 import { ResponseError } from '../dto/response-error'
-import { Event } from '@prisma/client'
 
-const createHistory = async (tx: any, history: HistoryDTO) => {
+const createTransaction = async (tx: any, transaction: TransactionDTO) => {
     try {
-        return await tx.history.create({
+        return await tx.transaction.create({
             data: {
-                event: history.event,
-                username: history.username,
+                event: transaction.event,
+                username: transaction.username,
                 Inventory: {
-                    create: history.inventory.map((i) => {
+                    create: transaction.inventory.map((i) => {
                         return {
                             quantity: i.quantity,
                             productId: i.product,
@@ -24,10 +22,10 @@ const createHistory = async (tx: any, history: HistoryDTO) => {
         });
     } catch (error) {
         await tx.$queryRaw`ROLLBACK;`;
-        throw new ResponseError(500, 'Error during transaction create history', error);
+        throw new ResponseError(500, 'Error during transaction create transaction', error);
     }
 };
 
 export default {
-    createHistory,
+    createTransaction,
 }
