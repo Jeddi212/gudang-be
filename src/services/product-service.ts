@@ -48,17 +48,14 @@ const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
 
     let updatedProduct = await productRepository.updateProductByName(originalName, dto.mapToProduct())
 
-    let needs: any
-    let deleted: any
-    let connectMaterial: any
     if (dto.needs) {
-        deleted = await productRepository.disconnectMaterial(dto.name)
-        if (deleted.count < 1 && (await productRepository.findMaterials(originalName)).length > 0) {
+        if ((await productRepository.disconnectMaterial(dto.name)).count < 1 &&
+            (await productRepository.findMaterials(originalName)).length > 0) {
             throw new ResponseError(500, 'Failed disconnect material');
         }
 
-        needs = await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
-        connectMaterial = await productRepository.connectMaterials(
+        await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
+        await productRepository.connectMaterials(
             dto.needs.map(m => new BomMany(dto.name, m.name, m.quantity)))
     }
 
