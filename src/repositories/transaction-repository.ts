@@ -8,8 +8,8 @@ const createTransaction = async (tx: any, transaction: TransactionDTO) => {
             data: {
                 event: transaction.event,
                 username: transaction.username,
-                Inventory: {
-                    create: transaction.inventory.map((i) => {
+                History: {
+                    create: transaction.history.map((i) => {
                         return {
                             quantity: i.quantity,
                             productId: i.product,
@@ -18,7 +18,7 @@ const createTransaction = async (tx: any, transaction: TransactionDTO) => {
                     }),
                 },
             },
-            include: { Inventory: true },
+            include: { History: true },
         });
     } catch (error) {
         await tx.$queryRaw`ROLLBACK;`;

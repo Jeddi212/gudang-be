@@ -2,7 +2,7 @@ import { Product } from "./product"
 import { Transaction } from "./transaction"
 import { Warehouse } from "./warehouse"
 
-class Inventory {
+class History {
     quantity: number
     product: Product
     warehouse: Warehouse
@@ -30,5 +30,5 @@ class Inventory {
 }
 
 export {
-    Inventory
+    History
 }

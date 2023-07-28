@@ -5,7 +5,7 @@ import { prisma } from '../utils/database';
 
 const createTransaction = async (dto: TransactionDTO) => {
     return await prisma.$transaction(async (tx) => {
-        await productRepository.updateManyProductStock(tx, dto.inventory);
+        await productRepository.updateManyProductStock(tx, dto.history);
         return await historyRepository.createTransaction(tx, dto);
     });
 };

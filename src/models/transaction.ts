@@ -1,11 +1,11 @@
 import { Event } from "@prisma/client"
-import { Inventory } from "./inventory"
+import { History } from "./history"
 import { User } from "./user"
 
 class Transaction {
     event: Event
     user: User
-    inventory?: Inventory[]
+    history?: History[]
     id?: number
     createdAt?: Date
     updatedAt?: Date
@@ -13,13 +13,13 @@ class Transaction {
     constructor(
         event: Event,
         user: User,
-        inventory?: Inventory[],
+        history?: History[],
         id?: number,
         createdAt?: Date,
         updatedAt?: Date) {
         this.event = event
         this.user = user
-        this.inventory = inventory
+        this.history = history
         this.id = id
         this.createdAt = createdAt
         this.updatedAt = updatedAt

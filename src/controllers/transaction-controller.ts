@@ -1,7 +1,7 @@
 import { Payload } from '../dto/payload'
 import { Request, Response, NextFunction } from 'express'
 import { TransactionDTO } from '../dto/transaction-dto'
-import { InventoryDTO } from '../dto/inventory-dto'
+import { HistoryDTO } from '../dto/history-dto'
 import historyService from '../services/transaction-service'
 import validation from '../utils/validation'
 
@@ -13,7 +13,7 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
         const dto: TransactionDTO = new TransactionDTO(
             req.body.event,
             req.payload?.name as string,
-            inventory.map((i: InventoryDTO) => new InventoryDTO(i.quantity, i.product, i.warehouse)))
+            inventory.map((i: HistoryDTO) => new HistoryDTO(i.quantity, i.product, i.warehouse)))
 
         const product = await historyService.createTransaction(dto)
         const payload: Payload = new Payload(`History successfully created`, product)
