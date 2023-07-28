@@ -18,11 +18,11 @@ backend for gudang web app
 ### PUT Warehouse
 ### DELETE Warehouse
 
-## History (of Product stock)
+## History (of event)
 ### GET History
 ### POST History
 
-## Production (manufacture log)
+## Inventory (stock log)
 ### GET Production
 ### POST Production
 
