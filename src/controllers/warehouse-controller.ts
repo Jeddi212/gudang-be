@@ -12,7 +12,7 @@ const createWarehouse = async (req: Request, res: Response, next: NextFunction) 
         const dto: WarehouseDTO = new WarehouseDTO(req.body.location)
 
         const wh: Warehouse = await whService.createWarehouse(dto)
-        const payload: Payload = new Payload('Warehouse created', wh)
+        const payload: Payload = new Payload(`Warehouse ${dto.location} created`, wh)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -25,7 +25,7 @@ const readWarehouses = async (req: Request, res: Response, next: NextFunction) =
         const location = req.query.location as string || ''
 
         const wh: Warehouse[] = await whService.readWarehouses(location)
-        const payload: Payload = new Payload('Read all warehouse success', wh)
+        const payload: Payload = new Payload(`Read warehouse ${location} success`, wh)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -41,7 +41,7 @@ const updateWarehouse = async (req: Request, res: Response, next: NextFunction) 
         const dto: WarehouseDTO = new WarehouseDTO(req.body.location)
 
         const wh: Warehouse = await whService.updateWarehouse(original, dto)
-        const payload: Payload = new Payload('Warehouse successfully updated', wh)
+        const payload: Payload = new Payload(`Warehouse ${original} successfully updated`, wh)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -56,7 +56,7 @@ const deleteWarehouse = async (req: Request, res: Response, next: NextFunction) 
         const location: string = req.params.location
 
         const wh: Warehouse = await whService.deleteWarehouse(location)
-        const payload: Payload = new Payload('Warehouse successfully deleted', wh)
+        const payload: Payload = new Payload(`Warehouse ${location} successfully deleted`, wh)
 
         res.status(200).json(payload)
     } catch (e) {

@@ -5,7 +5,7 @@ import userRepository from '../repositories/user-repository';
 
 const register = async (dto: UserAuthDTO) => {
     if (await userRepository.findUserByName(dto.name)) {
-        throw new ResponseError(409, 'Username is already in use')
+        throw new ResponseError(409, `Username ${dto.name} is already used`)
     }
 
     const user = await userRepository.createNewUser(dto.mapToModel())
