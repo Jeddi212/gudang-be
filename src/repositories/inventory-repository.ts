@@ -1,6 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { HistoryDTO } from "../dto/history-dto";
 import { ResponseError } from "../dto/response-error";
+import { prisma } from "../utils/database";
+
+const readAllInventories = async () => {
+    return await prisma.inventory.findMany()
+}
 
 const updateInventoryStock = async (tx: PrismaClient, products: HistoryDTO[]) => {
     const upsertedRecords = []
@@ -41,5 +46,6 @@ const updateInventoryStock = async (tx: PrismaClient, products: HistoryDTO[]) =>
 }
 
 export default {
-    updateInventoryStock
+    readAllInventories,
+    updateInventoryStock,
 }

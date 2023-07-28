@@ -1,4 +1,5 @@
 import express from 'express'
+import ivController from '../controllers/inventory-controller'
 import prController from '../controllers/product-controller'
 import tnController from '../controllers/transaction-controller'
 import userController from '../controllers/user-controller'
@@ -14,6 +15,8 @@ publicRouter.get('/api/product/:name', prController.readProductDetails)
 publicRouter.get('/api/transaction', tnController.readAllTransactions)
 publicRouter.get('/api/transaction/search', tnController.searchTransaction)
 publicRouter.get('/api/transaction/:id', tnController.findTransactionById)
+
+publicRouter.get('/api/inventory', ivController.readAllInventories)
 
 export {
     publicRouter
