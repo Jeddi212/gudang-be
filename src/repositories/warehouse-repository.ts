@@ -11,16 +11,16 @@ const readWarehouses = async (location: any) => {
     })
 }
 
-const updateWarehouse = async (wh: Warehouse) => {
+const updateWarehouse = async (original: string, wh: Warehouse) => {
     return prisma.warehouse.update({
-        where: { id: wh.id },
+        where: { location: original },
         data: { location: wh.location }
     })
 }
 
-const deleteWarehouseById = async (id: number) => {
+const deleteWarehouseById = async (location: string) => {
     return prisma.warehouse.delete({
-        where: { id: id }
+        where: { location: location }
     })
 }
 

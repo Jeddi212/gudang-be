@@ -8,8 +8,8 @@ privateRouter.use(authMiddleware)
 
 privateRouter.post('/api/warehouse', whController.createWarehouse)
 privateRouter.get('/api/warehouse', whController.readWarehouses)
-privateRouter.put('/api/warehouse/:id', whController.updateWarehouse)
-privateRouter.delete('/api/warehouse/:id', whController.deleteWarehouse)
+privateRouter.put('/api/warehouse/:location', whController.updateWarehouse)
+privateRouter.delete('/api/warehouse/:location', whController.deleteWarehouse)
 
 privateRouter.post('/api/product', prController.createProduct)
 privateRouter.put('/api/product/:name', prController.updateProduct)

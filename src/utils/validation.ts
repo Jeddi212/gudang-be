@@ -34,8 +34,8 @@ const validateWarehouse = async (req: Request) => {
 
 const validateUpdateWarehouse = async (req: Request) => {
     await Promise.all([
+        param('location').notEmpty().trim().run(req),
         body('location').notEmpty().trim().escape().run(req),
-        param('id').notEmpty().trim().isInt().run(req),
     ]);
 
     const errors = validationResult(req);
@@ -46,7 +46,7 @@ const validateUpdateWarehouse = async (req: Request) => {
 
 const validateDeleteWarehouse = async (req: Request) => {
     await Promise.all([
-        param('id').notEmpty().trim().isInt().run(req),
+        param('location').notEmpty().trim().isInt().run(req),
     ]);
 
     const errors = validationResult(req);

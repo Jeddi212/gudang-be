@@ -1,24 +1,25 @@
-import { ResponseError } from '../dto/response-error'
 import { WarehouseDTO } from '../dto/warehouse-dto';
 import { Warehouse } from '../models/warehouse';
 import whRepository from '../repositories/warehouse-repository';
 
 const createWarehouse = async (dto: WarehouseDTO) => {
-    const wh = await whRepository.createNewWarehouse(dto.mapToModel())
-    return new Warehouse(wh.location, wh.id)
+    const wh: Warehouse = await whRepository.createNewWarehouse(dto.mapToModel())
+    return new Warehouse(wh.location)
 }
 
-const readWarehouses = async (location: any) => {
+const readWarehouses = async (location: string) => {
     const wh = await whRepository.readWarehouses(location)
-    return wh.map(w => new Warehouse(w.location, w.id))
+    return wh.map(w => new Warehouse(w.location))
 }
 
-const updateWarehouse = async (wh: Warehouse) => {
-    return await whRepository.updateWarehouse(wh)
+const updateWarehouse = async (original: string, dto: WarehouseDTO) => {
+    const wh = await whRepository.updateWarehouse(original, dto.mapToModel())
+    return new Warehouse(wh.location)
 }
 
-const deleteWarehouse = async (id: number) => {
-    return await whRepository.deleteWarehouseById(id)
+const deleteWarehouse = async (location: string) => {
+    const wh = await whRepository.deleteWarehouseById(location)
+    return new Warehouse(wh.location)
 }
 
 export default {
