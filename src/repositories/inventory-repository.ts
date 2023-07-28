@@ -1,7 +1,8 @@
+import { PrismaClient } from "@prisma/client";
 import { HistoryDTO } from "../dto/history-dto";
 import { ResponseError } from "../dto/response-error";
 
-const updateInventoryStock = async (tx: any, products: HistoryDTO[]) => {
+const updateInventoryStock = async (tx: PrismaClient, products: HistoryDTO[]) => {
     const upsertedRecords = []
 
     try {
@@ -17,7 +18,7 @@ const updateInventoryStock = async (tx: any, products: HistoryDTO[]) => {
                 throw new ResponseError(400, 'Quantity cannot make stock negative.', {
                     "product": p.product,
                     "warehouse": p.warehouse,
-                    "stock": currentStock.quantity,
+                    "stock": currentStock?.quantity,
                     "quantity": p.quantity,
                     "newStock": newQuantity,
                 })

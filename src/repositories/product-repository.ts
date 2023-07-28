@@ -3,6 +3,7 @@ import { Product } from '../models/product'
 import { ResponseError } from '../dto/response-error'
 import { BomMany } from '../models/bom'
 import { HistoryDTO } from '../dto/history-dto'
+import { PrismaClient } from '@prisma/client'
 
 const findProductByName = async (name: string) => {
     return await prisma.product.findFirst({ where: { name: name } })
@@ -103,7 +104,7 @@ const deleteProductByName = async (name: string) => {
     })
 }
 
-const updateManyProductStock = async (tx: any, products: HistoryDTO[]) => {
+const updateManyProductStock = async (tx: PrismaClient, products: HistoryDTO[]) => {
     try {
         for (const p of products) {
             await tx.product.update({

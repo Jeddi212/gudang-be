@@ -1,7 +1,8 @@
 import { TransactionDTO } from '../dto/transaction-dto'
 import { ResponseError } from '../dto/response-error'
+import { PrismaClient } from '@prisma/client';
 
-const createTransaction = async (tx: any, transaction: TransactionDTO) => {
+const createTransaction = async (tx: PrismaClient, transaction: TransactionDTO) => {
     try {
         return await tx.transaction.create({
             data: {
