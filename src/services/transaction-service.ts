@@ -1,5 +1,5 @@
 import { prisma } from '../utils/database';
-import { TransactionDTO } from '../dto/transaction-dto';
+import { TransactionDTO, UpdateTransactionDTO } from '../dto/transaction-dto';
 import transactionRepository from '../repositories/transaction-repository';
 import inventoryRepository from '../repositories/inventory-repository';
 import productRepository from '../repositories/product-repository';
@@ -32,8 +32,13 @@ const findTransactionById = async (id: number) => {
     return await transactionRepository.findTransactionById(id)
 }
 
+const updateTransaction = async (id: number, dto: UpdateTransactionDTO) => {
+    return await transactionRepository.updateTransaction(id, dto)
+}
+
 export default {
     createTransaction,
     findTransactions,
     findTransactionById,
+    updateTransaction,
 }

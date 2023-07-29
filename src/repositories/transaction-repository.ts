@@ -1,4 +1,4 @@
-import { TransactionDTO } from '../dto/transaction-dto'
+import { TransactionDTO, UpdateTransactionDTO } from '../dto/transaction-dto'
 import { ResponseError } from '../dto/response-error'
 import { PrismaClient } from '@prisma/client';
 import { prisma } from '../utils/database';
@@ -28,7 +28,7 @@ const createTransaction = async (tx: PrismaClient, transaction: TransactionDTO) 
 }
 
 const findTransactions = async (whereCondition: any) => {
-    return await prisma.transaction.findMany({ where: whereCondition })
+    return await prisma.transaction.findMany({ where: whereCondition, orderBy: { createdAt: 'desc' } })
 }
 
 const findTransactionById = async (id: number) => {
@@ -38,8 +38,17 @@ const findTransactionById = async (id: number) => {
     })
 }
 
+const updateTransaction = async (id: number, transaction: UpdateTransactionDTO) => {
+    return await prisma.transaction.update({
+        where: { id: id },
+        data: transaction,
+        include: { History: true },
+    })
+}
+
 export default {
     createTransaction,
     findTransactions,
     findTransactionById,
+    updateTransaction,
 }

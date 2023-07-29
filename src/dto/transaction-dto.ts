@@ -17,6 +17,19 @@ class TransactionDTO {
     }
 }
 
+class UpdateTransactionDTO {
+    event: Event
+    username: string
+
+    constructor(
+        event: Event,
+        username: string) {
+        this.event = event
+        this.username = username
+    }
+}
+
 export {
-    TransactionDTO
+    TransactionDTO,
+    UpdateTransactionDTO,
 }

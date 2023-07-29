@@ -2,14 +2,14 @@ import { Event } from '@prisma/client'
 import { Request, Response, NextFunction } from 'express'
 import { Payload } from '../dto/payload'
 import { HistoryDTO } from '../dto/history-dto'
-import { TransactionDTO } from '../dto/transaction-dto'
+import { TransactionDTO, UpdateTransactionDTO } from '../dto/transaction-dto'
 import validation from '../utils/validation'
 import historyService from '../services/transaction-service'
 import transactionService from '../services/transaction-service'
 
 const createTransaction = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        validation.validateCreateHistory(req)
+        validation.validateCreateTransaction(req)
 
         const inventory = req.body.inventory ?? []
         const dto: TransactionDTO = new TransactionDTO(
@@ -44,10 +44,26 @@ const findTransactions = async (req: Request, res: Response, next: NextFunction)
 const findTransactionById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         await validation.validateTransactionId(req)
-        const username = parseInt(req.params.id)
+        const id = parseInt(req.params.id)
 
-        const transactions = await historyService.findTransactionById(username)
-        const payload: Payload = new Payload(`Transactions successfully fetched`, transactions)
+        const transactions = await historyService.findTransactionById(id)
+        const payload: Payload = new Payload(`Transactions ${id} successfully fetched`, transactions)
+
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
+const updateTransaction = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateTransactionId(req)
+        await validation.validateUpdateTransaction(req)
+        const id = parseInt(req.params.id)
+        const dto: UpdateTransactionDTO = new UpdateTransactionDTO(req.body.event, req.body.username)
+
+        const transactions = await historyService.updateTransaction(id, dto)
+        const payload: Payload = new Payload(`Transactions ${id} successfully updated`, transactions)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -58,5 +74,6 @@ const findTransactionById = async (req: Request, res: Response, next: NextFuncti
 export default {
     createTransaction,
     findTransactions,
-    findTransactionById
+    findTransactionById,
+    updateTransaction,
 }

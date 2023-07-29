@@ -1,11 +1,11 @@
 import { ResponseError } from '../dto/response-error'
 import { Request } from 'express'
-import { Role } from '@prisma/client';
-import { body, query, param, validationResult } from 'express-validator';
+import { Role } from '@prisma/client'
+import { body, query, param, validationResult } from 'express-validator'
 
 const validateAdminRole = (role: Role = Role.STAFF) => {
     if (!(role === Role.ADMIN)) {
-        throw new ResponseError(403, "forbidden access");
+        throw new ResponseError(403, "forbidden access")
     }
 }
 
@@ -13,9 +13,9 @@ const validateAuth = async (req: Request) => {
     await Promise.all([
         body('name').notEmpty().trim().escape().run(req),
         body('password').notEmpty().run(req),
-    ]);
+    ])
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array())
     }
@@ -24,9 +24,9 @@ const validateAuth = async (req: Request) => {
 const validateWarehouse = async (req: Request) => {
     await Promise.all([
         body('location').notEmpty().trim().escape().run(req),
-    ]);
+    ])
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array())
     }
@@ -36,9 +36,9 @@ const validateUpdateWarehouse = async (req: Request) => {
     await Promise.all([
         param('location').notEmpty().trim().run(req),
         body('location').notEmpty().trim().escape().run(req),
-    ]);
+    ])
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array())
     }
@@ -47,9 +47,9 @@ const validateUpdateWarehouse = async (req: Request) => {
 const validateDeleteWarehouse = async (req: Request) => {
     await Promise.all([
         param('location').notEmpty().trim().run(req),
-    ]);
+    ])
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array())
     }
@@ -61,7 +61,7 @@ const validateProduct = async (req: Request) => {
         body('materials.*.name').notEmpty().trim()
             .withMessage('material name can\'t be empty')
             .escape().run(req),
-    ]);
+    ])
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -72,36 +72,48 @@ const validateProduct = async (req: Request) => {
 const validateProductNameQuery = async (req: Request) => {
     await Promise.all([
         query('name').trim().escape().run(req),
-    ]);
+    ])
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        throw new ResponseError(422, "validation error", errors.array());
+        throw new ResponseError(422, "validation error", errors.array())
     }
 }
 
 const validateProductNameParam = async (req: Request) => {
     await Promise.all([
         param('name').notEmpty().trim().escape().run(req),
-    ]);
+    ])
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        throw new ResponseError(422, "validation error", errors.array());
+        throw new ResponseError(422, "validation error", errors.array())
     }
 }
 
-const validateCreateHistory = async (req: Request) => {
+const validateCreateTransaction = async (req: Request) => {
     await Promise.all([
         body('event').notEmpty().trim().escape().run(req),
         body('inventory.*.quantity').notEmpty().isInt().run(req),
         body('inventory.*.product').notEmpty().trim().escape().run(req),
         body('inventory.*.warehouse').notEmpty().trim().escape().run(req),
-    ]);
+    ])
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        throw new ResponseError(422, "validation error", errors.array());
+        throw new ResponseError(422, "validation error", errors.array())
+    }
+}
+
+const validateUpdateTransaction = async (req: Request) => {
+    await Promise.all([
+        body('event').notEmpty().trim().escape().run(req),
+        body('username').notEmpty().trim().escape().run(req),
+    ])
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        throw new ResponseError(422, "validation error", errors.array())
     }
 }
 
@@ -110,7 +122,7 @@ const validateTransactionId = async (req: Request) => {
         param('id').notEmpty().isInt().run(req),
     ]);
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
         throw new ResponseError(422, "validation error", errors.array())
     }
@@ -125,6 +137,7 @@ export default {
     validateProduct,
     validateProductNameQuery,
     validateProductNameParam,
-    validateCreateHistory,
+    validateCreateTransaction,
+    validateUpdateTransaction,
     validateTransactionId,
 }
