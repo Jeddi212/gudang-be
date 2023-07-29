@@ -15,16 +15,17 @@ const createTransaction = async (dto: TransactionDTO) => {
     })
 }
 
-const readAllTransactions = async () => {
-    return await transactionRepository.findAllTransactions()
-}
+const findTransactions = async (event: Event, username: string) => {
+    let whereCondition: any = {};
 
-const findTransactionsByEvent = async (event: Event) => {
-    return await transactionRepository.findTransactionsByEvent(event)
-}
+    if (event && username) {
+        whereCondition = { event: event, username: username }
+    } else {
+        if (event) { whereCondition = { event: event } }
+        if (username) { whereCondition = { username: username } }
+    }
 
-const findTransactionsByUser = async (username: string) => {
-    return await transactionRepository.findTransactionsByUser(username)
+    return await transactionRepository.findTransactions(whereCondition)
 }
 
 const findTransactionById = async (id: number) => {
@@ -33,8 +34,6 @@ const findTransactionById = async (id: number) => {
 
 export default {
     createTransaction,
-    readAllTransactions,
-    findTransactionsByEvent,
-    findTransactionsByUser,
+    findTransactions,
     findTransactionById,
 }

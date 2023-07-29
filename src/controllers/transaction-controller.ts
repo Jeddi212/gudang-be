@@ -6,11 +6,7 @@ import historyService from '../services/transaction-service'
 import validation from '../utils/validation'
 import { Event } from '@prisma/client'
 import { ResponseError } from '../dto/response-error'
-
-enum SearchType {
-    EVENT = 'event',
-    USER = 'user',
-}
+import transactionService from '../services/transaction-service'
 
 const createTransaction = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -31,37 +27,12 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
     }
 }
 
-const readAllTransactions = async (req: Request, res: Response, next: NextFunction) => {
+const findTransactions = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const transactions = await historyService.readAllTransactions()
-        const payload: Payload = new Payload(`Transactions successfully fetched`, transactions)
+        const event = req.query.event as Event || '';
+        const username = req.query.username as string || '';
 
-        res.status(200).json(payload)
-    } catch (e) {
-        next(e)
-    }
-}
-
-const searchTransaction = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const search = req.query.search as SearchType;
-        let searchValue = ''
-
-        switch (search) {
-            case SearchType.EVENT:
-                searchValue = req.query.event as Event || ''
-                break
-            case SearchType.USER:
-                searchValue = req.query.username as string || ''
-                break
-            default:
-                throw new ResponseError(404, 'Invalid search type', search)
-        }
-
-        const transactions =
-            search === SearchType.EVENT
-                ? await historyService.findTransactionsByEvent(searchValue as Event)
-                : await historyService.findTransactionsByUser(searchValue)
+        let transactions = await transactionService.findTransactions(event, username)
 
         const payload: Payload = new Payload(`Transactions successfully fetched`, transactions)
 
@@ -87,7 +58,6 @@ const findTransactionById = async (req: Request, res: Response, next: NextFuncti
 
 export default {
     createTransaction,
-    readAllTransactions,
-    searchTransaction,
+    findTransactions,
     findTransactionById
 }

@@ -27,19 +27,9 @@ const createTransaction = async (tx: PrismaClient, transaction: TransactionDTO) 
     }
 }
 
-const findAllTransactions = async () => {
-    return await prisma.transaction.findMany()
-}
-
-const findTransactionsByEvent = async (event: Event) => {
+const findTransactions = async (whereCondition: any) => {
     return await prisma.transaction.findMany({
-        where: { event: event }
-    })
-}
-
-const findTransactionsByUser = async (username: string) => {
-    return await prisma.transaction.findMany({
-        where: { username: username }
+        where: whereCondition
     })
 }
 
@@ -52,8 +42,6 @@ const findTransactionById = async (id: number) => {
 
 export default {
     createTransaction,
-    findAllTransactions,
-    findTransactionsByEvent,
-    findTransactionsByUser,
+    findTransactions,
     findTransactionById,
 }
