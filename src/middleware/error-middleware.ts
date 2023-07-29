@@ -23,7 +23,7 @@ function errorMiddleware(err: Error, _req: Request, res: Response, _next: NextFu
         data = err.name
     }
 
-    res.status(status).json({ message: message, error: data }).end()
+    res.status(status).json({ message: message, data: data }).end()
 }
 
 export {
