@@ -16,7 +16,7 @@ const createTransaction = async (dto: TransactionDTO) => {
 }
 
 const findTransactions = async (event: Event, username: string) => {
-    let whereCondition: any = {};
+    let whereCondition: any = {}
 
     if (event && username) {
         whereCondition = { event: event, username: username }

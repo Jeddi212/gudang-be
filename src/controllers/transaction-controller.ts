@@ -1,18 +1,17 @@
-import { Payload } from '../dto/payload'
-import { Request, Response, NextFunction } from 'express'
-import { TransactionDTO } from '../dto/transaction-dto'
-import { HistoryDTO } from '../dto/history-dto'
-import historyService from '../services/transaction-service'
-import validation from '../utils/validation'
 import { Event } from '@prisma/client'
-import { ResponseError } from '../dto/response-error'
+import { Request, Response, NextFunction } from 'express'
+import { Payload } from '../dto/payload'
+import { HistoryDTO } from '../dto/history-dto'
+import { TransactionDTO } from '../dto/transaction-dto'
+import validation from '../utils/validation'
+import historyService from '../services/transaction-service'
 import transactionService from '../services/transaction-service'
 
 const createTransaction = async (req: Request, res: Response, next: NextFunction) => {
     try {
         validation.validateCreateHistory(req)
 
-        const inventory = req.body.inventory ?? [];
+        const inventory = req.body.inventory ?? []
         const dto: TransactionDTO = new TransactionDTO(
             req.body.event,
             req.payload?.name as string,
@@ -29,8 +28,8 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
 
 const findTransactions = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const event = req.query.event as Event || '';
-        const username = req.query.username as string || '';
+        const event = req.query.event as Event || ''
+        const username = req.query.username as string || ''
 
         let transactions = await transactionService.findTransactions(event, username)
 
