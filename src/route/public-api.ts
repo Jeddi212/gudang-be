@@ -6,8 +6,8 @@ import userController from '../controllers/user-controller'
 
 const publicRouter = express.Router()
 
-publicRouter.post('/register', userController.register)
-publicRouter.post('/login', userController.login)
+publicRouter.post('/api/register', userController.register)
+publicRouter.post('/api/login', userController.login)
 
 publicRouter.get('/api/product', prController.readAllProducts)
 publicRouter.get('/api/product/:name', prController.readProductDetails)
