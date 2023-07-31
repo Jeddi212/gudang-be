@@ -1,4 +1,5 @@
-<form id="register-form" hx-post="/api/register" hx-target="#register-response" hx-indicator="#spinner">
+<form id="register-form" hx-post="/api/register" hx-target="#register-response" hx-indicator="#spinner"
+    hx-on::after-request="window.location.href = '/login'">
     <label for="nameRegister">Name</label>
     <input type="text" id="nameRegister" name="name" placeholder="First and last name" required><br>
 

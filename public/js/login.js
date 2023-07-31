@@ -14,6 +14,7 @@ function handleLoginResponse(event) {
     if (jwt) {
         const expiresInSeconds = decodeJWT(jwt).exp - Math.floor(Date.now() / 1000);
         setCookie("jwt", jwt, expiresInSeconds);
+        window.location.href = "/";
     } else {
         alert(response.message);
     }
