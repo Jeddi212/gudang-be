@@ -24,8 +24,18 @@ function addAuthorizationHeader(event) {
 }
 
 function getUser() {
-    const jwt = decodeJWT(getCookie('jwt'));
-    return jwt ? jwt.payload : { name: "User" };
+    const jwtCookie = getCookie('jwt');
+    if (jwtCookie) {
+        const jwt = decodeJWT(jwtCookie);
+        return jwt.payload;
+    } else {
+        return { name: "User", level: "GUEST" };
+    }
+}
+
+function setUsername() {
+    const usernameElement = document.getElementById('user-name');
+    usernameElement.innerText = getUser().name;
 }
 
 htmx.on("htmx:beforeRequest", addAuthorizationHeader);
