@@ -1,13 +1,13 @@
 <form id="login-form" hx-post="/login" hx-target="#login-response">
     <label for="nameLogin">Name:</label>
-    <input type="text" id="nameLogin" name="name" required><br>
+    <input type="text" id="nameLogin" name="name" placeholder="First and last name" required><br>
 
     <label for="passwordLogin">Password:</label>
-    <input type="password" id="passwordLogin" name="password" required><br>
+    <input type="password" id="passwordLogin" name="password" placeholder="Enter you password" required><br>
 
     <input type="submit" value="Login">
 </form>
 <div id="login-response"></div>
 <img id="spinner" class="htmx-indicator" src="/img/rings.svg" />
 
-<script src="js/login.js"></script>
+<script src="/js/login.js"></script>
