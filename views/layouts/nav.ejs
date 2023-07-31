@@ -1,0 +1,21 @@
+<nav>
+    <ul>
+        <li><strong>
+                <%= title %>
+            </strong></li>
+    </ul>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Index</a></li>
+        <li>
+            <details role="list">
+                <summary aria-haspopup="listbox">User</summary>
+                <ul role="listbox">
+                    <li><a href="/register">Register</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li hx-on:click="logout()">Logout</li>
+                </ul>
+            </details>
+        </li>
+    </ul>
+</nav>

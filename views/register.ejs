@@ -1,0 +1,12 @@
+<form id="register-form" hx-post="http://localhost:3000/register" hx-target="#register-response"
+    hx-indicator="#spinner">
+    <label for="nameRegister">Name</label>
+    <input type="text" id="nameRegister" name="name" placeholder="First and last name" required><br>
+
+    <label for="passwordRegister">Password</label>
+    <input type="password" id="passwordRegister" name="password" placeholder="Enter you password" required><br>
+
+    <input type="submit" value="Register">
+</form>
+<div id="register-response"></div>
+<img id="spinner" class="htmx-indicator" src="/img/rings.svg" />
