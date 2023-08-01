@@ -23,7 +23,15 @@ function errorMiddleware(err: Error, _req: Request, res: Response, _next: NextFu
         data = err.name
     }
 
-    res.status(status).json({ message: message, data: data }).end()
+    res.status(status).render('error', {
+        data,
+        message,
+        status,
+        title: 'Gudang | Error',
+        layout: './layouts/plain-layout.ejs'
+    })
+    res.end()
+    // res.status(status).json({ message: message, data: data }).end()
 }
 
 export {
