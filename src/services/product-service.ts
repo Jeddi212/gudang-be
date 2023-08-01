@@ -1,6 +1,8 @@
+import { prisma } from '../utils/database';
 import { CreateProductDTO } from '../dto/product-dto';
 import { ResponseError } from '../dto/response-error';
 import { BomMany } from '../models/bom';
+import { PrismaClient } from '@prisma/client';
 import productRepository from '../repositories/product-repository';
 
 const createProduct = async (dto: CreateProductDTO) => {
@@ -45,13 +47,21 @@ const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
         throw new ResponseError(409, `Product ${originalName} is already exist`)
     }
 
+    // return await prisma.$transaction(async (tx) => {
+    //     const inventories = await inventoryRepository.updateInventoryStock(tx as PrismaClient, dto.history)
+    //     await productRepository.updateManyProductStock(tx as PrismaClient, dto.history)
+    //     const transaction = await transactionRepository.createTransaction(tx as PrismaClient, dto)
+
+    //     return { transaction, inventories }
+    // })
+
     let updatedProduct = await productRepository.updateProductByName(originalName, dto.mapToProduct())
 
     if (dto.needs) {
-        if ((await productRepository.disconnectMaterial(dto.name)).count < 1 &&
-            (await productRepository.findMaterials(originalName)).length > 0) {
-            throw new ResponseError(500, 'Failed disconnect material');
-        }
+        // if ((await productRepository.disconnectMaterial(dto.name)).count < 1 &&
+        //     (await productRepository.findMaterials(originalName)).length > 0) {
+        //     throw new ResponseError(500, 'Failed disconnect material');
+        // }
 
         await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
         await productRepository.connectMaterials(

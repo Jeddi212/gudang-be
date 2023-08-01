@@ -70,7 +70,8 @@ const updateProductByName = async (originalName: string, product: Product) => {
         where: { name: originalName },
         data: {
             name: product.name,
-            description: product.description
+            description: product.description,
+            Needs: { deleteMany: {} }
             // stock: product.stock,
         }
     })
