@@ -8,13 +8,16 @@ datasource db {
 }
 
 enum Role {
+  GUEST
   STAFF
   ADMIN
 }
 
 enum Event {
-  PRODUCTION
   INPUT
+  OUTPUT
+  PRODUCTION
+  TRANSFER
 }
 
 model User {
@@ -31,12 +34,13 @@ model Warehouse {
 }
 
 model Product {
-  name      String      @id
-  stock     Int
-  Needs     BOM[]       @relation("product")
-  UsedBy    BOM[]       @relation("materials")
-  Inventory Inventory[]
-  History   History[]
+  name        String      @id
+  stock       Int
+  description String      @default("Description not available")
+  Needs       BOM[]       @relation("product")
+  UsedBy      BOM[]       @relation("materials")
+  Inventory   Inventory[]
+  History     History[]
 }
 
 model BOM {
