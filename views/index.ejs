@@ -1,3 +1,5 @@
 <button id="getHistoryBtn" hx-trigger="click" hx-get="http://localhost:3000/api/warehouse/"
-    hx-target="#historyContainer" hx-swap="innerHTML"> Get History</button>
+    hx-target="#historyContainer" hx-swap="innerHTML" hx-indicator="#spinner">
+    <img id="spinner" class="htmx-indicator" src="/img/rings.svg"></img> Get History
+</button>
 <div id="historyContainer"></div>
