@@ -10,17 +10,19 @@ const createProduct = async (dto: CreateProductDTO) => {
         throw new ResponseError(409, `Product ${dto.name} is already exist`, dto)
     }
 
-    const product = await productRepository.createProduct(dto.mapToProduct())
+    return await prisma.$transaction(async (tx) => {
+        const product = await productRepository.createProduct(dto.mapToProduct(), tx as PrismaClient)
 
-    let needs: any
-    if (dto.needs) {
-        needs = await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
-        await productRepository.connectMaterials(
-            dto.needs.map(m => new BomMany(product.name, m.name, m.quantity)))
-    }
+        if (dto.needs) {
+            await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()), tx as PrismaClient)
+            await productRepository.connectMaterials(
+                dto.needs.map(m => new BomMany(product.name, m.name, m.quantity)), tx as PrismaClient);
 
-    (product as any).needs = needs
-    return product
+            (product as any).needs = dto.needs
+        }
+
+        return product
+    })
 }
 
 const readAllProducts = async (name: string) => {

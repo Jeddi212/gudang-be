@@ -9,10 +9,17 @@ const findProductByName = async (name: string) => {
     return await prisma.product.findFirst({ where: { name: name } })
 }
 
-const createProduct = async (product: Product) => {
-    return await prisma.product.create({
-        data: product
-    })
+const createProduct = async (product: Product, tx?: PrismaClient) => {
+    const client = tx ? tx : prisma
+
+    try {
+        return await client.product.create({
+            data: product
+        })
+    } catch (error) {
+        await client.$queryRaw`ROLLBACK;`
+        throw new ResponseError(500, 'Error during upsert materials', error)
+    }
 }
 
 const upsertManyProductByName = async (products: Product[], tx?: PrismaClient) => {
