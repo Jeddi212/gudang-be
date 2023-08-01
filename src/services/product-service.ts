@@ -47,29 +47,22 @@ const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
         throw new ResponseError(409, `Product ${originalName} is already exist`)
     }
 
-    // return await prisma.$transaction(async (tx) => {
-    //     const inventories = await inventoryRepository.updateInventoryStock(tx as PrismaClient, dto.history)
-    //     await productRepository.updateManyProductStock(tx as PrismaClient, dto.history)
-    //     const transaction = await transactionRepository.createTransaction(tx as PrismaClient, dto)
+    return await prisma.$transaction(async (tx) => {
+        let updatedProduct = await productRepository
+            .updateProductByName(originalName, dto.mapToProduct(), tx as PrismaClient)
 
-    //     return { transaction, inventories }
-    // })
+        if (dto.needs) {
+            await productRepository.upsertManyProductByName(
+                dto.needs.map((p) => p.mapToProduct()), tx as PrismaClient)
 
-    let updatedProduct = await productRepository.updateProductByName(originalName, dto.mapToProduct())
+            await productRepository.connectMaterials(
+                dto.needs.map(m => new BomMany(dto.name, m.name, m.quantity)), tx as PrismaClient);
 
-    if (dto.needs) {
-        // if ((await productRepository.disconnectMaterial(dto.name)).count < 1 &&
-        //     (await productRepository.findMaterials(originalName)).length > 0) {
-        //     throw new ResponseError(500, 'Failed disconnect material');
-        // }
+            (updatedProduct as any).needs = dto.needs
+        }
 
-        await productRepository.upsertManyProductByName(dto.needs.map((p) => p.mapToProduct()))
-        await productRepository.connectMaterials(
-            dto.needs.map(m => new BomMany(dto.name, m.name, m.quantity)))
-    }
-
-    (updatedProduct as any).needs = dto.needs
-    return updatedProduct
+        return updatedProduct
+    })
 }
 
 const deleteProduct = async (name: string) => {

@@ -1,4 +1,4 @@
-import { prisma } from '../utils/database'
+import { prisma } from '../utils/database';
 import { Product } from '../models/product'
 import { ResponseError } from '../dto/response-error'
 import { BomMany } from '../models/bom'
@@ -15,27 +15,34 @@ const createProduct = async (product: Product) => {
     })
 }
 
-const upsertManyProductByName = async (products: Product[]) => {
+const upsertManyProductByName = async (products: Product[], tx?: PrismaClient) => {
+    const client = tx ? tx : prisma
+
     try {
-        return await prisma.$transaction(
-            products.map((p) => {
-                return prisma.product.upsert({
-                    where: { name: p.name },
-                    update: {},
-                    create: { name: p.name, stock: p.stock || 0 }
-                })
+        for (const p of products) {
+            await client.product.upsert({
+                where: { name: p.name },
+                update: {},
+                create: { name: p.name, stock: p.stock || 0 }
             })
-        )
+        }
     } catch (error) {
-        await prisma.$queryRaw`ROLLBACK;`
-        throw new ResponseError(500, 'Error during transaction upsert many product by name')
+        await client.$queryRaw`ROLLBACK;`
+        throw new ResponseError(500, 'Error during upsert materials', error)
     }
 }
 
-const connectMaterials = async (boms: BomMany[]) => {
-    return await prisma.bOM.createMany({
-        data: boms
-    })
+const connectMaterials = async (boms: BomMany[], tx?: PrismaClient) => {
+    const client = tx ? tx : prisma
+
+    try {
+        return await client.bOM.createMany({
+            data: boms
+        })
+    } catch (error) {
+        await client.$queryRaw`ROLLBACK;`
+        throw new ResponseError(500, 'Error during connect materials', error)
+    }
 }
 
 const readAllProducts = async (name: string) => {
@@ -65,16 +72,23 @@ const readProductDetails = async (name: string) => {
     })
 }
 
-const updateProductByName = async (originalName: string, product: Product) => {
-    return await prisma.product.update({
-        where: { name: originalName },
-        data: {
-            name: product.name,
-            description: product.description,
-            Needs: { deleteMany: {} }
-            // stock: product.stock,
-        }
-    })
+const updateProductByName = async (originalName: string, product: Product, tx?: PrismaClient) => {
+    const client = tx ? tx : prisma
+
+    try {
+        return await client.product.update({
+            where: { name: originalName },
+            data: {
+                name: product.name,
+                description: product.description,
+                Needs: { deleteMany: {} }
+                // stock: product.stock,
+            }
+        })
+    } catch (error) {
+        await client.$queryRaw`ROLLBACK;`
+        throw new ResponseError(500, 'Error during update product by name', error)
+    }
 }
 
 const disconnectMaterial = async (productName: string) => {
@@ -119,7 +133,7 @@ const updateManyProductStock = async (tx: PrismaClient, products: HistoryDTO[]) 
         }
     } catch (error) {
         await tx.$queryRaw`ROLLBACK;`
-        throw new ResponseError(500, 'Error during transaction update product stock', error);
+        throw new ResponseError(500, 'Error during update product stock', error)
     }
 }
 
