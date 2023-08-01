@@ -1,0 +1,24 @@
+<div>
+    <form>
+        <div class="grid">
+            <input id="event" name="event" type="text" placeholder="Event">
+            <input id="username" name="username" type="text" placeholder="Username">
+
+            <button hx-trigger="click" hx-target="#transactions" hx-indicator="#spinner" hx-get="/transaction-data"
+                hx-include="[name='event'], [name='username']">
+                <img id="spinner" class="htmx-indicator" src="/img/rings.svg"></img>Search</button>
+
+        </div>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Actor</th>
+            </tr>
+        </thead>
+        <tbody id="transactions"></tbody>
+    </table>
+</div>

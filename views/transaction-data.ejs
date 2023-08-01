@@ -1,0 +1,16 @@
+<% transactions.forEach(t=> { %>
+    <tr>
+        <td>
+            <%= t.id %>
+        </td>
+        <td>
+            <%= t.createdAt.toLocaleString(undefined, { hour12: false }) %>
+        </td>
+        <td>
+            <%= t.event %>
+        </td>
+        <td>
+            <%= t.username %>
+        </td>
+    </tr>
+    <% }) %>
