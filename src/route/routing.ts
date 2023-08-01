@@ -7,6 +7,8 @@ viewRouter.get('/', viewController.index)
 viewRouter.get('/login', viewController.login)
 viewRouter.get('/register', viewController.register)
 
+viewRouter.get('/product', viewController.product)
+
 export {
     viewRouter
 }
