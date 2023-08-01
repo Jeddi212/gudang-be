@@ -12,6 +12,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
         const materials = req.body.materials ?? [];
         const dto: CreateProductDTO = new CreateProductDTO(
             req.body.name,
+            req.body.description,
             materials.map((m: Material) => new Material(m.name, m.quantity)))
 
         const product = await productService.createProduct(dto)
@@ -64,6 +65,7 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
         const materials = req.body.materials ?? [];
         const dto: CreateProductDTO = new CreateProductDTO(
             req.body.name,
+            req.body.description,
             materials.map((m: Material) => new Material(m.name, m.quantity)))
 
         const product = await productService.updateProduct(name, dto)

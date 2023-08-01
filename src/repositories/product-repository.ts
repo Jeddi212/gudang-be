@@ -11,10 +11,7 @@ const findProductByName = async (name: string) => {
 
 const createProduct = async (product: Product) => {
     return await prisma.product.create({
-        data: {
-            name: product.name,
-            stock: product.stock,
-        }
+        data: product
     })
 }
 
@@ -54,12 +51,15 @@ const readProductDetails = async (name: string) => {
             Needs: {
                 select: { materialName: true, quantity: true }
             },
-            Inventory: {
-                orderBy: { updatedAt: 'desc' },
-                take: 25
-            },
             UsedBy: {
                 select: { productName: true }
+            },
+            Inventory: {
+                orderBy: { updatedAt: 'desc' },
+            },
+            History: {
+                orderBy: { updatedAt: 'desc' },
+                take: 25
             },
         }
     })
@@ -70,6 +70,7 @@ const updateProductByName = async (originalName: string, product: Product) => {
         where: { name: originalName },
         data: {
             name: product.name,
+            description: product.description
             // stock: product.stock,
         }
     })
@@ -94,11 +95,14 @@ const deleteProductByName = async (name: string) => {
             Needs: {
                 select: { materialName: true, quantity: true }
             },
+            UsedBy: {
+                select: { productName: true }
+            },
             Inventory: {
                 orderBy: { updatedAt: 'desc' },
             },
-            UsedBy: {
-                select: { productName: true }
+            History: {
+                orderBy: { updatedAt: 'desc' },
             },
         }
     })
