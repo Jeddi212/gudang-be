@@ -47,6 +47,24 @@ const product = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+const productDetail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateProductNameParam(req)
+
+        const name: string = req.params.name
+
+        const product = await productService.readProductDetails(name)
+
+        res.status(200).render('./guest/productDetail', {
+            product,
+            title: product.name,
+            layout: './layouts/main-layout.ejs'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 const transaction = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         res.render('transaction', {
@@ -93,8 +111,12 @@ export default {
     index,
     login,
     register,
+
     product,
+    productDetail,
+
     transaction,
     transactionData,
+
     inventory,
 }

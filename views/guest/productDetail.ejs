@@ -1,0 +1,126 @@
+<div>
+    <article>
+        <div class="grid">
+            <hgroup>
+                <h1>
+                    <%= product.name %>
+                </h1>
+                <h2>Overall stock: <code><%= product.stock %></code></h2>
+            </hgroup>
+            <p>
+                <%= product.description %>
+            </p>
+        </div>
+        <hr>
+        <div class="grid">
+            <article id="needs" style="margin: 0;">
+                <h3>Needs</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products">
+                        <% product.Needs.forEach(m=> { %>
+                            <tr>
+                                <td onclick="window.location='/product/' + '<%= m.materialName %>';">
+                                    <%= m.materialName %>
+                                </td>
+                                <td>
+                                    <%= m.quantity %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </article>
+            <article id="usedBy" style="margin: 0;">
+                <h3>Used By</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products">
+                        <% product.UsedBy.forEach(u=> { %>
+                            <tr>
+                                <td onclick="window.location='/product/' + '<%= u.productName %>';">
+                                    <%= u.productName %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </article>
+        </div>
+        <article id="inventory" style="margin: 0;">
+            <h3>Inventory</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Update</th>
+                        <th>Product</th>
+                        <th>Warehouse</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+                <tbody id="inventories">
+                    <% product.Inventory.forEach(i=> { %>
+                        <tr>
+                            <td>
+                                <%= i.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                            </td>
+                            <td>
+                                <%= i.productId %>
+                            </td>
+                            <td>
+                                <%= i.warehouseId %>
+                            </td>
+                            <td>
+                                <%= i.quantity %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </article>
+        <article id="history" style="margin: 0;">
+            <h3>History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Product</th>
+                        <th>Warehouse</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="inventories">
+                    <% product.History.forEach(h=> { %>
+                        <tr>
+                            <td>
+                                <%= h.transactionId %>
+                            </td>
+                            <td>
+                                <%= h.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                            </td>
+                            <td>
+                                <%= h.productId %>
+                            </td>
+                            <td>
+                                <%= h.warehouseId %>
+                            </td>
+                            <td>
+                                <%= h.quantity %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </article>
+    </article>
+</div>
