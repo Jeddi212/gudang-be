@@ -18,7 +18,7 @@
         </thead>
         <tbody id="inventories">
             <% inventories.forEach(i=> { %>
-                <tr>
+                <tr onclick="window.location='/product/' + '<%= i.productId %>';" class="link">
                     <td>
                         <%= i.updatedAt.toLocaleString(undefined, { hour12: false }) %>
                     </td>
