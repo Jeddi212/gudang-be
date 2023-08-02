@@ -13,7 +13,7 @@
         </div>
         <hr>
         <div class="grid">
-            <article id="needs" style="margin: 0;">
+            <article id="needs" class="reset">
                 <h3>Needs</h3>
                 <table>
                     <thead>
@@ -25,7 +25,7 @@
                     <tbody id="products">
                         <% product.Needs.forEach(m=> { %>
                             <tr>
-                                <td onclick="window.location='/product/' + '<%= m.materialName %>';">
+                                <td onclick="window.location='/product/' + '<%= m.materialName %>';" class="link">
                                     <%= m.materialName %>
                                 </td>
                                 <td>
@@ -36,7 +36,7 @@
                     </tbody>
                 </table>
             </article>
-            <article id="usedBy" style="margin: 0;">
+            <article id="usedBy" class="reset">
                 <h3>Used By</h3>
                 <table>
                     <thead>
@@ -47,7 +47,7 @@
                     <tbody id="products">
                         <% product.UsedBy.forEach(u=> { %>
                             <tr>
-                                <td onclick="window.location='/product/' + '<%= u.productName %>';">
+                                <td onclick="window.location='/product/' + '<%= u.productName %>';" class="link">
                                     <%= u.productName %>
                                 </td>
                             </tr>
@@ -56,7 +56,7 @@
                 </table>
             </article>
         </div>
-        <article id="inventory" style="margin: 0;">
+        <article id="inventory" class="reset">
             <h3>Inventory</h3>
             <table>
                 <thead>
@@ -87,7 +87,7 @@
                 </tbody>
             </table>
         </article>
-        <article id="history" style="margin: 0;">
+        <article id="history" class="reset">
             <h3>History</h3>
             <table>
                 <thead>
