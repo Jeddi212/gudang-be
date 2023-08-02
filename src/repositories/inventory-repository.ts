@@ -4,7 +4,9 @@ import { ResponseError } from "../dto/response-error";
 import { prisma } from "../utils/database";
 
 const readAllInventories = async () => {
-    return await prisma.inventory.findMany()
+    return await prisma.inventory.findMany({
+        orderBy: { productId: 'asc' }
+    })
 }
 
 const updateInventoryStock = async (tx: PrismaClient, products: HistoryDTO[]) => {
