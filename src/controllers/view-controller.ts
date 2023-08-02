@@ -11,21 +11,21 @@ const index = async (req: Request, res: Response) => {
     res.render('index', {
         user,
         title: 'Gudang',
-        layout: './layouts/main-layout.ejs'
+        layout: './layouts/main-layout'
     })
 }
 
 const login = async (_req: Request, res: Response) => {
     res.render('./guest/login', {
         title: 'Gudang | Login',
-        layout: './layouts/main-layout.ejs'
+        layout: './layouts/main-layout'
     })
 }
 
 const register = async (_req: Request, res: Response) => {
     res.render('./guest/register', {
         title: 'Gudang | Register',
-        layout: './layouts/main-layout.ejs'
+        layout: './layouts/main-layout'
     })
 }
 
@@ -40,7 +40,7 @@ const product = async (req: Request, res: Response, next: NextFunction) => {
         res.status(200).render('./guest/product', {
             product,
             title: 'Gudang | Product',
-            layout: './layouts/main-hyperscript.ejs'
+            layout: './layouts/main-hyperscript'
         })
     } catch (e) {
         next(e)
@@ -58,7 +58,7 @@ const productDetail = async (req: Request, res: Response, next: NextFunction) =>
         res.status(200).render('./guest/product-detail', {
             product,
             title: product.name,
-            layout: './layouts/main-layout.ejs'
+            layout: './layouts/main-layout'
         })
     } catch (e) {
         next(e)
@@ -69,7 +69,7 @@ const transaction = async (_req: Request, res: Response, next: NextFunction) => 
     try {
         res.render('./guest/transaction', {
             title: 'Gudang | Transaction',
-            layout: './layouts/main-layout.ejs'
+            layout: './layouts/main-layout'
         })
     } catch (e) {
         next(e)
@@ -86,7 +86,7 @@ const transactionData = async (req: Request, res: Response, next: NextFunction) 
         res.render('./guest/transaction-data', {
             transactions,
             title: 'Gudang | Transaction',
-            layout: './layouts/plain-layout.ejs'
+            layout: './layouts/plain-layout'
         })
     } catch (e) {
         next(e)
@@ -100,7 +100,7 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
         res.render('./guest/inventory', {
             inventories,
             title: 'Gudang | Inventory',
-            layout: './layouts/main-hyperscript.ejs'
+            layout: './layouts/main-hyperscript'
         })
     } catch (e) {
         next(e)
