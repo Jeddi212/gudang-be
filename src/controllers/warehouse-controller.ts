@@ -11,8 +11,8 @@ const createWarehouse = async (req: Request, res: Response, next: NextFunction) 
         await validation.validateWarehouse(req)
         const dto: WarehouseDTO = new WarehouseDTO(req.body.location)
 
-        const wh: Warehouse = await whService.createWarehouse(dto)
-        const payload: Payload = new Payload(`Warehouse ${dto.location} created`, wh)
+        const warehouse: Warehouse = await whService.createWarehouse(dto)
+        const payload: Payload = new Payload(`Warehouse ${dto.location} created`, warehouse)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -22,8 +22,8 @@ const createWarehouse = async (req: Request, res: Response, next: NextFunction) 
 
 const readWarehouses = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const wh: Warehouse[] = await whService.readWarehouses()
-        const payload: Payload = new Payload(`Read all warehouse success`, wh)
+        const warehouse: Warehouse[] = await whService.readWarehouses()
+        const payload: Payload = new Payload(`Read all warehouse success`, warehouse)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -36,8 +36,8 @@ const readWarehouseByLocation = async (req: Request, res: Response, next: NextFu
         await validation.validateWarehouseLocationParam(req)
         const location: string = req.params.location
 
-        const wh: Warehouse = await whService.findWarehouseByLocation(location)
-        const payload: Payload = new Payload(`Warehouse ${location} successfully fetched`, wh)
+        const warehouse: Warehouse = await whService.findWarehouseByLocation(location)
+        const payload: Payload = new Payload(`Warehouse ${location} successfully fetched`, warehouse)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -52,8 +52,8 @@ const updateWarehouse = async (req: Request, res: Response, next: NextFunction) 
         const original = req.params.location
         const dto: WarehouseDTO = new WarehouseDTO(req.body.location)
 
-        const wh: Warehouse = await whService.updateWarehouse(original, dto)
-        const payload: Payload = new Payload(`Warehouse ${original} successfully updated`, wh)
+        const warehouse: Warehouse = await whService.updateWarehouse(original, dto)
+        const payload: Payload = new Payload(`Warehouse ${original} successfully updated`, warehouse)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -67,8 +67,8 @@ const deleteWarehouse = async (req: Request, res: Response, next: NextFunction) 
         await validation.validateDeleteWarehouse(req)
         const location: string = req.params.location
 
-        const wh: Warehouse = await whService.deleteWarehouse(location)
-        const payload: Payload = new Payload(`Warehouse ${location} successfully deleted`, wh)
+        const warehouse: Warehouse = await whService.deleteWarehouse(location)
+        const payload: Payload = new Payload(`Warehouse ${location} successfully deleted`, warehouse)
 
         res.status(200).json(payload)
     } catch (e) {

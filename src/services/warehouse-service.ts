@@ -8,22 +8,22 @@ const createWarehouse = async (dto: WarehouseDTO) => {
         throw new ResponseError(409, `Warehouse ${dto.location} already exist`, dto)
     }
 
-    const wh: Warehouse = await whRepository.createNewWarehouse(dto.mapToModel())
-    return new Warehouse(wh.location)
+    const warehouse: Warehouse = await whRepository.createNewWarehouse(dto.mapToModel())
+    return new Warehouse(warehouse.location)
 }
 
 const readWarehouses = async () => {
-    const wh = await whRepository.readWarehouses()
-    return wh.map(w => new Warehouse(w.location))
+    const warehouse = await whRepository.readWarehouses()
+    return warehouse.map(w => new Warehouse(w.location))
 }
 
 const findWarehouseByLocation = async (location: string) => {
-    const wh = await whRepository.findWarehouseByLocation(location)
-    if (!wh) {
-        throw new ResponseError(404, `Warehouse ${location} not found`, wh);
+    const warehouse = await whRepository.readWarehouseDetail(location)
+    if (!warehouse) {
+        throw new ResponseError(404, `Warehouse ${location} not found`, warehouse);
     }
 
-    return new Warehouse(wh.location)
+    return warehouse
 }
 
 const updateWarehouse = async (original: string, dto: WarehouseDTO) => {
@@ -41,8 +41,8 @@ const updateWarehouse = async (original: string, dto: WarehouseDTO) => {
         })
     }
 
-    const wh = await whRepository.updateWarehouse(original, dto.mapToModel())
-    return new Warehouse(wh.location)
+    const warehouse = await whRepository.updateWarehouse(original, dto.mapToModel())
+    return new Warehouse(warehouse.location)
 }
 
 const deleteWarehouse = async (location: string) => {
@@ -50,8 +50,8 @@ const deleteWarehouse = async (location: string) => {
         throw new ResponseError(409, `Warehouse ${location} is not exist`)
     }
 
-    const wh = await whRepository.deleteWarehouseByLocation(location)
-    return new Warehouse(wh.location)
+    const warehouse = await whRepository.deleteWarehouseByLocation(location)
+    return new Warehouse(warehouse.location)
 }
 
 export default {
