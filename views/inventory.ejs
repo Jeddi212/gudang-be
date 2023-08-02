@@ -1,0 +1,38 @@
+<div>
+    <input type="search" name="search" placeholder="Search" _="on keyup
+        if the event's key is 'Escape'
+            set my value to ''
+            trigger keyup
+        else
+            show <tr/> in #inventories 
+            when its textContent.toLowerCase() 
+            contains my value.toLowerCase()">
+    <table>
+        <thead>
+            <tr>
+                <th>Update</th>
+                <th>Product</th>
+                <th>Warehouse</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody id="inventories">
+            <% inventories.forEach(i=> { %>
+                <tr>
+                    <td>
+                        <%= i.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                    </td>
+                    <td>
+                        <%= i.productId %>
+                    </td>
+                    <td>
+                        <%= i.warehouseId %>
+                    </td>
+                    <td>
+                        <%= i.quantity %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</div>

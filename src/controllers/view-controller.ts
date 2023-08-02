@@ -1,5 +1,6 @@
 import { Event, Role } from '@prisma/client'
 import { Request, Response, NextFunction } from 'express'
+import inventoryService from '../services/inventory-service'
 import productService from '../services/product-service'
 import transactionService from '../services/transaction-service'
 import validation from '../utils/validation'
@@ -74,6 +75,20 @@ const transactionData = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
+const inventory = async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+        const inventories = await inventoryService.readAllInventories()
+
+        res.render('inventory', {
+            inventories,
+            title: 'Gudang | Inventory',
+            layout: './layouts/main-hyperscript.ejs'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
     index,
     login,
@@ -81,4 +96,5 @@ export default {
     product,
     transaction,
     transactionData,
+    inventory,
 }
