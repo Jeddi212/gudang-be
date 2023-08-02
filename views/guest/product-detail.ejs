@@ -24,8 +24,8 @@
                     </thead>
                     <tbody id="products">
                         <% product.Needs.forEach(m=> { %>
-                            <tr>
-                                <td onclick="window.location='/product/' + '<%= m.materialName %>';" class="link">
+                            <tr onclick="window.location='/product/' + '<%= m.materialName %>';" class="link">
+                                <td>
                                     <%= m.materialName %>
                                 </td>
                                 <td>
@@ -46,8 +46,8 @@
                     </thead>
                     <tbody id="products">
                         <% product.UsedBy.forEach(u=> { %>
-                            <tr>
-                                <td onclick="window.location='/product/' + '<%= u.productName %>';" class="link">
+                            <tr onclick="window.location='/product/' + '<%= u.productName %>';" class="link">
+                                <td>
                                     <%= u.productName %>
                                 </td>
                             </tr>
