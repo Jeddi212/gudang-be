@@ -16,14 +16,14 @@ const index = async (req: Request, res: Response) => {
 }
 
 const login = async (_req: Request, res: Response) => {
-    res.render('login', {
+    res.render('./guest/login', {
         title: 'Gudang | Login',
         layout: './layouts/main-layout.ejs'
     })
 }
 
 const register = async (_req: Request, res: Response) => {
-    res.render('register', {
+    res.render('./guest/register', {
         title: 'Gudang | Register',
         layout: './layouts/main-layout.ejs'
     })
@@ -55,7 +55,7 @@ const productDetail = async (req: Request, res: Response, next: NextFunction) =>
 
         const product = await productService.readProductDetails(name)
 
-        res.status(200).render('./guest/productDetail', {
+        res.status(200).render('./guest/product-detail', {
             product,
             title: product.name,
             layout: './layouts/main-layout.ejs'
@@ -67,7 +67,7 @@ const productDetail = async (req: Request, res: Response, next: NextFunction) =>
 
 const transaction = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-        res.render('transaction', {
+        res.render('./guest/transaction', {
             title: 'Gudang | Transaction',
             layout: './layouts/main-layout.ejs'
         })
@@ -83,7 +83,7 @@ const transactionData = async (req: Request, res: Response, next: NextFunction) 
 
         let transactions = await transactionService.findTransactions(event, username)
 
-        res.render('transaction-data', {
+        res.render('./guest/transaction-data', {
             transactions,
             title: 'Gudang | Transaction',
             layout: './layouts/plain-layout.ejs'
@@ -97,7 +97,7 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         const inventories = await inventoryService.readAllInventories()
 
-        res.render('inventory', {
+        res.render('./guest/inventory', {
             inventories,
             title: 'Gudang | Inventory',
             layout: './layouts/main-hyperscript.ejs'
