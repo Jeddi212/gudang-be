@@ -7,6 +7,9 @@ publicRouter.get('/', viewController.index)
 publicRouter.get('/login', viewController.login)
 publicRouter.get('/register', viewController.register)
 
+publicRouter.get('/warehouse', viewController.warehouse)
+publicRouter.get('/warehouse/:location', viewController.warehouseDetail)
+
 publicRouter.get('/product', viewController.product)
 publicRouter.get('/product/:name', viewController.productDetail)
 

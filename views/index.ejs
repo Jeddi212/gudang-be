@@ -5,7 +5,11 @@
             <div><a href="/product"><button>Products</button></a></div>
         </article>
         <article>
-            <h2>Transaction</h2>
+            <h2>Warehouse</h2>
+            <div><a href="/warehouse"><button>Warehouse</button></a></div>
+        </article>
+        <article>
+            <h2>Event</h2>
             <div><a href="/transaction"><button>Transaction</button></a></div>
         </article>
         <article>
@@ -14,15 +18,22 @@
         </article>
     </div>
     <% } else { %>
-        <div>
+        <div class="grid">
             <article>
                 <h2>Product</h2>
-                <div><a href="/product"><button>All Products</button></a></div>
-                <div><a href="/product"><button>Product</button></a></div>
+                <div><a href="/product"><button>Products</button></a></div>
             </article>
             <article>
+                <h2>Warehouse</h2>
+                <div><a href="/warehouse"><button>Warehouse</button></a></div>
+            </article>
+            <article>
+                <h2>Event</h2>
                 <div><a href="/transaction"><button>Transaction</button></a></div>
-                <div><a href="/transaction"><button>Transaction</button></a></div>
+            </article>
+            <article>
+                <h2>Inventory</h2>
+                <div><a href="/inventory"><button>Inventory</button></a></div>
             </article>
         </div>
         <% } %>

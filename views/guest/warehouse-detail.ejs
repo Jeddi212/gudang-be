@@ -1,0 +1,79 @@
+<div>
+    <article>
+        <div class="grid">
+            <hgroup>
+                <h1>
+                    <%= warehouse.location %>
+                </h1>
+                <p></p>
+            </hgroup>
+        </div>
+        <hr>
+        <article id="inventory" class="reset">
+            <h3>Inventory</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Update</th>
+                        <th>Product</th>
+                        <th>Warehouse</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+                <tbody id="inventories">
+                    <% warehouse.Inventory.forEach(i=> { %>
+                        <tr>
+                            <td>
+                                <%= i.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                            </td>
+                            <td>
+                                <%= i.productId %>
+                            </td>
+                            <td>
+                                <%= i.warehouseId %>
+                            </td>
+                            <td>
+                                <%= i.quantity %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </article>
+        <article id="history" class="reset">
+            <h3>History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Product</th>
+                        <th>Warehouse</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="inventories">
+                    <% warehouse.History.forEach(h=> { %>
+                        <tr>
+                            <td>
+                                <%= h.transactionId %>
+                            </td>
+                            <td>
+                                <%= h.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                            </td>
+                            <td>
+                                <%= h.productId %>
+                            </td>
+                            <td>
+                                <%= h.warehouseId %>
+                            </td>
+                            <td>
+                                <%= h.quantity %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </article>
+    </article>
+</div>

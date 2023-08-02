@@ -1,0 +1,30 @@
+<div>
+    <input type="search" name="search" placeholder="Search" _="on keyup
+        if the event's key is 'Escape'
+            set my value to ''
+            trigger keyup
+        else
+            show <tr/> in #warehouses 
+            when its textContent.toLowerCase() 
+            contains my value.toLowerCase()">
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody id="warehouses">
+            <% warehouse.forEach((w, i)=> { %>
+                <tr onclick="window.location='/warehouse/' + '<%= w.location %>';" class="link">
+                    <td>
+                        <%= i+1 %>
+                    </td>
+                    <td>
+                        <%= w.location %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</div>

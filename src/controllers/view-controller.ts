@@ -4,8 +4,10 @@ import historyService from '../services/transaction-service'
 import inventoryService from '../services/inventory-service'
 import productService from '../services/product-service'
 import transactionService from '../services/transaction-service'
+import whService from '../services/warehouse-service'
 import validation from '../utils/validation'
 
+// GUEST VIEW
 const index = async (req: Request, res: Response) => {
     const user = req.payload || { name: 'Guest', level: Role.GUEST }
 
@@ -28,6 +30,38 @@ const register = async (_req: Request, res: Response) => {
         title: 'Gudang | Register',
         layout: './layouts/main-layout'
     })
+}
+
+const warehouse = async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+        const warehouse = await whService.readWarehouses()
+
+        res.status(200).render('./guest/warehouse', {
+            warehouse,
+            title: 'Gudang | Warehouse',
+            layout: './layouts/main-hyperscript'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+const warehouseDetail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateWarehouseLocationParam(req)
+
+        const location: string = req.params.location
+
+        const warehouse = await whService.findWarehouseByLocation(location)
+
+        res.status(200).render('./guest/warehouse-detail', {
+            warehouse,
+            title: warehouse.location,
+            layout: './layouts/main-layout'
+        })
+    } catch (e) {
+        next(e)
+    }
 }
 
 const product = async (req: Request, res: Response, next: NextFunction) => {
@@ -125,10 +159,16 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+// STAFF VIEW
+
+
 export default {
     index,
     login,
     register,
+
+    warehouse,
+    warehouseDetail,
 
     product,
     productDetail,
