@@ -37,7 +37,7 @@ const product = async (req: Request, res: Response, next: NextFunction) => {
 
         const product = await productService.readAllProducts(name)
 
-        res.status(200).render('product', {
+        res.status(200).render('./guest/product', {
             product,
             title: 'Gudang | Product',
             layout: './layouts/main-hyperscript.ejs'
