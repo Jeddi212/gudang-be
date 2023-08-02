@@ -29,7 +29,7 @@ function getUser() {
         const jwt = decodeJWT(jwtCookie);
         return jwt.payload;
     } else {
-        return { name: "User", level: "GUEST" };
+        return { name: "Guest", level: "GUEST" };
     }
 }
 
