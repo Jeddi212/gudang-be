@@ -12,9 +12,18 @@ const createWarehouse = async (dto: WarehouseDTO) => {
     return new Warehouse(wh.location)
 }
 
-const readWarehouses = async (location: string) => {
-    const wh = await whRepository.readWarehouses(location)
+const readWarehouses = async () => {
+    const wh = await whRepository.readWarehouses()
     return wh.map(w => new Warehouse(w.location))
+}
+
+const findWarehouseByLocation = async (location: string) => {
+    const wh = await whRepository.findWarehouseByLocation(location)
+    if (!wh) {
+        throw new ResponseError(404, `Warehouse ${location} not found`, wh);
+    }
+
+    return new Warehouse(wh.location)
 }
 
 const updateWarehouse = async (original: string, dto: WarehouseDTO) => {
@@ -48,6 +57,7 @@ const deleteWarehouse = async (location: string) => {
 export default {
     createWarehouse,
     readWarehouses,
+    findWarehouseByLocation,
     updateWarehouse,
     deleteWarehouse,
 }

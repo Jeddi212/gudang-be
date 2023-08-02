@@ -22,10 +22,22 @@ const createWarehouse = async (req: Request, res: Response, next: NextFunction) 
 
 const readWarehouses = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const location = req.query.location as string || ''
+        const wh: Warehouse[] = await whService.readWarehouses()
+        const payload: Payload = new Payload(`Read all warehouse success`, wh)
 
-        const wh: Warehouse[] = await whService.readWarehouses(location)
-        const payload: Payload = new Payload(`Read warehouse ${location} success`, wh)
+        res.status(200).json(payload)
+    } catch (e) {
+        next(e)
+    }
+}
+
+const readWarehouseByLocation = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateWarehouseLocationParam(req)
+        const location: string = req.params.location
+
+        const wh: Warehouse = await whService.findWarehouseByLocation(location)
+        const payload: Payload = new Payload(`Warehouse ${location} successfully fetched`, wh)
 
         res.status(200).json(payload)
     } catch (e) {
@@ -67,6 +79,7 @@ const deleteWarehouse = async (req: Request, res: Response, next: NextFunction) 
 export default {
     createWarehouse,
     readWarehouses,
+    readWarehouseByLocation,
     updateWarehouse,
     deleteWarehouse,
 }

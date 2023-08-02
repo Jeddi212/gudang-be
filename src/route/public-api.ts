@@ -11,6 +11,7 @@ publicApi.post('/api/register', userController.register)
 publicApi.post('/api/login', userController.login)
 
 publicApi.get('/api/warehouse', whController.readWarehouses)
+publicApi.get('/api/warehouse/:location', whController.readWarehouseByLocation)
 
 publicApi.get('/api/product', prController.readAllProducts)
 publicApi.get('/api/product/:name', prController.readProductDetails)

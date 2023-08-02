@@ -5,10 +5,8 @@ const createNewWarehouse = async (wh: Warehouse) => {
     return prisma.warehouse.create({ data: wh })
 }
 
-const readWarehouses = async (location: string) => {
-    return prisma.warehouse.findMany({
-        where: { location: { contains: location } }
-    })
+const readWarehouses = async () => {
+    return prisma.warehouse.findMany()
 }
 
 const updateWarehouse = async (original: string, wh: Warehouse) => {
