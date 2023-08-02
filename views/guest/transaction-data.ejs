@@ -1,5 +1,5 @@
 <% transactions.forEach(t=> { %>
-    <tr>
+    <tr onclick="window.location='/transaction/' + '<%= t.id %>';" class="link">
         <td>
             <%= t.id %>
         </td>
