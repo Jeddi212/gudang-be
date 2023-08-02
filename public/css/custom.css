@@ -1,0 +1,12 @@
+.reset {
+    margin: 0;
+}
+
+.link {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.link:hover {
+    opacity: 0.5;
+}
