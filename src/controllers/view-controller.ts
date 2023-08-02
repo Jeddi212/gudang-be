@@ -1,11 +1,14 @@
-import { Event } from '@prisma/client'
+import { Event, Role } from '@prisma/client'
 import { Request, Response, NextFunction } from 'express'
 import productService from '../services/product-service'
 import transactionService from '../services/transaction-service'
 import validation from '../utils/validation'
 
-const index = async (_req: Request, res: Response) => {
+const index = async (req: Request, res: Response) => {
+    const user = req.payload || { name: 'Guest', level: Role.GUEST }
+
     res.render('index', {
+        user,
         title: 'Gudang',
         layout: './layouts/main-layout.ejs'
     })
