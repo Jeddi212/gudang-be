@@ -1,5 +1,6 @@
 import { Event, Role } from '@prisma/client'
 import { Request, Response, NextFunction } from 'express'
+import historyService from '../services/transaction-service'
 import inventoryService from '../services/inventory-service'
 import productService from '../services/product-service'
 import transactionService from '../services/transaction-service'
@@ -93,6 +94,23 @@ const transactionData = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
+const transactionDetail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await validation.validateTransactionId(req)
+        const id = parseInt(req.params.id)
+
+        const transactions = await historyService.findTransactionById(id)
+
+        res.render('./guest/transaction-detail', {
+            transactions,
+            title: `Transaction ${transactions?.id}`,
+            layout: './layouts/main-layout'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 const inventory = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         const inventories = await inventoryService.readAllInventories()
@@ -116,6 +134,7 @@ export default {
     productDetail,
 
     transaction,
+    transactionDetail,
     transactionData,
 
     inventory,

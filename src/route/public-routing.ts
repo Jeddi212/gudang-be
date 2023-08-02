@@ -11,6 +11,7 @@ publicRouter.get('/product', viewController.product)
 publicRouter.get('/product/:name', viewController.productDetail)
 
 publicRouter.get('/transaction', viewController.transaction)
+publicRouter.get('/transaction/:id', viewController.transactionDetail)
 publicRouter.get('/transaction-data', viewController.transactionData)
 
 publicRouter.get('/inventory', viewController.inventory)

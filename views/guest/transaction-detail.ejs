@@ -1,0 +1,50 @@
+<div>
+    <article>
+        <div class="grid">
+            <hgroup>
+                <h1>Transaction <%= transactions.id %>
+                </h1>
+                <p>Event: <%= transactions.event %>
+                </p>
+                <p>Actor: <%= transactions.username %>
+                </p>
+
+            </hgroup>
+            <div>
+                <span>Created at: <code><%= transactions.createdAt %></code></span>
+                <span>Updated at: <code><%= transactions.updatedAt %></code></span>
+            </div>
+        </div>
+        <hr>
+        <article id="history" class="reset">
+            <h3>History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Product</th>
+                        <th>Warehouse</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="inventories">
+                    <% transactions.History.forEach(h=> { %>
+                        <tr onclick="window.location='/product/' + '<%= h.productId %>';" class="link">
+                            <td>
+                                <%= h.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                            </td>
+                            <td>
+                                <%= h.productId %>
+                            </td>
+                            <td>
+                                <%= h.warehouseId %>
+                            </td>
+                            <td>
+                                <%= h.quantity %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </article>
+</div>
