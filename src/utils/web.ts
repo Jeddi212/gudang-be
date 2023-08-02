@@ -1,9 +1,10 @@
-import cors from 'cors';
+import cors from 'cors'
 import express from 'express'
-import ejsLayouts from 'express-ejs-layouts';
-import { viewRouter } from '../route/routing'
-import { publicRouter } from '../route/public-api'
-import { privateRouter } from '../route/api'
+import ejsLayouts from 'express-ejs-layouts'
+import { privateApi } from '../route/api'
+import { publicApi } from '../route/public-api'
+import { privateRouter } from '../route/routing'
+import { publicRouter } from '../route/public-routing'
 import { errorMiddleware } from '../middleware/error-middleware'
 
 export const corsOption = {
@@ -20,8 +21,10 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(ejsLayouts);
 
-app.use(viewRouter)
+app.use(publicApi)
 app.use(publicRouter)
+
+app.use(privateApi)
 app.use(privateRouter)
 
 app.use(errorMiddleware)

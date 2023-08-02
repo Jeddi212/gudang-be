@@ -4,19 +4,19 @@ import prController from '../controllers/product-controller'
 import tnController from '../controllers/transaction-controller'
 import userController from '../controllers/user-controller'
 
-const publicRouter = express.Router()
+const publicApi = express.Router()
 
-publicRouter.post('/api/register', userController.register)
-publicRouter.post('/api/login', userController.login)
+publicApi.post('/api/register', userController.register)
+publicApi.post('/api/login', userController.login)
 
-publicRouter.get('/api/product', prController.readAllProducts)
-publicRouter.get('/api/product/:name', prController.readProductDetails)
+publicApi.get('/api/product', prController.readAllProducts)
+publicApi.get('/api/product/:name', prController.readProductDetails)
 
-publicRouter.get('/api/transaction', tnController.findTransactions)
-publicRouter.get('/api/transaction/:id', tnController.findTransactionById)
+publicApi.get('/api/transaction', tnController.findTransactions)
+publicApi.get('/api/transaction/:id', tnController.findTransactionById)
 
-publicRouter.get('/api/inventory', ivController.readAllInventories)
+publicApi.get('/api/inventory', ivController.readAllInventories)
 
 export {
-    publicRouter
+    publicApi
 }

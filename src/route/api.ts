@@ -4,21 +4,21 @@ import prController from '../controllers/product-controller'
 import whController from '../controllers/warehouse-controller'
 import { authMiddleware } from '../middleware/auth-middleware'
 
-const privateRouter = express.Router()
-privateRouter.use(authMiddleware)
+const privateApi = express.Router()
+privateApi.use(authMiddleware)
 
-privateRouter.post('/api/warehouse', whController.createWarehouse)
-privateRouter.get('/api/warehouse', whController.readWarehouses)
-privateRouter.put('/api/warehouse/:location', whController.updateWarehouse)
-privateRouter.delete('/api/warehouse/:location', whController.deleteWarehouse)
+privateApi.post('/api/warehouse', whController.createWarehouse)
+privateApi.get('/api/warehouse', whController.readWarehouses)
+privateApi.put('/api/warehouse/:location', whController.updateWarehouse)
+privateApi.delete('/api/warehouse/:location', whController.deleteWarehouse)
 
-privateRouter.post('/api/product', prController.createProduct)
-privateRouter.put('/api/product/:name', prController.updateProduct)
-privateRouter.delete('/api/product/:name', prController.deleteProduct)
+privateApi.post('/api/product', prController.createProduct)
+privateApi.put('/api/product/:name', prController.updateProduct)
+privateApi.delete('/api/product/:name', prController.deleteProduct)
 
-privateRouter.post('/api/transaction', trController.createTransaction)
-privateRouter.put('/api/transaction/:id', trController.updateTransaction)
+privateApi.post('/api/transaction', trController.createTransaction)
+privateApi.put('/api/transaction/:id', trController.updateTransaction)
 
 export {
-    privateRouter
+    privateApi
 }
