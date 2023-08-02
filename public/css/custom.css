@@ -10,3 +10,15 @@
 .link:hover {
     opacity: 0.5;
 }
+
+.htmx-indicator {
+    display: none;
+}
+
+.htmx-request .my-indicator {
+    display: inline;
+}
+
+.htmx-request.my-indicator {
+    display: inline;
+}

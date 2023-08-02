@@ -14,20 +14,6 @@
     <script src="/script/htmx.min.js"></script>
     <script src="/js/cookie.js"></script>
     <script src="/js/logout.js"></script>
-
-    <style>
-        .htmx-indicator {
-            display: none;
-        }
-
-        .htmx-request .my-indicator {
-            display: inline;
-        }
-
-        .htmx-request.my-indicator {
-            display: inline;
-        }
-    </style>
 </head>
 
 <body>
@@ -37,13 +23,7 @@
             <%- body %>
     </main>
 
-    <script>
-        document.addEventListener('htmx:responseError', function (event) {
-            const errorResponse = event.detail.xhr.response;
-            const targetElement = event.detail.target;
-            targetElement.innerHTML = errorResponse;
-        });
-    </script>
+    <script src="/js/error-response.js"></script>
 </body>
 
 </html>
