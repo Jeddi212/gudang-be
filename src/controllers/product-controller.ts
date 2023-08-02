@@ -56,10 +56,10 @@ const readProductDetails = async (req: Request, res: Response, next: NextFunctio
 
 const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        validation.validateAdminRole(req.payload?.level)
+
         await validation.validateProductNameParam(req)
         const name: string = req.params.name
-
-        validation.validateAdminRole(req.payload?.level)
         await validation.validateProduct(req)
 
         const materials = req.body.materials ?? [];
@@ -79,10 +79,10 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
 
 const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        validation.validateAdminRole(req.payload?.level)
+
         await validation.validateProductNameParam(req)
         const name: string = req.params.name
-
-        validation.validateAdminRole(req.payload?.level)
 
         const product = await productService.deleteProduct(name)
         const payload: Payload = new Payload(`Product ${name} successfully deleted`, product)

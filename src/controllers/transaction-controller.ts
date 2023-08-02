@@ -57,8 +57,11 @@ const findTransactionById = async (req: Request, res: Response, next: NextFuncti
 
 const updateTransaction = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        validation.validateAdminRole(req.payload?.level)
+
         await validation.validateTransactionId(req)
         await validation.validateUpdateTransaction(req)
+
         const id = parseInt(req.params.id)
         const dto: UpdateTransactionDTO = new UpdateTransactionDTO(req.body.event, req.body.username)
 
