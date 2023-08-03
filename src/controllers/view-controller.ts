@@ -1,4 +1,4 @@
-import { Event, Role } from '@prisma/client'
+import { Event } from '@prisma/client'
 import { Request, Response, NextFunction } from 'express'
 import historyService from '../services/transaction-service'
 import inventoryService from '../services/inventory-service'
