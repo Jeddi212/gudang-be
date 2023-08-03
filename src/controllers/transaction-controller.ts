@@ -15,7 +15,7 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
         const dto: TransactionDTO = new TransactionDTO(
             req.body.event,
             req.payload?.name as string,
-            inventory.map((i: InventoryDTO) => new InventoryDTO(i.quantity, i.product, i.warehouse)))
+            inventory.map((i: any) => new InventoryDTO(parseInt(i.quantity), i.product, i.warehouse)))
 
         const result = await historyService.createTransaction(dto)
         const payload: Payload = new Payload(`Transaction successfully created`, result)
