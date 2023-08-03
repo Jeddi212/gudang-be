@@ -1,45 +1,24 @@
 <div>
-    <form id="jsonForm">
-        <label for="event">Event:</label>
-        <input type="text" id="event" name="event" required><br><br>
+    <form id="jsonForm" action="">
+        <input type="hidden" id="event" name="event" value="INPUT">
 
         <div id="inventoryFields">
-            <h2>Inventory:</h2>
-            <div class="inventory-item">
-                <label for="product">Product:</label>
-                <input type="text" name="product[]" required>
+            <article class="inventory-item reset">
+                <input type="text" name="product[]" placeholder="Product" required>
+                <input type="text" name="warehouse[]" placeholder="Warehouse" required>
+                <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
 
-                <label for="warehouse">Warehouse:</label>
-                <input type="text" name="warehouse[]" required>
-
-                <label for="quantity">Quantity:</label>
-                <input type="number" name="quantity[]" required>
-            </div>
+                <button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
+            </article>
         </div>
-        <br>
 
-        <button type="button" id="addInventoryItem">Add Inventory Item</button>
-        <br><br>
-
-        <input type="submit" value="Generate JSON">
+        <div class="grid">
+            <button type="button" id="addInventoryItem"><strong>+</strong> Another Item</button>
+            <input type="submit" value="Submit">
+        </div>
     </form>
 
-    <script>
-        document.getElementById('addInventoryItem').addEventListener('click', function () {
-            var inventoryFields = document.getElementById('inventoryFields');
-            var inventoryItem = document.createElement('div');
-            inventoryItem.classList.add('inventory-item');
-            inventoryItem.innerHTML = `
-            <label for="product">Product:</label>
-            <input type="text" name="product[]" required>
-    
-            <label for="warehouse">Warehouse:</label>
-            <input type="text" name="warehouse[]" required>
-    
-            <label for="quantity">Quantity:</label>
-            <input type="number" name="quantity[]" required>
-          `;
-            inventoryFields.appendChild(inventoryItem);
-        });
-    </script>
+    <div id="result"></div>
+
+    <script src="/js/add-stock.js"></script>
 </div>

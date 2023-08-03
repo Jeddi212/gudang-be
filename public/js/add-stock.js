@@ -42,7 +42,7 @@ document.getElementById('jsonForm').addEventListener('submit', async (event) => 
 
     try {
         const dto = collectForm();
-        const formAction = '/post/transaction';
+        const formAction = '/api/transaction';
 
         const response = await fetch(formAction, {
             method: 'POST',
