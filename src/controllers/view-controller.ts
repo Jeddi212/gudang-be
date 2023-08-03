@@ -166,7 +166,7 @@ const addStock = async (req: Request, res: Response, next: NextFunction) => {
     try {
         res.render('./staff/add-stock', {
             title: 'Add Stock',
-            layout: './layouts/main-hyperscript'
+            layout: './layouts/main-layout'
         })
     } catch (e) {
         next(e)
