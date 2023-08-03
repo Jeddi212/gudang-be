@@ -7,7 +7,11 @@ import { Role } from '@prisma/client'
 const secretKey = process.env.JWT_SECRET_KEY || ''
 
 function authMiddleware(req: Request, res: Response, next: NextFunction) {
-    const token = req.cookies.jwt
+    let token = req.header('Authorization')?.replace('Bearer ', '')
+
+    if (!token) {
+        token = req.cookies.jwt
+    }
 
     if (!token) {
         throw new ResponseError(401, 'Unauthorized: Token not found')
