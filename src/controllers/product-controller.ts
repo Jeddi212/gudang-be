@@ -13,7 +13,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
         const dto: CreateProductDTO = new CreateProductDTO(
             req.body.name,
             req.body.description,
-            materials.map((m: Material) => new Material(m.name, m.quantity)))
+            materials.map((m: any) => new Material(m.name, parseInt(m.quantity))))
 
         const product = await productService.createProduct(dto)
         const payload: Payload = new Payload(`Product ${req.body.name} successfully created`, product)
@@ -66,7 +66,7 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
         const dto: CreateProductDTO = new CreateProductDTO(
             req.body.name,
             req.body.description,
-            materials.map((m: Material) => new Material(m.name, m.quantity)))
+            materials.map((m: any) => new Material(m.name, parseInt(m.quantity))))
 
         const product = await productService.updateProduct(name, dto)
         const payload: Payload = new Payload(`Product ${name} successfully updated`, product)
