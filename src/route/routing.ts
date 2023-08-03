@@ -3,8 +3,11 @@ import viewController from '../controllers/view-controller'
 
 const privateRouter = express.Router()
 
+// STAFF
+privateRouter.get('/transaction-post', viewController.createTransactionView)
+
+// ADMIN
 // privateRouter.post('/warehouse', viewController.createWarehouse)
-// privateRouter.get('/warehouse', viewController.readWarehouses)
 // privateRouter.put('/warehouse/:location', viewController.updateWarehouse)
 // privateRouter.delete('/warehouse/:location', viewController.deleteWarehouse)
 
@@ -12,7 +15,6 @@ const privateRouter = express.Router()
 // privateRouter.put('/product/:name', viewController.updateProduct)
 // privateRouter.delete('/product/:name', viewController.deleteProduct)
 
-// privateRouter.post('/transaction', viewController.createTransaction)
 // privateRouter.put('/transaction/:id', viewController.updateTransaction)
 
 export {

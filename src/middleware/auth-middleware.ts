@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { UserDTO } from '../dto/user-dto'
 import jwt from 'jsonwebtoken'
 import { ResponseError } from '../dto/response-error'
+import { Role } from '@prisma/client'
 
 const secretKey = process.env.JWT_SECRET_KEY || ''
 
@@ -23,6 +24,25 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+function guestAuthMiddleware(req: Request, _res: Response, next: NextFunction) {
+    const token = req.header('Authorization')?.replace('Bearer ', '') || 'null'
+
+    if (token == 'null') {
+        req.payload = new UserDTO('Guest', Role.GUEST)
+        next()
+    } else {
+        try {
+            const decoded = jwt.verify(token, secretKey) as { payload: UserDTO }
+            req.payload = decoded.payload
+            next()
+        } catch (err) {
+            throw new ResponseError(401, 'Unauthorized: Invalid token')
+        }
+    }
+}
+
+
 export {
-    authMiddleware
+    authMiddleware,
+    guestAuthMiddleware
 }

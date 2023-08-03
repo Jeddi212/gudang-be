@@ -6,15 +6,24 @@ import productService from '../services/product-service'
 import transactionService from '../services/transaction-service'
 import whService from '../services/warehouse-service'
 import validation from '../utils/validation'
+import { TransactionDTO } from '../dto/transaction-dto'
+import { HistoryDTO } from '../dto/history-dto'
 
 // GUEST VIEW
 const index = async (req: Request, res: Response) => {
-    const user = req.payload || { name: 'Guest', level: Role.GUEST }
-
     res.render('index', {
-        user,
         title: 'Gudang',
         layout: './layouts/main-layout'
+    })
+}
+
+const menu = async (req: Request, res: Response) => {
+    const user = req.payload
+
+    res.render('menu', {
+        user,
+        title: 'Gudang',
+        layout: './layouts/plain-layout'
     })
 }
 
@@ -160,10 +169,43 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
 }
 
 // STAFF VIEW
+const createTransactionView = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('./guest/transaction-create', {
+            title: 'Transaction | Create',
+            layout: './layouts/main-hyperscript'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
 
+const createTransaction = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        validation.validateCreateTransaction(req)
+
+        const inventory = req.body.inventory ?? []
+        const dto: TransactionDTO = new TransactionDTO(
+            req.body.event,
+            req.payload?.name as string,
+            inventory.map((i: HistoryDTO) => new HistoryDTO(i.quantity, i.product, i.warehouse)))
+
+        const transaction = await historyService.createTransaction(dto)
+
+        // atau redirect aja ke halamannya?
+        res.render('./guest/transaction-create-ok', {
+            transaction,
+            title: 'Transaction | Create | OK',
+            layout: './layouts/main-hyperscript'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
 
 export default {
     index,
+    menu,
     login,
     register,
 
@@ -178,4 +220,7 @@ export default {
     transactionData,
 
     inventory,
+
+    createTransactionView,
+    createTransaction,
 }
