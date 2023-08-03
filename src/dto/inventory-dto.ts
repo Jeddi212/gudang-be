@@ -1,4 +1,4 @@
-class HistoryDTO {
+class InventoryDTO {
     quantity: number
     product: string
     warehouse: string
@@ -17,5 +17,5 @@ class HistoryDTO {
 }
 
 export {
-    HistoryDTO
+    InventoryDTO
 }

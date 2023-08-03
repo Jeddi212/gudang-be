@@ -1,19 +1,19 @@
 import { Event } from "@prisma/client"
-import { HistoryDTO } from "./history-dto"
+import { InventoryDTO } from "./inventory-dto"
 
 class TransactionDTO {
     event: Event
     username: string
-    history: HistoryDTO[]
+    inventory: InventoryDTO[]
     createdAt?: Date
 
     constructor(
         event: Event,
         username: string,
-        history: HistoryDTO[]) {
+        inventory: InventoryDTO[]) {
         this.event = event
         this.username = username
-        this.history = history
+        this.inventory = inventory
     }
 }
 

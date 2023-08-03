@@ -7,8 +7,8 @@ import { Event, PrismaClient } from '@prisma/client';
 
 const createTransaction = async (dto: TransactionDTO) => {
     return await prisma.$transaction(async (tx) => {
-        const inventories = await inventoryRepository.updateInventoryStock(tx as PrismaClient, dto.history)
-        await productRepository.updateManyProductStock(tx as PrismaClient, dto.history)
+        const inventories = await inventoryRepository.updateInventoryStock(tx as PrismaClient, dto.inventory)
+        await productRepository.updateManyProductStock(tx as PrismaClient, dto.inventory)
         const transaction = await transactionRepository.createTransaction(tx as PrismaClient, dto)
 
         return { transaction, inventories }

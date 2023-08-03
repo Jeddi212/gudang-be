@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { HistoryDTO } from "../dto/history-dto";
+import { InventoryDTO } from "../dto/inventory-dto";
 import { ResponseError } from "../dto/response-error";
 import { prisma } from "../utils/database";
 
@@ -9,12 +9,12 @@ const readAllInventories = async () => {
     })
 }
 
-const updateInventoryStock = async (tx: PrismaClient, products: HistoryDTO[]) => {
+const updateInventoryStock = async (tx: PrismaClient, products: InventoryDTO[]) => {
     const upsertedRecords = []
 
     try {
         for (const p of products) {
-            const currentStock = await tx.inventory.findUnique({
+            const currentStock = await tx.inventory.findUniqueOrThrow({
                 where: { productId_warehouseId: { productId: p.product, warehouseId: p.warehouse } },
                 select: { quantity: true },
             })

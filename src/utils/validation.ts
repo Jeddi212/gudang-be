@@ -105,6 +105,7 @@ const validateProductNameParam = async (req: Request) => {
 const validateCreateTransaction = async (req: Request) => {
     await Promise.all([
         body('event').notEmpty().trim().escape().run(req),
+        body('inventory').notEmpty().isArray().run(req),
         body('inventory.*.quantity').notEmpty().isInt().run(req),
         body('inventory.*.product').notEmpty().trim().escape().run(req),
         body('inventory.*.warehouse').notEmpty().trim().escape().run(req),

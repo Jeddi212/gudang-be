@@ -1,7 +1,7 @@
 import { Event } from '@prisma/client'
 import { Request, Response, NextFunction } from 'express'
 import { Payload } from '../dto/payload'
-import { HistoryDTO } from '../dto/history-dto'
+import { InventoryDTO } from '../dto/inventory-dto'
 import { TransactionDTO, UpdateTransactionDTO } from '../dto/transaction-dto'
 import validation from '../utils/validation'
 import historyService from '../services/transaction-service'
@@ -9,14 +9,15 @@ import transactionService from '../services/transaction-service'
 
 const createTransaction = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        validation.validateCreateTransaction(req)
+        await validation.validateCreateTransaction(req)
 
         const inventory = req.body.inventory ?? []
         const dto: TransactionDTO = new TransactionDTO(
             req.body.event,
             req.payload?.name as string,
-            inventory.map((i: HistoryDTO) => new HistoryDTO(i.quantity, i.product, i.warehouse)))
+            inventory.map((i: InventoryDTO) => new InventoryDTO(i.quantity, i.product, i.warehouse)))
 
+        console.log('dto: ', dto);
         const result = await historyService.createTransaction(dto)
         const payload: Payload = new Payload(`Transaction successfully created`, result)
 

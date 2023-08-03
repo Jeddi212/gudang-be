@@ -10,7 +10,7 @@ const createTransaction = async (tx: PrismaClient, transaction: TransactionDTO) 
                 event: transaction.event,
                 username: transaction.username,
                 History: {
-                    create: transaction.history.map((i) => {
+                    create: transaction.inventory.map((i) => {
                         return {
                             quantity: i.quantity,
                             productId: i.product,
