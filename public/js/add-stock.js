@@ -28,7 +28,7 @@ document.getElementById('jsonForm').addEventListener('submit', async (event) => 
 
     try {
         const dto = collectForm();
-        const formAction = '/api/transaction';
+        const formAction = event.target.action;
 
         const response = await fetch(formAction, {
             method: 'POST',
