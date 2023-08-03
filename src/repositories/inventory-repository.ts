@@ -14,7 +14,7 @@ const updateInventoryStock = async (tx: PrismaClient, products: InventoryDTO[]) 
 
     try {
         for (const p of products) {
-            const currentStock = await tx.inventory.findUniqueOrThrow({
+            const currentStock = await tx.inventory.findUnique({
                 where: { productId_warehouseId: { productId: p.product, warehouseId: p.warehouse } },
                 select: { quantity: true },
             })
