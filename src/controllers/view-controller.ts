@@ -171,7 +171,7 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
 // STAFF VIEW
 const createTransactionView = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.render('./guest/transaction-create', {
+        res.render('./staff/transaction-create', {
             title: 'Transaction | Create',
             layout: './layouts/main-hyperscript'
         })
@@ -193,7 +193,7 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
         const transaction = await historyService.createTransaction(dto)
 
         // atau redirect aja ke halamannya?
-        res.render('./guest/transaction-create-ok', {
+        res.render('./staff/transaction-create-ok', {
             transaction,
             title: 'Transaction | Create | OK',
             layout: './layouts/main-hyperscript'
