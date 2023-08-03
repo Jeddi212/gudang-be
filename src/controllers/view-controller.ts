@@ -162,10 +162,21 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
 }
 
 // STAFF VIEW
-const createTransactionView = async (req: Request, res: Response, next: NextFunction) => {
+const addStock = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.render('./staff/transaction-create', {
-            title: 'Transaction | Create',
+        res.render('./staff/add-stock', {
+            title: 'Add Stock',
+            layout: './layouts/main-hyperscript'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+const production = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('./staff/production', {
+            title: 'Production',
             layout: './layouts/main-hyperscript'
         })
     } catch (e) {
@@ -213,6 +224,7 @@ export default {
 
     inventory,
 
-    createTransactionView,
+    addStock,
+    production,
     createTransaction,
 }

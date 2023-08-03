@@ -4,7 +4,8 @@ import viewController from '../controllers/view-controller'
 const privateRouter = express.Router()
 
 // STAFF
-privateRouter.get('/transaction-post', viewController.createTransactionView)
+privateRouter.get('/add-stock', viewController.addStock)
+privateRouter.get('/production', viewController.production)
 
 // ADMIN
 // privateRouter.post('/warehouse', viewController.createWarehouse)

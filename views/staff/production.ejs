@@ -1,0 +1,45 @@
+<div>
+    <form id="jsonForm">
+        <label for="event">Event:</label>
+        <input type="text" id="event" name="event" required><br><br>
+
+        <div id="inventoryFields">
+            <h2>Inventory:</h2>
+            <div class="inventory-item">
+                <label for="product">Product:</label>
+                <input type="text" name="product[]" required>
+
+                <label for="warehouse">Warehouse:</label>
+                <input type="text" name="warehouse[]" required>
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity[]" required>
+            </div>
+        </div>
+        <br>
+
+        <button type="button" id="addInventoryItem">Add Inventory Item</button>
+        <br><br>
+
+        <input type="submit" value="Generate JSON">
+    </form>
+
+    <script>
+        document.getElementById('addInventoryItem').addEventListener('click', function () {
+            var inventoryFields = document.getElementById('inventoryFields');
+            var inventoryItem = document.createElement('div');
+            inventoryItem.classList.add('inventory-item');
+            inventoryItem.innerHTML = `
+            <label for="product">Product:</label>
+            <input type="text" name="product[]" required>
+    
+            <label for="warehouse">Warehouse:</label>
+            <input type="text" name="warehouse[]" required>
+    
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity[]" required>
+          `;
+            inventoryFields.appendChild(inventoryItem);
+        });
+    </script>
+</div>
