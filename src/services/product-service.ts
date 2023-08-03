@@ -71,10 +71,20 @@ const deleteProduct = async (name: string) => {
     return await productRepository.deleteProductByName(name)
 }
 
+const getAllFinishGoods = async () => {
+    return productRepository.getAllFinishGoods()
+}
+
+const findMaterials = async (productName: string) => {
+    return productRepository.findMaterials(productName)
+}
+
 export default {
     createProduct,
     readAllProducts,
     readProductDetails,
     updateProduct,
     deleteProduct,
+    getAllFinishGoods,
+    findMaterials,
 }

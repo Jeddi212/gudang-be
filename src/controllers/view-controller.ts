@@ -180,7 +180,8 @@ const addStock = async (req: Request, res: Response, next: NextFunction) => {
 
 const production = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const products = await productService.readAllProducts('')
+        const products = await productService.getAllFinishGoods()
+        console.log('products: ', products);
         const warehouses = await whService.readWarehouseSorted()
 
         res.render('./staff/production', {

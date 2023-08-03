@@ -99,18 +99,6 @@ const updateProductByName = async (originalName: string, product: Product, tx?: 
     }
 }
 
-const disconnectMaterial = async (productName: string) => {
-    return await prisma.bOM.deleteMany({
-        where: { productName: productName }
-    })
-}
-
-const findMaterials = async (productName: string) => {
-    return await prisma.bOM.findMany({
-        where: { productName: productName }
-    })
-}
-
 const deleteProductByName = async (name: string) => {
     return await prisma.product.delete({
         where: { name: name },
@@ -145,6 +133,29 @@ const updateManyProductStock = async (tx: PrismaClient, products: InventoryDTO[]
     }
 }
 
+const disconnectMaterial = async (productName: string) => {
+    return await prisma.bOM.deleteMany({
+        where: { productName: productName }
+    })
+}
+
+const findMaterials = async (productName: string) => {
+    return await prisma.bOM.findMany({
+        where: { productName: productName },
+        orderBy: { productName: 'asc' }
+    })
+}
+
+const getAllFinishGoods = async () => {
+    const uniqueFinishGoods = await prisma.bOM.findMany({
+        select: { productName: true },
+        distinct: ['productName'],
+        orderBy: { productName: 'asc' }
+    })
+
+    return uniqueFinishGoods.map((item) => item.productName)
+}
+
 export default {
     findProductByName,
     createProduct,
@@ -157,4 +168,5 @@ export default {
     findMaterials,
     deleteProductByName,
     updateManyProductStock,
+    getAllFinishGoods,
 }

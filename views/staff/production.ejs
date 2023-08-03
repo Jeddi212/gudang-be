@@ -1,11 +1,26 @@
 <div>
-    <form id="jsonForm" action="">
+    <form id="jsonForm" action="/api/transaction" method="POST">
         <input type="hidden" id="event" name="event" value="INPUT">
 
         <div id="inventoryFields">
             <article class="inventory-item reset">
-                <input type="text" name="product[]" placeholder="Product" required>
-                <input type="text" name="warehouse[]" placeholder="Warehouse" required>
+                <select name="product[]" required>
+                    <option value="" disabled selected>Product</option>
+
+                    <% products.forEach(productName=> { %>
+                        <option value="<%= productName %>">
+                            <%= productName %>
+                        </option>
+                        <% }) %>
+                </select>
+                <select name="warehouse[]" required>
+                    <option value="" disabled selected>Warehouse</option>
+                    <% warehouses.forEach(w=> { %>
+                        <option value="<%= w.location %>">
+                            <%= w.location %>
+                        </option>
+                        <% }) %>
+                </select>
                 <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
 
                 <button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
@@ -19,6 +34,36 @@
     </form>
 
     <div id="result"></div>
+
+    <script>
+        document.getElementById('addInventoryItem').addEventListener('click', function () {
+            var inventoryFields = document.getElementById('inventoryFields');
+            var inventoryItem = document.createElement('article');
+            inventoryItem.classList.add('inventory-item', 'reset');
+            inventoryItem.innerHTML = `
+    <select name="product[]" required>
+    <option value="" disabled selected>Product</option>
+    <% products.forEach(p=> { %>
+        <option value="<%= p.name %>">
+            <%= p.name %>
+        </option>
+        <% }) %>
+    </select>
+    <select name="warehouse[]" required>
+        <option value="" disabled selected>Warehouse</option>
+        <% warehouses.forEach(w=> { %>
+        <option value="<%= w.location %>">
+            <%= w.location %>
+        </option>
+        <% }) %>
+    </select>
+    <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+
+    <button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
+`;
+            inventoryFields.appendChild(inventoryItem);
+        });
+    </script>
 
     <script src="/js/add-stock.js"></script>
 </div>
