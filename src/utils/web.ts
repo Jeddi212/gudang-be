@@ -1,5 +1,6 @@
 import cors from 'cors'
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import ejsLayouts from 'express-ejs-layouts'
 import { privateApi } from '../route/api'
 import { publicApi } from '../route/public-api'
@@ -21,6 +22,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(ejsLayouts);
 
+app.use(cookieParser())
 app.use(publicApi)
 app.use(publicRouter)
 
