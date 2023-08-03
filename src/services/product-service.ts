@@ -29,6 +29,10 @@ const readAllProducts = async (name: string) => {
     return await productRepository.readAllProducts(name)
 }
 
+const readAllProductsSorted = async () => {
+    return await productRepository.readAllProductsSorted()
+}
+
 const readProductDetails = async (name: string) => {
     const product = await productRepository.readProductDetails(name)
     if (!product) {
@@ -74,6 +78,7 @@ const deleteProduct = async (name: string) => {
 export default {
     createProduct,
     readAllProducts,
+    readAllProductsSorted,
     readProductDetails,
     updateProduct,
     deleteProduct,

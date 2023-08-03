@@ -164,7 +164,12 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
 // STAFF VIEW
 const addStock = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const products = await productService.readAllProductsSorted()
+        const warehouses = await whService.readWarehouseSorted()
+
         res.render('./staff/add-stock', {
+            products,
+            warehouses,
             title: 'Add Stock',
             layout: './layouts/main-layout'
         })

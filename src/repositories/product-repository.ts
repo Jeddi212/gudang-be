@@ -58,6 +58,12 @@ const readAllProducts = async (name: string) => {
     })
 }
 
+const readAllProductsSorted = async () => {
+    return prisma.product.findMany({
+        orderBy: { name: 'asc' }
+    })
+}
+
 const readProductDetails = async (name: string) => {
     return prisma.product.findFirst({
         where: { name: name },
@@ -150,6 +156,7 @@ export default {
     upsertManyProductByName,
     connectMaterials,
     readAllProducts,
+    readAllProductsSorted,
     readProductDetails,
     updateProductByName,
     disconnectMaterial,

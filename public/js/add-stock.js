@@ -1,17 +1,3 @@
-document.getElementById('addInventoryItem').addEventListener('click', function () {
-    var inventoryFields = document.getElementById('inventoryFields');
-    var inventoryItem = document.createElement('article');
-    inventoryItem.classList.add('inventory-item', 'reset');
-    inventoryItem.innerHTML = `
-  <input type="text" name="product[]" placeholder="Product" required>
-  <input type="text" name="warehouse[]" placeholder="Warehouse" required>
-  <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
-
-  <button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
-`;
-    inventoryFields.appendChild(inventoryItem);
-});
-
 function removeItem(button) {
     var confirmation = confirm("Are you sure you want to remove this item?");
     if (confirmation) {

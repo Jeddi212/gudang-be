@@ -9,6 +9,12 @@ const readWarehouses = async () => {
     return prisma.warehouse.findMany()
 }
 
+const readWarehouseSorted = async () => {
+    return prisma.warehouse.findMany({
+        orderBy: { location: 'asc' }
+    })
+}
+
 const findWarehouseByLocation = async (location: string) => {
     return prisma.warehouse.findUnique({
         where: { location: location }
@@ -48,6 +54,7 @@ export default {
     readWarehouses,
     findWarehouseByLocation,
     readWarehouseDetail,
+    readWarehouseSorted,
     updateWarehouse,
     deleteWarehouseByLocation,
 }

@@ -17,6 +17,11 @@ const readWarehouses = async () => {
     return warehouse.map(w => new Warehouse(w.location))
 }
 
+const readWarehouseSorted = async () => {
+    const warehouse = await whRepository.readWarehouseSorted()
+    return warehouse.map(w => new Warehouse(w.location))
+}
+
 const findWarehouseByLocation = async (location: string) => {
     const warehouse = await whRepository.readWarehouseDetail(location)
     if (!warehouse) {
@@ -57,6 +62,7 @@ const deleteWarehouse = async (location: string) => {
 export default {
     createWarehouse,
     readWarehouses,
+    readWarehouseSorted,
     findWarehouseByLocation,
     updateWarehouse,
     deleteWarehouse,
