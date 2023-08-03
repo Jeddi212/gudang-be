@@ -54,12 +54,7 @@ const connectMaterials = async (boms: BomMany[], tx?: PrismaClient) => {
 
 const readAllProducts = async (name: string) => {
     return prisma.product.findMany({
-        where: { name: { contains: name } }
-    })
-}
-
-const readAllProductsSorted = async () => {
-    return prisma.product.findMany({
+        where: { name: { contains: name } },
         orderBy: { name: 'asc' }
     })
 }
@@ -156,7 +151,6 @@ export default {
     upsertManyProductByName,
     connectMaterials,
     readAllProducts,
-    readAllProductsSorted,
     readProductDetails,
     updateProductByName,
     disconnectMaterial,

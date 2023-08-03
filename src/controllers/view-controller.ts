@@ -164,7 +164,7 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
 // STAFF VIEW
 const addStock = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const products = await productService.readAllProductsSorted()
+        const products = await productService.readAllProducts('')
         const warehouses = await whService.readWarehouseSorted()
 
         res.render('./staff/add-stock', {
@@ -180,7 +180,12 @@ const addStock = async (req: Request, res: Response, next: NextFunction) => {
 
 const production = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const products = await productService.readAllProducts('')
+        const warehouses = await whService.readWarehouseSorted()
+
         res.render('./staff/production', {
+            products,
+            warehouses,
             title: 'Production',
             layout: './layouts/main-hyperscript'
         })
