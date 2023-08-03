@@ -6,6 +6,7 @@ const privateRouter = express.Router()
 // STAFF
 privateRouter.get('/add-stock', viewController.addStock)
 privateRouter.get('/production', viewController.production)
+privateRouter.post('/post/transaction', viewController.createTransaction)
 
 // ADMIN
 // privateRouter.post('/warehouse', viewController.createWarehouse)

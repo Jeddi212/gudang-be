@@ -1,12 +1,12 @@
 <div>
-    <form hx-post="/api/transaction">
+    <form id="jsonForm">
         <input type="hidden" id="event" name="event" value="INPUT">
 
         <div id="inventoryFields">
             <article class="inventory-item reset">
                 <input type="text" name="product[]" placeholder="Product" required>
                 <input type="text" name="warehouse[]" placeholder="Warehouse" required>
-                <input type="number" name="quantity[]" min="1" , max="100" placeholder="Quantity" required>
+                <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
 
                 <button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
             </article>
@@ -18,30 +18,7 @@
         </div>
     </form>
 
-    <script>
-        document.getElementById('addInventoryItem').addEventListener('click', function () {
-            var inventoryFields = document.getElementById('inventoryFields');
-            var inventoryItem = document.createElement('div');
-            inventoryItem.classList.add('inventory-item');
-            inventoryItem.innerHTML = `
-            <article class="inventory-item reset">
-                <input type="text" name="product[]" placeholder="Product" required>
-                <input type="text" name="warehouse[]" placeholder="Warehouse" required>
-                <input type="number" name="quantity[]" min="1" , max="100" placeholder="Quantity" required>
+    <div id="result"></div>
 
-                <button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
-            </article>
-          `;
-            inventoryFields.appendChild(inventoryItem);
-        });
-
-        function removeItem(button) {
-            var confirmation = confirm("Are you sure you want to remove this item?");
-            if (confirmation) {
-                var inventoryFields = document.getElementById('inventoryFields');
-                var inventoryItem = button.parentElement;
-                inventoryFields.removeChild(inventoryItem);
-            }
-        }
-    </script>
+    <script src="/js/add-stock.js"></script>
 </div>
