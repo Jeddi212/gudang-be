@@ -11,19 +11,12 @@ import { HistoryDTO } from '../dto/history-dto'
 
 // GUEST VIEW
 const index = async (req: Request, res: Response) => {
-    res.render('index', {
-        title: 'Gudang',
-        layout: './layouts/main-layout'
-    })
-}
-
-const menu = async (req: Request, res: Response) => {
     const user = req.payload
 
-    res.render('menu', {
+    res.render('index', {
         user,
         title: 'Gudang',
-        layout: './layouts/plain-layout'
+        layout: './layouts/main-layout'
     })
 }
 
@@ -205,7 +198,6 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
 
 export default {
     index,
-    menu,
     login,
     register,
 

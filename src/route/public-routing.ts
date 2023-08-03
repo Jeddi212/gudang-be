@@ -4,9 +4,8 @@ import { guestAuthMiddleware } from '../middleware/auth-middleware'
 
 const publicRouter = express.Router()
 
-publicRouter.get('/', viewController.index)
+publicRouter.get('/', guestAuthMiddleware, viewController.index)
 
-publicRouter.get('/menu', guestAuthMiddleware, viewController.menu)
 publicRouter.get('/login', guestAuthMiddleware, viewController.login)
 publicRouter.get('/register', guestAuthMiddleware, viewController.register)
 
