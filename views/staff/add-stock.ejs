@@ -7,9 +7,9 @@
                 <select name="product[]" required>
                     <option value="" disabled selected>Product</option>
 
-                    <% products.forEach(p=> { %>
-                        <option value="<%= p.name %>">
-                            <%= p.name %>
+                    <% materials.forEach(m=> { %>
+                        <option value="<%= m %>">
+                            <%= m %>
                         </option>
                         <% }) %>
                 </select>
@@ -43,9 +43,9 @@
             inventoryItem.innerHTML = `
     <select name="product[]" required>
     <option value="" disabled selected>Product</option>
-    <% products.forEach(p=> { %>
-        <option value="<%= p.name %>">
-            <%= p.name %>
+    <% materials.forEach(m=> { %>
+        <option value="<%= m %>">
+            <%= m %>
         </option>
         <% }) %>
     </select>

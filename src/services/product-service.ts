@@ -71,6 +71,10 @@ const deleteProduct = async (name: string) => {
     return await productRepository.deleteProductByName(name)
 }
 
+const getAllMaterials = async () => {
+    return productRepository.getAllMaterials()
+}
+
 const getAllFinishGoods = async () => {
     return productRepository.getAllFinishGoods()
 }
@@ -85,6 +89,7 @@ export default {
     readProductDetails,
     updateProduct,
     deleteProduct,
+    getAllMaterials,
     getAllFinishGoods,
     findMaterials,
 }
