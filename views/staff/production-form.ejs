@@ -1,0 +1,47 @@
+<% materials.forEach(m=> { %>
+    <div id="inventoryFields">
+        <article id="<%= m.materialName %> Item">
+            <div class="inventory-item grid">
+                <input type="hidden" name="product[]" value="<%= m.materialName %>" required>
+                <div class="grid relative">
+                    <h3>
+                        <%= m.materialName %>
+                    </h3>
+                    <div class="center-v"><code><%= m.quantity %></code></div>
+                </div>
+                <button type="button" id="<%= m.materialName %> btn" class="secondary outline">Split</button>
+            </div>
+            <div class="inventory-item grid">
+                <select name="warehouse[]" required>
+                    <option value="" disabled selected>Warehouse</option>
+                    <% warehouses.forEach(w=> { %>
+                        <option value="<%= w.location %>">
+                            <%= w.location %>
+                        </option>
+                        <% }) %>
+                </select>
+                <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+            </div>
+        </article>
+    </div>
+    <script>
+        document.getElementById('<%= m.materialName %> btn').addEventListener('click', function () {
+            var inventoryFields = document.getElementById('<%= m.materialName %> Item');
+            var warehouseSplit = document.createElement('div');
+            warehouseSplit.classList.add('inventory-item', 'grid');
+            warehouseSplit.innerHTML = `
+<select name="warehouse[]" required>
+<option value="" disabled selected>Warehouse</option>
+<% warehouses.forEach(w=> { %>
+<option value="<%= w.location %>">
+    <%= w.location %>
+</option>
+<% }) %>
+</select>
+<input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+<button type="button" onclick="removeSplit(this)" class="secondary">Remove Item</button>
+`;
+            inventoryFields.appendChild(warehouseSplit);
+        });
+    </script>
+    <% }) %>

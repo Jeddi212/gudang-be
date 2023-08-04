@@ -7,6 +7,14 @@ function removeItem(button) {
     }
 }
 
+function removeSplit(button) {
+    var confirmation = confirm("Are you sure you want to remove this item?");
+    if (confirmation) {
+        var inventoryItem = button.parentElement;
+        inventoryItem.parentElement.removeChild(inventoryItem);
+    }
+}
+
 const collectForm = () => {
     const eventValue = document.getElementById('event').value;
     const inventoryArray = Array.from(document.querySelectorAll('.inventory-item')).map((item) => ({

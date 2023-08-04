@@ -2,6 +2,16 @@
     margin: 0;
 }
 
+.relative {
+    position: relative;
+}
+
+.center-v {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+}
+
 .link {
     cursor: pointer;
     transition: opacity 0.3s ease;

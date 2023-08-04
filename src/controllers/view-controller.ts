@@ -181,7 +181,6 @@ const addStock = async (req: Request, res: Response, next: NextFunction) => {
 const production = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products = await productService.getAllFinishGoods()
-        console.log('products: ', products);
         const warehouses = await whService.readWarehouseSorted()
 
         res.render('./staff/production', {
@@ -189,6 +188,23 @@ const production = async (req: Request, res: Response, next: NextFunction) => {
             warehouses,
             title: 'Production',
             layout: './layouts/main-hyperscript'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+const productionForm = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const product = req.body.product[0] ? req.body.product[0] : req.body.product
+        const materials = await productService.findMaterials(product)
+        const warehouses = await whService.readWarehouseSorted()
+
+        res.render('./staff/production-form', {
+            materials,
+            warehouses,
+            title: 'Material',
+            layout: './layouts/plain-layout'
         })
     } catch (e) {
         next(e)
@@ -232,5 +248,6 @@ export default {
 
     addStock,
     production,
+    productionForm,
     createTransaction,
 }
