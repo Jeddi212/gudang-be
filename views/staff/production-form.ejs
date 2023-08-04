@@ -1,17 +1,17 @@
 <% materials.forEach(m=> { %>
     <div id="inventoryFields">
         <article id="<%= m.materialName %> Item">
-            <div class="inventory-item grid">
-                <input type="hidden" name="product[]" value="<%= m.materialName %>" required>
-                <div class="grid relative">
+            <div class="grid">
+                <div class="relative">
                     <h3>
                         <%= m.materialName %>
                     </h3>
-                    <div class="center-v"><code><%= m.quantity %></code></div>
+                    <div class="center-v"><code>Needs: <%= m.quantity %></code></div>
                 </div>
                 <button type="button" id="<%= m.materialName %> btn" class="secondary outline">Split</button>
             </div>
             <div class="inventory-item grid">
+                <input type="hidden" name="product[]" value="<%= m.materialName %>" required>
                 <select name="warehouse[]" required>
                     <option value="" disabled selected>Warehouse</option>
                     <% warehouses.forEach(w=> { %>
@@ -20,7 +20,7 @@
                         </option>
                         <% }) %>
                 </select>
-                <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+                <input type="number" name="quantity[]" max="-1" placeholder="Quantity" required>
             </div>
         </article>
     </div>
@@ -30,6 +30,7 @@
             var warehouseSplit = document.createElement('div');
             warehouseSplit.classList.add('inventory-item', 'grid');
             warehouseSplit.innerHTML = `
+<input type="hidden" name="product[]" value="<%= m.materialName %>" required>
 <select name="warehouse[]" required>
 <option value="" disabled selected>Warehouse</option>
 <% warehouses.forEach(w=> { %>
@@ -38,7 +39,7 @@
 </option>
 <% }) %>
 </select>
-<input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+<input type="number" name="quantity[]" max="-1" placeholder="Quantity" required>
 <button type="button" onclick="removeSplit(this)" class="secondary">Remove Item</button>
 `;
             inventoryFields.appendChild(warehouseSplit);
