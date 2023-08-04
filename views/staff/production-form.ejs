@@ -29,7 +29,7 @@
                         <% }) %>
                 </select>
                 <input type="number" name="quantity[]" required min="1" placeholder="Quantity"
-                    data-material="<%= m.name %>"
+                    data-material="<%= m.name %>" data-quantity="<%= m.quantity %>" class="qty"
                     oninput="validateQInput(this);validateQuantity('<%= m.name %>', '<%= m.quantity %>')">
             </div>
         </article>

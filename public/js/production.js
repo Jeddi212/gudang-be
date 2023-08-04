@@ -61,6 +61,46 @@ function validateQuantity(materialName, needs) {
     }
 }
 
+function validateQuantityAll() {
+    var productQuantity = document.getElementById('product-quantity').value;
+    var qtyInputs = document.querySelectorAll('.qty');
+
+    qtyInputs.forEach(input => {
+        var materialName = input.getAttribute('data-material');
+        var needsInt = parseInt(input.getAttribute('data-quantity'), 10) * parseInt(productQuantity, 10);
+        var sum = calculateSum(materialName, needsInt);
+        var errorMessage = document.getElementById(`${materialName}ErrorMessage`);
+
+        if (sum !== needsInt) {
+            errorMessage.textContent = `Sum of quantities must be equal to ${needsInt}. Current sum: ${sum}`;
+        } else {
+            errorMessage.textContent = '';
+        }
+    });
+}
+
+function validateSubmit() {
+    var productQuantity = document.getElementById('product-quantity').value;
+    var qtyInputs = document.querySelectorAll('.qty');
+
+    for (var i = 0; i < qtyInputs.length; i++) {
+        var input = qtyInputs[i];
+        var materialName = input.getAttribute('data-material');
+        var needsInt = parseInt(input.getAttribute('data-quantity'), 10) * parseInt(productQuantity, 10);
+        var sum = calculateSum(materialName, needsInt);
+        var errorMessage = document.getElementById(`${materialName}ErrorMessage`);
+
+        if (sum !== needsInt) {
+            errorMessage.textContent = `Sum of quantities must be equal to ${needsInt}. Current sum: ${sum}`;
+            return false;
+        } else {
+            errorMessage.textContent = '';
+        }
+    }
+
+    return true;
+}
+
 function removeSplit(button) {
     var confirmation = confirm("Are you sure you want to remove this item?");
     if (confirmation) {
@@ -91,6 +131,11 @@ const collectForm = () => {
 
 document.getElementById('jsonForm').addEventListener('submit', async (event) => {
     event.preventDefault();
+
+    if (!validateSubmit()) {
+        alert('Some quantity are incorrect. Please check the quantities.');
+        return;
+    }
 
     const targetElement = document.getElementById('result');
 
