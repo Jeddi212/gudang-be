@@ -6,10 +6,6 @@ const createNewWarehouse = async (wh: Warehouse) => {
 }
 
 const readWarehouses = async () => {
-    return prisma.warehouse.findMany()
-}
-
-const readWarehouseSorted = async () => {
     return prisma.warehouse.findMany({
         orderBy: { location: 'asc' }
     })
@@ -54,7 +50,6 @@ export default {
     readWarehouses,
     findWarehouseByLocation,
     readWarehouseDetail,
-    readWarehouseSorted,
     updateWarehouse,
     deleteWarehouseByLocation,
 }
