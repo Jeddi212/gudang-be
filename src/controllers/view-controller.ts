@@ -197,12 +197,10 @@ const production = async (req: Request, res: Response, next: NextFunction) => {
 const productionForm = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const product = req.body.product[0] ? req.body.product[0] : req.body.product
-        const materials = await productService.findMaterials(product)
-        const warehouses = await whService.readWarehouses()
+        const materials = await productService.getProductMaterialsWithStock(product)
 
         res.render('./staff/production-form', {
             materials,
-            warehouses,
             title: 'Material',
             layout: './layouts/plain-layout'
         })

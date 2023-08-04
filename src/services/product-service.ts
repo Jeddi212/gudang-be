@@ -1,9 +1,10 @@
-import { prisma } from '../utils/database';
-import { CreateProductDTO } from '../dto/product-dto';
-import { ResponseError } from '../dto/response-error';
-import { BomMany } from '../models/bom';
-import { PrismaClient } from '@prisma/client';
-import productRepository from '../repositories/product-repository';
+import { prisma } from '../utils/database'
+import { CreateProductDTO } from '../dto/product-dto'
+import { ResponseError } from '../dto/response-error'
+import { BomMany } from '../models/bom'
+import { PrismaClient } from '@prisma/client'
+import productRepository from '../repositories/product-repository'
+import inventoryRepository from '../repositories/inventory-repository'
 
 const createProduct = async (dto: CreateProductDTO) => {
     if (await productRepository.findProductByName(dto.name)) {
@@ -32,7 +33,7 @@ const readAllProducts = async (name: string) => {
 const readProductDetails = async (name: string) => {
     const product = await productRepository.readProductDetails(name)
     if (!product) {
-        throw new ResponseError(404, `Product ${name} not found`);
+        throw new ResponseError(404, `Product ${name} not found`)
     }
 
     return product
@@ -72,15 +73,64 @@ const deleteProduct = async (name: string) => {
 }
 
 const getAllMaterials = async () => {
-    return productRepository.getAllMaterials()
+    return await productRepository.getAllMaterials()
 }
 
 const getAllFinishGoods = async () => {
-    return productRepository.getAllFinishGoods()
+    return await productRepository.getAllFinishGoods()
 }
 
 const findMaterials = async (productName: string) => {
-    return productRepository.findMaterials(productName)
+    return await productRepository.findMaterials(productName)
+}
+
+const getProductMaterialsWithStock = async (productName: string) => {
+    const materials = await findMaterials(productName)
+    const inventories = await inventoryRepository.getInvetoryOfProducts(materials.map(m => m.materialName))
+    return mapForProductionForm(inventories as Inventories[], materials)
+}
+
+interface Materials {
+    productName: string;
+    materialName: string;
+    quantity: number;
+}
+
+interface Inventories {
+    productId: string,
+    warehouseId: string,
+    quantity: number
+}
+
+interface GroupedInventory {
+    [productId: string]: {
+        name: string
+        quantity: number
+        inventory: { location: string; stock: number }[]
+    }
+}
+
+function mapForProductionForm(inventories: Inventories[], materials: Materials[]) {
+    let counter = 0
+    const data = inventories.reduce((result: GroupedInventory, item: Inventories) => {
+        if (!result[item.productId]) {
+            result[item.productId] = {
+                name: item.productId,
+                quantity: materials[counter].quantity,
+                inventory: [],
+            }
+            counter++
+        }
+
+        result[item.productId].inventory.push({
+            location: item.warehouseId,
+            stock: item.quantity,
+        })
+
+        return result
+    }, {})
+
+    return Object.values(data);
 }
 
 export default {
@@ -92,4 +142,5 @@ export default {
     getAllMaterials,
     getAllFinishGoods,
     findMaterials,
+    getProductMaterialsWithStock,
 }

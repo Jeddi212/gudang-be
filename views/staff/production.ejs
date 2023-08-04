@@ -23,7 +23,8 @@
                         </option>
                         <% }) %>
                 </select>
-                <input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+                <input type="number" id="product-quantity" name="quantity[]" min="1" value="1"
+                    oninput="validateQInput(this);updateNeedsUI()" required>
             </article>
         </article>
 
@@ -34,5 +35,5 @@
 
     <div id="result"></div>
 
-    <script src="/js/add-stock.js"></script>
+    <script src="/js/production.js"></script>
 </div>

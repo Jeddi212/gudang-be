@@ -12,6 +12,11 @@
     top: 50%;
 }
 
+.ruby {
+    color: red;
+    font-weight: bold;
+}
+
 .link {
     cursor: pointer;
     transition: opacity 0.3s ease;

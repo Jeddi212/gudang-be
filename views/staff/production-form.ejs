@@ -1,45 +1,56 @@
 <% materials.forEach(m=> { %>
     <div id="inventoryFields">
-        <article id="<%= m.materialName %> Item">
+        <article id="<%= m.name %>">
             <div class="grid">
                 <div class="relative">
                     <h3>
-                        <%= m.materialName %>
+                        <%= m.name %>
                     </h3>
-                    <div class="center-v"><code>Needs: <%= m.quantity %></code></div>
+                    <div class="center-v">
+                        <code class="needs" data-material="<%= m.name %>" data-quantity="<%= m.quantity %>"
+                            _="on mutation updateMax(document.getElementById('<%= m.name %> select'), '<%= m.quantity %>')">Needs: <%= m.quantity %></code>
+                    </div>
                 </div>
-                <button type="button" id="<%= m.materialName %> btn" class="secondary outline">Split</button>
+                <button type="button" id="<%= m.name %> btn" class="secondary outline">Split</button>
             </div>
+
+            <p id="<%= m.name %>ErrorMessage" class="ruby"></p>
+            <hr>
+
             <div class="inventory-item grid">
-                <input type="hidden" name="product[]" value="<%= m.materialName %>" required>
-                <select name="warehouse[]" required>
+                <input type="hidden" name="product[]" value="<%= m.name %>" required>
+                <select name="warehouse[]" required id="<%= m.name %> select"
+                    onchange="updateMax(this, '<%= m.quantity %>')">
                     <option value="" disabled selected>Warehouse</option>
-                    <% warehouses.forEach(w=> { %>
-                        <option value="<%= w.location %>">
-                            <%= w.location %>
+                    <% m.inventory.forEach(w=> { %>
+                        <option value="<%= w.location %>" data-stock="<%= w.stock %>">
+                            <%= w.location %> | stock: <%= w.stock %>
                         </option>
                         <% }) %>
                 </select>
-                <input type="number" name="quantity[]" max="-1" placeholder="Quantity" required>
+                <input type="number" name="quantity[]" required min="1" placeholder="Quantity"
+                    data-material="<%= m.name %>"
+                    oninput="validateQInput(this);validateQuantity('<%= m.name %>', '<%= m.quantity %>')">
             </div>
         </article>
     </div>
+
     <script>
-        document.getElementById('<%= m.materialName %> btn').addEventListener('click', function () {
-            var inventoryFields = document.getElementById('<%= m.materialName %> Item');
+        document.getElementById('<%= m.name %> btn').addEventListener('click', function () {
+            var inventoryFields = document.getElementById('<%= m.name %>');
             var warehouseSplit = document.createElement('div');
             warehouseSplit.classList.add('inventory-item', 'grid');
             warehouseSplit.innerHTML = `
-<input type="hidden" name="product[]" value="<%= m.materialName %>" required>
-<select name="warehouse[]" required>
-<option value="" disabled selected>Warehouse</option>
-<% warehouses.forEach(w=> { %>
-<option value="<%= w.location %>">
-    <%= w.location %>
-</option>
-<% }) %>
+<input type="hidden" name="product[]" value="<%= m.name %>" required>
+<select name="warehouse[]" required onchange="updateMax(this, '<%= m.quantity %>')">
+    <option value="" disabled selected>Warehouse</option>
+    <% m.inventory.forEach(w=> { %>
+    <option value="<%= w.location %>" data-stock="<%= w.stock %>">
+        <%= w.location %> | stock: <%= w.stock %>
+    </option>
+    <% }) %>
 </select>
-<input type="number" name="quantity[]" max="-1" placeholder="Quantity" required>
+<input type="number" name="quantity[]" required min="1" placeholder="Quantity" data-material="<%= m.name %>" oninput="validateQInput(this);validateQuantity('<%= m.name %>', '<%= m.quantity %>')">
 <button type="button" onclick="removeSplit(this)" class="secondary">Remove Item</button>
 `;
             inventoryFields.appendChild(warehouseSplit);

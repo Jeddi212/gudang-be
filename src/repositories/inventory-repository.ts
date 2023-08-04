@@ -47,7 +47,16 @@ const updateInventoryStock = async (tx: PrismaClient, products: InventoryDTO[]) 
     }
 }
 
+async function getInvetoryOfProducts(productNames: string[]) {
+    return await prisma.inventory.findMany({
+        select: { productId: true, warehouseId: true, quantity: true },
+        where: { productId: { in: productNames } },
+        orderBy: [{ productId: 'asc' }, { warehouseId: 'asc' }]
+    })
+}
+
 export default {
     readAllInventories,
     updateInventoryStock,
+    getInvetoryOfProducts,
 }
