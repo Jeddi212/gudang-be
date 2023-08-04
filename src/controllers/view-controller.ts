@@ -165,7 +165,7 @@ const inventory = async (_req: Request, res: Response, next: NextFunction) => {
 const addStock = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products = await productService.readAllProducts('')
-        const warehouses = await whService.readWarehouseSorted()
+        const warehouses = await whService.readWarehouses()
 
         res.render('./staff/add-stock', {
             products,
@@ -181,7 +181,7 @@ const addStock = async (req: Request, res: Response, next: NextFunction) => {
 const production = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products = await productService.getAllFinishGoods()
-        const warehouses = await whService.readWarehouseSorted()
+        const warehouses = await whService.readWarehouses()
 
         res.render('./staff/production', {
             products,
