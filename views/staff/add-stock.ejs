@@ -5,7 +5,7 @@
         <div id="inventoryFields">
             <article class="inventory-item reset">
                 <select name="product[]" required>
-                    <option value="" disabled selected>Product</option>
+                    <option value="" disabled selected>Material</option>
 
                     <% materials.forEach(m=> { %>
                         <option value="<%= m %>">
@@ -42,7 +42,7 @@
             inventoryItem.classList.add('inventory-item', 'reset');
             inventoryItem.innerHTML = `
     <select name="product[]" required>
-    <option value="" disabled selected>Product</option>
+    <option value="" disabled selected>Material</option>
     <% materials.forEach(m=> { %>
         <option value="<%= m %>">
             <%= m %>
