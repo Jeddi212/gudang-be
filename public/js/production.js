@@ -1,9 +1,8 @@
-function removeItem(button) {
+function removeSplit(button) {
     var confirmation = confirm("Are you sure you want to remove this item?");
     if (confirmation) {
-        var inventoryFields = document.getElementById('inventoryFields');
         var inventoryItem = button.parentElement;
-        inventoryFields.removeChild(inventoryItem);
+        inventoryItem.parentElement.removeChild(inventoryItem);
     }
 }
 
@@ -12,8 +11,14 @@ const collectForm = () => {
     const inventoryArray = Array.from(document.querySelectorAll('.inventory-item')).map((item) => ({
         product: item.querySelector('[name="product[]"]').value,
         warehouse: item.querySelector('[name="warehouse[]"]').value,
-        quantity: item.querySelector('[name="quantity[]"]').value,
+        quantity: Number(item.querySelector('[name="quantity[]"]').value),
     }));
+
+    for (let i = 1; i < inventoryArray.length; i++) {
+        if (inventoryArray[i].quantity > 0) {
+            inventoryArray[i].quantity = -inventoryArray[i].quantity;
+        }
+    }
 
     return JSON.stringify({
         event: eventValue,
