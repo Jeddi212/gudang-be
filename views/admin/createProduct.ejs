@@ -1,0 +1,42 @@
+<form id="createProductForm" action="/api/product" method="POST">
+    <input type="text" name="name" id="name" placeholder="Name" required>
+    <textarea id="description" name="description" rows="1" placeholder="Product description"></textarea>
+    <hr>
+
+    <h3>Material</h3>
+    <div id="materialFields">
+    </div>
+
+    <div class="grid">
+        <button type="button" id="addMaterialItem"><strong>+</strong> Add Material</button>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById('addMaterialItem').addEventListener('click', function () {
+        var materialFields = document.getElementById('materialFields');
+        var materialItem = document.createElement('article');
+        materialItem.classList.add('material-item', 'reset');
+        materialItem.innerHTML = `
+<input type="text" name="materialName[]" id="materialName" list="materialList" required
+    placeholder="Material Name">
+<datalist id="materialList">
+    <% products.forEach(p=> { %>
+        <option value="<%= p.name %>">
+            <%= p.name %>
+        </option>
+        <% }) %>
+</datalist>
+
+<input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+
+<button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
+`;
+        materialFields.appendChild(materialItem);
+    });
+</script>
+
+<script src="/js/add-product.js"></script>

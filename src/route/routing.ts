@@ -10,11 +10,12 @@ privateRouter.post('/production-form', viewController.productionForm)
 // privateRouter.post('/post/transaction', viewController.createTransaction)
 
 // ADMIN
-privateRouter.get('/post/warehouse', viewController.createWarehouseView)
+privateRouter.get('/post/warehouse', viewController.createWarehouseForm)
 // privateRouter.post('/warehouse', viewController.createWarehouse)
 // privateRouter.put('/warehouse/:location', viewController.updateWarehouse)
 // privateRouter.delete('/warehouse/:location', viewController.deleteWarehouse)
 
+privateRouter.get('/post/product', viewController.createProductForm)
 // privateRouter.post('/product', viewController.createProduct)
 // privateRouter.put('/product/:name', viewController.updateProduct)
 // privateRouter.delete('/product/:name', viewController.deleteProduct)

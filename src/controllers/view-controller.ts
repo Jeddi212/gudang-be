@@ -231,14 +231,25 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
 }
 
 // ADMIN VIEW
-const createWarehouseView = async (req: Request, res: Response, next: NextFunction) => {
-    const user = req.payload
-
+const createWarehouseForm = async (req: Request, res: Response, next: NextFunction) => {
     try {
         res.render('./admin/createWarehouse', {
-            user,
             title: 'Create Warehouse',
             layout: './layouts/main-layout'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+const createProductForm = async (req: Request, res: Response, next: NextFunction) => {
+    const products = await productService.readAllProducts('')
+
+    try {
+        res.render('./admin/createProduct', {
+            products,
+            title: 'Create Product',
+            layout: './layouts/main-vanilla'
         })
     } catch (e) {
         next(e)
@@ -267,5 +278,6 @@ export default {
     productionForm,
     createTransaction,
 
-    createWarehouseView,
+    createWarehouseForm,
+    createProductForm,
 }
