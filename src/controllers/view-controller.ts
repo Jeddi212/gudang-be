@@ -212,24 +212,6 @@ const productionForm = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
-const createTransaction = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        await validation.validateCreateTransaction(req)
-
-        const inventory = req.body.inventory ?? []
-        const dto: TransactionDTO = new TransactionDTO(
-            req.body.event,
-            req.payload?.name as string,
-            inventory.map((i: any) => new InventoryDTO(parseInt(i.quantity), i.product, i.warehouse)))
-
-        const result = await historyService.createTransaction(dto)
-
-        res.redirect(`/transaction/${result.transaction.id}`)
-    } catch (e) {
-        next(e)
-    }
-}
-
 // ADMIN VIEW
 const createWarehouseForm = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -276,7 +258,6 @@ export default {
     addStock,
     production,
     productionForm,
-    createTransaction,
 
     createWarehouseForm,
     createProductForm,
