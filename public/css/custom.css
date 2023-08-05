@@ -1,3 +1,7 @@
+.mh {
+    margin: 0 10px 0 10px;
+}
+
 .reset {
     margin: 0;
 }
@@ -16,9 +20,32 @@
     top: 50%;
 }
 
-.ruby {
-    color: red;
+.emerald-svg {
+    fill: #00897b
+}
+
+.emerald {
+    color: #00897b;
     font-weight: bold;
+}
+
+.emerald-b {
+    background-color: #00897b;
+    border-color: #00897b;
+}
+
+.ruby-svg {
+    fill: #e53935;
+}
+
+.ruby {
+    color: #e53935;
+    font-weight: bold;
+}
+
+.ruby-b {
+    background-color: #e53935;
+    border-color: #e53935;
 }
 
 .link {
@@ -41,4 +68,22 @@
 
 .htmx-request.htmx-indicator {
     opacity: 1;
+}
+
+.show {
+    opacity: 1;
+    margin: 1em 0;
+    padding: 1em 0;
+    max-height: 1000px;
+    overflow: hidden;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.hide {
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }

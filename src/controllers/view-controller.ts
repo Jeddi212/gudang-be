@@ -8,7 +8,6 @@ import whService from '../services/warehouse-service'
 import validation from '../utils/validation'
 import { TransactionDTO } from '../dto/transaction-dto'
 import { InventoryDTO } from '../dto/inventory-dto'
-import { WarehouseDTO } from '../dto/warehouse-dto'
 
 // GUEST VIEW
 const index = async (req: Request, res: Response) => {
@@ -63,7 +62,7 @@ const warehouseDetail = async (req: Request, res: Response, next: NextFunction) 
             user,
             warehouse,
             title: warehouse.location,
-            layout: './layouts/main-layout'
+            layout: './layouts/main-hyperscript'
         })
     } catch (e) {
         next(e)
