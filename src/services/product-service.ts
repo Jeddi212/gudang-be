@@ -39,6 +39,15 @@ const readProductDetails = async (name: string) => {
     return product
 }
 
+const readProductAndMaterial = async (name: string) => {
+    const product = await productRepository.readProductAndMaterial(name)
+    if (!product) {
+        throw new ResponseError(404, `Product ${name} not found`)
+    }
+
+    return product
+}
+
 const updateProduct = async (originalName: string, dto: CreateProductDTO) => {
     const originalProduct = await productRepository.findProductByName(originalName)
     if (!originalProduct) {
@@ -137,6 +146,7 @@ export default {
     createProduct,
     readAllProducts,
     readProductDetails,
+    readProductAndMaterial,
     updateProduct,
     deleteProduct,
     getAllMaterials,

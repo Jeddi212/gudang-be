@@ -17,7 +17,7 @@ privateRouter.get('/post/warehouse', viewController.createWarehouseForm)
 
 privateRouter.get('/post/product', viewController.createProductForm)
 // privateRouter.post('/product', viewController.createProduct)
-// privateRouter.put('/product/:name', viewController.updateProduct)
+privateRouter.get('/put/product/:name', viewController.updateProductForm)
 // privateRouter.delete('/product/:name', viewController.deleteProduct)
 
 // privateRouter.put('/transaction/:id', viewController.updateTransaction)

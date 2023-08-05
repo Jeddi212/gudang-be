@@ -1,0 +1,62 @@
+<form id="productForm" action="/api/product/<%= product.name %>" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="text" name="name" id="name" placeholder="Name" required value="<%= product.name %>">
+    <textarea id="description" name="description" rows="1"
+        placeholder="Product description"><%= product.description %></textarea>
+    <hr>
+
+    <h3>Material</h3>
+    <div id="materialFields">
+        <% product.Needs.forEach(m=> { %>
+            <article class="material-item reset">
+                <input type="text" name="materialName[]" id="materialName" list="materialList" required
+                    placeholder="Material Name" value="<%= m.materialName %>">
+                <datalist id="materialList">
+                    <% productList.forEach(p=> { %>
+                        <option value="<%= p.name %>">
+                            <%= p.name %>
+                        </option>
+                        <% }) %>
+                </datalist>
+
+                <input type="number" name="quantity[]" min="1" placeholder="Quantity" required
+                    value="<%= m.quantity %>">
+
+                <button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
+            </article>
+            <% }) %>
+    </div>
+
+    <div class="grid">
+        <button type="button" id="addMaterialItem"><strong>+</strong> Add Material</button>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById('addMaterialItem').addEventListener('click', function () {
+        var materialFields = document.getElementById('materialFields');
+        var materialItem = document.createElement('article');
+        materialItem.classList.add('material-item', 'reset');
+        materialItem.innerHTML = `
+<input type="text" name="materialName[]" id="materialName" list="materialList" required
+    placeholder="Material Name">
+<datalist id="materialList">
+    <% productList.forEach(p=> { %>
+        <option value="<%= p.name %>">
+            <%= p.name %>
+        </option>
+        <% }) %>
+</datalist>
+
+<input type="number" name="quantity[]" min="1" placeholder="Quantity" required>
+
+<button type="button" onclick="removeItem(this)" class="secondary">Remove Item</button>
+`;
+        materialFields.appendChild(materialItem);
+    });
+</script>
+
+<script src="/js/add-product.js"></script>

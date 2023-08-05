@@ -1,4 +1,5 @@
-<form id="createProductForm" action="/api/product" method="POST">
+<form id="productForm" action="/api/product" method="POST">
+    <input type="hidden" name="_method" value="POST" />
     <input type="text" name="name" id="name" placeholder="Name" required>
     <textarea id="description" name="description" rows="1" placeholder="Product description"></textarea>
     <hr>

@@ -6,8 +6,6 @@ import productService from '../services/product-service'
 import transactionService from '../services/transaction-service'
 import whService from '../services/warehouse-service'
 import validation from '../utils/validation'
-import { TransactionDTO } from '../dto/transaction-dto'
-import { InventoryDTO } from '../dto/inventory-dto'
 
 // GUEST VIEW
 const index = async (req: Request, res: Response) => {
@@ -49,11 +47,9 @@ const warehouse = async (_req: Request, res: Response, next: NextFunction) => {
 }
 
 const warehouseDetail = async (req: Request, res: Response, next: NextFunction) => {
-    const user = req.payload
-
     try {
         await validation.validateWarehouseLocationParam(req)
-
+        const user = req.payload
         const location: string = req.params.location
 
         const warehouse = await whService.findWarehouseByLocation(location)
@@ -72,7 +68,6 @@ const warehouseDetail = async (req: Request, res: Response, next: NextFunction) 
 const product = async (req: Request, res: Response, next: NextFunction) => {
     try {
         await validation.validateProductNameQuery(req)
-
         const name: string = req.query.name as string || ''
 
         const product = await productService.readAllProducts(name)
@@ -90,12 +85,13 @@ const product = async (req: Request, res: Response, next: NextFunction) => {
 const productDetail = async (req: Request, res: Response, next: NextFunction) => {
     try {
         await validation.validateProductNameParam(req)
-
+        const user = req.payload
         const name: string = req.params.name
 
         const product = await productService.readProductDetails(name)
 
         res.status(200).render('./guest/product-detail', {
+            user,
             product,
             title: product.name,
             layout: './layouts/main-layout'
@@ -238,6 +234,25 @@ const createProductForm = async (req: Request, res: Response, next: NextFunction
     }
 }
 
+const updateProductForm = async (req: Request, res: Response, next: NextFunction) => {
+    await validation.validateProductNameParam(req)
+    const productName: string = req.params.name
+
+    const productList = await productService.readAllProducts('')
+    const product = await productService.readProductAndMaterial(productName)
+
+    try {
+        res.render('./admin/updateProduct', {
+            product,
+            productList,
+            title: 'Update Product',
+            layout: './layouts/main-vanilla'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
     index,
     login,
@@ -261,4 +276,5 @@ export default {
 
     createWarehouseForm,
     createProductForm,
+    updateProductForm,
 }

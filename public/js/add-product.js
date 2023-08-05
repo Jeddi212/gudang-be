@@ -22,7 +22,7 @@ const collectForm = () => {
     });
 };
 
-document.getElementById('createProductForm').addEventListener('submit', async (event) => {
+document.getElementById('productForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const targetElement = document.getElementById('result');
@@ -30,9 +30,10 @@ document.getElementById('createProductForm').addEventListener('submit', async (e
     try {
         const dto = collectForm();
         const formAction = event.target.action;
+        const formMethod = document.querySelector('[name="_method"]').value;
 
         const response = await fetch(formAction, {
-            method: 'POST',
+            method: formMethod,
             headers: {
                 'Content-Type': 'application/json',
             },

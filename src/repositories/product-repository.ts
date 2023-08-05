@@ -80,6 +80,17 @@ const readProductDetails = async (name: string) => {
     })
 }
 
+const readProductAndMaterial = async (name: string) => {
+    return prisma.product.findFirst({
+        where: { name: name },
+        include: {
+            Needs: {
+                select: { materialName: true, quantity: true }
+            }
+        }
+    })
+}
+
 const updateProductByName = async (originalName: string, product: Product, tx?: PrismaClient) => {
     const client = tx ? tx : prisma
 
@@ -173,6 +184,7 @@ export default {
     connectMaterials,
     readAllProducts,
     readProductDetails,
+    readProductAndMaterial,
     updateProductByName,
     disconnectMaterial,
     findMaterials,
