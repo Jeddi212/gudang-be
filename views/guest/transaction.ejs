@@ -11,7 +11,10 @@
 
             <button hx-trigger="click" hx-target="#transactions" hx-indicator="#spinner" hx-get="/transaction-data"
                 hx-include="[name='event'], [name='username']">
-                <img id="spinner" class="htmx-indicator" src="/img/rings.svg"></img>Search</button>
+                Search</button>
+        </div>
+        <div class="center">
+            <img id="spinner" class="htmx-indicator" src="/img/rings.svg"></img>
         </div>
     </form>
     <table>
@@ -23,6 +26,6 @@
                 <th>Actor</th>
             </tr>
         </thead>
-        <tbody id="transactions" hx-trigger="load" hx-get="/transaction-data"></tbody>
+        <tbody id="transactions" hx-trigger="load" hx-get="/transaction-data" hx-indicator="#spinner"></tbody>
     </table>
 </div>
