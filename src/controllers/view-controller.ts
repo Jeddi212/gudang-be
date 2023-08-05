@@ -174,7 +174,7 @@ const addStock = async (req: Request, res: Response, next: NextFunction) => {
             materials,
             warehouses,
             title: 'Add Stock',
-            layout: './layouts/main-layout'
+            layout: './layouts/main-vanilla'
         })
     } catch (e) {
         next(e)
