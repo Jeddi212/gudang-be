@@ -38,4 +38,14 @@ function setUsername() {
     usernameElement.innerText = getUser().name;
 }
 
+function addBusyLoader(event) {
+    event.target.setAttribute("aria-busy", "true");
+}
+
+function removeBusyLoader(event) {
+    event.target.setAttribute("aria-busy", "false");
+}
+
 htmx.on("htmx:beforeRequest", addAuthorizationHeader);
+htmx.on("htmx:beforeRequest", addBusyLoader);
+htmx.on("htmx:afterRequest", removeBusyLoader);
