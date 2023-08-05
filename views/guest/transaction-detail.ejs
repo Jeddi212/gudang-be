@@ -29,14 +29,14 @@
                 </thead>
                 <tbody id="histories">
                     <% transactions.History.forEach(h=> { %>
-                        <tr onclick="window.location='/product/' + '<%= h.productId %>';" class="link">
+                        <tr>
                             <td>
                                 <%= h.updatedAt.toLocaleString(undefined, { hour12: false }) %>
                             </td>
-                            <td>
+                            <td onclick="window.location='/product/' + '<%= h.productId %>';" class="link">
                                 <%= h.productId %>
                             </td>
-                            <td>
+                            <td onclick="window.location='/warehouse/' + '<%= h.warehouseId %>';" class="link">
                                 <%= h.warehouseId %>
                             </td>
                             <td>

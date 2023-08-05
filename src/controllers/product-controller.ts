@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import { CreateProductDTO, Material } from '../dto/product-dto'
 import productService from '../services/product-service'
 import validation from '../utils/validation'
+import { ResponseError } from '../dto/response-error'
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -82,7 +83,12 @@ const deleteProduct = async (req: Request, res: Response, next: NextFunction) =>
         validation.validateAdminRole(req.payload?.level)
 
         await validation.validateProductNameParam(req)
+        const validateKey: string = req.header('HX-Prompt') || ''
         const name: string = req.params.name
+
+        if (validateKey !== name) {
+            throw new ResponseError(422, 'The provided prompt does not match the ID to be deleted')
+        }
 
         const product = await productService.deleteProduct(name)
         const payload: Payload = new Payload(`Product ${name} successfully deleted`, product)

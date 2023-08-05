@@ -4,6 +4,7 @@ import { WarehouseDTO } from '../dto/warehouse-dto'
 import { Warehouse } from '../models/warehouse'
 import validation from '../utils/validation'
 import whService from '../services/warehouse-service'
+import { ResponseError } from '../dto/response-error'
 
 const createWarehouse = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -65,7 +66,12 @@ const deleteWarehouse = async (req: Request, res: Response, next: NextFunction) 
     try {
         validation.validateAdminRole(req.payload?.level)
         await validation.validateDeleteWarehouse(req)
+        const validateKey: string = req.header('HX-Prompt') || ''
         const location: string = req.params.location
+
+        if (validateKey !== location) {
+            throw new ResponseError(422, 'The provided prompt does not match the ID to be deleted')
+        }
 
         const warehouse: Warehouse = await whService.deleteWarehouse(location)
         const payload: Payload = new Payload(`Warehouse ${location} successfully deleted`, warehouse)
