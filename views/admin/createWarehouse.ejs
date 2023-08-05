@@ -1,0 +1,15 @@
+<form id="form" hx-post="/api/warehouse" hx-target="#result">
+    <input type="text" name="location" id="location" placeholder="Location" required>
+    <input type="submit" value="Submit">
+</form>
+<div id="result"></div>
+
+<script>
+    htmx.on('htmx:afterRequest', function (event) {
+        if (event.detail.successful) {
+            const payload = JSON.parse(event.detail.xhr.response);
+            const location = payload.data.location;
+            window.location.href = `/warehouse/${location}`;
+        }
+    });
+</script>

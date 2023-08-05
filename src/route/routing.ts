@@ -7,10 +7,11 @@ const privateRouter = express.Router()
 privateRouter.get('/add-stock', viewController.addStock)
 privateRouter.get('/production', viewController.production)
 privateRouter.post('/production-form', viewController.productionForm)
-privateRouter.post('/post/transaction', viewController.createTransaction)
+// privateRouter.post('/post/transaction', viewController.createTransaction)
 
 // ADMIN
-privateRouter.post('/warehouse', viewController.createWarehouse)
+privateRouter.get('/post/warehouse', viewController.createWarehouseView)
+// privateRouter.post('/warehouse', viewController.createWarehouse)
 // privateRouter.put('/warehouse/:location', viewController.updateWarehouse)
 // privateRouter.delete('/warehouse/:location', viewController.deleteWarehouse)
 

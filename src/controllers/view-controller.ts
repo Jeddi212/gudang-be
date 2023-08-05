@@ -8,6 +8,7 @@ import whService from '../services/warehouse-service'
 import validation from '../utils/validation'
 import { TransactionDTO } from '../dto/transaction-dto'
 import { InventoryDTO } from '../dto/inventory-dto'
+import { WarehouseDTO } from '../dto/warehouse-dto'
 
 // GUEST VIEW
 const index = async (req: Request, res: Response) => {
@@ -49,6 +50,8 @@ const warehouse = async (_req: Request, res: Response, next: NextFunction) => {
 }
 
 const warehouseDetail = async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.payload
+
     try {
         await validation.validateWarehouseLocationParam(req)
 
@@ -57,6 +60,7 @@ const warehouseDetail = async (req: Request, res: Response, next: NextFunction) 
         const warehouse = await whService.findWarehouseByLocation(location)
 
         res.status(200).render('./guest/warehouse-detail', {
+            user,
             warehouse,
             title: warehouse.location,
             layout: './layouts/main-layout'
@@ -227,6 +231,21 @@ const createTransaction = async (req: Request, res: Response, next: NextFunction
     }
 }
 
+// ADMIN VIEW
+const createWarehouseView = async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.payload
+
+    try {
+        res.render('./admin/createWarehouse', {
+            user,
+            title: 'Create Warehouse',
+            layout: './layouts/main-layout'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
     index,
     login,
@@ -248,4 +267,6 @@ export default {
     production,
     productionForm,
     createTransaction,
+
+    createWarehouseView,
 }
