@@ -5,7 +5,7 @@ import { prisma } from "../utils/database";
 
 const readAllInventories = async () => {
     return await prisma.inventory.findMany({
-        orderBy: { productId: 'asc' }
+        orderBy: [{ productId: 'asc' }, { warehouseId: 'asc' }]
     })
 }
 
