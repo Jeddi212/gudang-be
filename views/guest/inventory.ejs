@@ -18,14 +18,14 @@
         </thead>
         <tbody id="inventories">
             <% inventories.forEach(i=> { %>
-                <tr onclick="window.location='/product/' + '<%= i.productId %>';" class="link">
+                <tr>
                     <td>
                         <%= i.updatedAt.toLocaleString(undefined, { hour12: false }) %>
                     </td>
-                    <td>
+                    <td onclick="window.location='/product/' + '<%= i.productId %>';" class="link">
                         <%= i.productId %>
                     </td>
-                    <td>
+                    <td onclick="window.location='/warehouse/' + '<%= i.warehouseId %>';" class="link">
                         <%= i.warehouseId %>
                     </td>
                     <td>
