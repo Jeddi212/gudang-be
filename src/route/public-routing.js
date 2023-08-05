@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.publicRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const view_controller_1 = __importDefault(require("../controllers/view-controller"));
+const auth_middleware_1 = require("../middleware/auth-middleware");
+const publicRouter = express_1.default.Router();
+exports.publicRouter = publicRouter;
+publicRouter.get('/', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.index);
+publicRouter.get('/login', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.login);
+publicRouter.get('/register', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.register);
+publicRouter.get('/warehouse', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.warehouse);
+publicRouter.get('/warehouse/:location', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.warehouseDetail);
+publicRouter.get('/product', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.product);
+publicRouter.get('/product/:name', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.productDetail);
+publicRouter.get('/transaction', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.transaction);
+publicRouter.get('/transaction/:id', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.transactionDetail);
+publicRouter.get('/transaction-data', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.transactionData);
+publicRouter.get('/inventory', auth_middleware_1.guestAuthMiddleware, view_controller_1.default.inventory);
