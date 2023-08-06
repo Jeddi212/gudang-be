@@ -37,6 +37,25 @@
                     <input type="submit" value="Update">
                 </form>
             </div>
+
+            <script>
+                htmx.on('#updateWarehouseForm', 'htmx:afterRequest', function (event) {
+                    if (event.detail.successful) {
+                        const payload = JSON.parse(event.detail.xhr.response);
+                        const location = payload.data.location;
+                        window.location.href = `/warehouse/${location}`;
+                    }
+                });
+            
+                htmx.on('#deleteWarehouse', 'htmx:afterRequest', function (event) {
+                    if (event.detail.successful) {
+                        alert('Warehouse successfully deleted');
+                        const payload = JSON.parse(event.detail.xhr.response);
+                        const location = payload.data.location;
+                        window.location.href = `/warehouse`;
+                    }
+                });
+            </script>
             <% } %>
                 <hr>
                 <article id="inventory" class="reset">
@@ -112,22 +131,3 @@
                 </article>
     </article>
 </div>
-
-<script>
-    htmx.on('#updateWarehouseForm', 'htmx:afterRequest', function (event) {
-        if (event.detail.successful) {
-            const payload = JSON.parse(event.detail.xhr.response);
-            const location = payload.data.location;
-            window.location.href = `/warehouse/${location}`;
-        }
-    });
-
-    htmx.on('#deleteWarehouse', 'htmx:afterRequest', function (event) {
-        if (event.detail.successful) {
-            alert('Warehouse successfully deleted');
-            const payload = JSON.parse(event.detail.xhr.response);
-            const location = payload.data.location;
-            window.location.href = `/warehouse`;
-        }
-    });
-</script>
