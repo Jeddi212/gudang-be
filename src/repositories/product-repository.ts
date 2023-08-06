@@ -157,6 +157,14 @@ const findMaterials = async (productName: string) => {
     })
 }
 
+const getAllRawMaterial =async () =>{ 
+    return await prisma.product.findMany({
+        select: { name: true },
+        where: { NOT: { Needs: { some: {} } } },
+        orderBy: { name: 'asc' }
+    })
+}
+
 const getAllMaterials = async () => {
     const uniqueFinishGoods = await prisma.bOM.findMany({
         select: { materialName: true },
@@ -190,6 +198,7 @@ export default {
     findMaterials,
     deleteProductByName,
     updateManyProductStock,
+    getAllRawMaterial,
     getAllMaterials,
     getAllFinishGoods,
 }

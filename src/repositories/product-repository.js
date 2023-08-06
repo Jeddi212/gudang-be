@@ -152,6 +152,13 @@ const findMaterials = (productName) => __awaiter(void 0, void 0, void 0, functio
         orderBy: { productName: 'asc' }
     });
 });
+const getAllRawMaterial = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield database_1.prisma.product.findMany({
+        select: { name: true },
+        where: { NOT: { Needs: { some: {} } } },
+        orderBy: { name: 'asc' }
+    });
+});
 const getAllMaterials = () => __awaiter(void 0, void 0, void 0, function* () {
     const uniqueFinishGoods = yield database_1.prisma.bOM.findMany({
         select: { materialName: true },
@@ -181,6 +188,7 @@ exports.default = {
     findMaterials,
     deleteProductByName,
     updateManyProductStock,
+    getAllRawMaterial,
     getAllMaterials,
     getAllFinishGoods,
 };

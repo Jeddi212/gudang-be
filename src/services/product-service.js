@@ -72,7 +72,8 @@ const deleteProduct = (name) => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_repository_1.default.deleteProductByName(name);
 });
 const getAllMaterials = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_repository_1.default.getAllMaterials();
+    const materials = yield product_repository_1.default.getAllRawMaterial();
+    return materials.map((item) => item.name);
 });
 const getAllFinishGoods = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_repository_1.default.getAllFinishGoods();
