@@ -25,6 +25,7 @@ document.getElementById('jsonForm').addEventListener('submit', async (event) => 
     event.preventDefault();
 
     const targetElement = document.getElementById('result');
+    targetElement.setAttribute("aria-busy", "true");
 
     try {
         const dto = collectForm();
@@ -44,4 +45,5 @@ document.getElementById('jsonForm').addEventListener('submit', async (event) => 
     } catch (error) {
         targetElement.innerHTML = error;
     }
+    targetElement.setAttribute("aria-busy", "false");
 });
