@@ -152,9 +152,14 @@ document.getElementById('jsonForm').addEventListener('submit', async (event) => 
             body: dto,
         });
 
-        const payload = await response.json();
-        const transactionId = payload.data.transaction.id;
-        window.location.href = `/transaction/${transactionId}`;
+        if (response.ok) {
+            const payload = await response.json();
+            const transactionId = payload.data.transaction.id;
+            window.location.href = `/transaction/${transactionId}`;
+        } else {
+            const errorHTML = await response.text();
+            targetElement.innerHTML = errorHTML;
+        }
     } catch (error) {
         targetElement.innerHTML = error;
     }
