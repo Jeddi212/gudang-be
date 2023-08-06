@@ -55,7 +55,7 @@
                             <% warehouse.Inventory.forEach(i=> { %>
                                 <tr>
                                     <td>
-                                        <%= i.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                                        <%= i.updatedAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %>
                                     </td>
                                     <td onclick="window.location='/product/' + '<%= i.productId %>';" class="link">
                                         <%= i.productId %>
@@ -93,7 +93,7 @@
                                         <%= h.transactionId %>
                                     </td>
                                     <td>
-                                        <%= h.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                                        <%= h.updatedAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %>
                                     </td>
                                     <td onclick="window.location='/product/' + '<%= h.productId %>';" class="link">
                                         <%= h.productId %>

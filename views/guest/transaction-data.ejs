@@ -4,7 +4,7 @@
             <%= t.id %>
         </td>
         <td>
-            <%= t.createdAt.toLocaleString(undefined, { hour12: false }) %>
+            <%= t.createdAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %>
         </td>
         <td>
             <%= t.event %>
