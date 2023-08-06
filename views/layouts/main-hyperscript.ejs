@@ -8,13 +8,23 @@
         <%= title %>
     </title>
 
-    <link rel="stylesheet" href="/css/pico.min.css">
-    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icon/favicon-16x16.png">
+    <link rel="manifest" href="/img/icon/site.webmanifest">
 
-    <script src="/script/hyperscript.min.js"></script>
-    <script src="/script/htmx.min.js"></script>
-    <script src="/js/cookie.js"></script>
-    <script src="/js/logout.js"></script>
+    <!-- <link rel="stylesheet" href="/css/pico.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="/css/custom.min.css">
+
+    <!-- <script src="/script/hyperscript.min.js"></script> -->
+    <!-- <script src="/script/htmx.min.js"></script> -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.4"
+        integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV"
+        crossorigin="anonymous"></script>
+    <script src="/js/cookie.min.js"></script>
+    <script src="/js/logout.min.js"></script>
 </head>
 
 <body>
@@ -24,7 +34,7 @@
             <%- body %>
     </main>
 
-    <script src="/js/error-response.js"></script>
+    <script src="/js/error-response.min.js"></script>
 </body>
 
 </html>
