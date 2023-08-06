@@ -45,6 +45,7 @@ document.getElementById('productForm').addEventListener('submit', async (event) 
         const productName = payload.data.name;
         window.location.href = `/product/${productName}`;
     } catch (error) {
+        console.log('error: ', error);
         targetElement.innerHTML = error;
     }
     targetElement.setAttribute("aria-busy", "false");
