@@ -46,6 +46,14 @@ function removeBusyLoader(event) {
     event.target.setAttribute("aria-busy", "false");
 }
 
+function logout() {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+        document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = "/";
+    }
+}
+
 htmx.on("htmx:beforeRequest", addAuthorizationHeader);
 htmx.on("htmx:beforeRequest", addBusyLoader);
 htmx.on("htmx:afterRequest", removeBusyLoader);
