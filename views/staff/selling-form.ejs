@@ -1,0 +1,48 @@
+<div>
+    <article id="inventoryFields">
+        <div class="grid">
+            <h3>Detail</h3>
+            <button type="button" id="split-btn" class="secondary outline">Split</button>
+        </div>
+
+        <p id="ErrorMessage" class="ruby"></p>
+        <hr>
+
+        <div class="inventory-item grid">
+            <input type="hidden" name="product[]" value="<%= product.name %>" required>
+            <select name="warehouse[]" required onchange="updateMax(this)">
+                <option value="" disabled selected>Warehouse</option>
+                <% product.Inventory.forEach(w=> { %>
+                    <option value="<%= w.warehouseId %>" data-stock="<%= w.quantity %>">
+                        <%= w.warehouseId %> | stock: <%= w.quantity %>
+                    </option>
+                    <% }) %>
+            </select>
+            <input type="number" name="quantity[]" required min="1" placeholder="Quantity"
+                oninput="validateQInput(this);validateQuantity();">
+        </div>
+    </article>
+</div>
+
+<script>
+    document.getElementById('split-btn').addEventListener('click', function () {
+        var inventoryFields = document.getElementById('inventoryFields');
+        var warehouseSplit = document.createElement('div');
+        warehouseSplit.classList.add('inventory-item', 'grid');
+        warehouseSplit.innerHTML = `
+<input type="hidden" name="product[]" value="<%= product.name %>" required>
+<select name="warehouse[]" required onchange="updateMax(this)">
+    <option value="" disabled selected>Warehouse</option>
+    <% product.Inventory.forEach(w=> { %>
+        <option value="<%= w.warehouseId %>" data-stock="<%= w.quantity %>">
+            <%= w.warehouseId %> | stock: <%= w.quantity %>
+        </option>
+        <% }) %>
+</select>
+<input type="number" name="quantity[]" required min="1" placeholder="Quantity"
+    oninput="validateQInput(this);validateQuantity();">
+<button type="button" onclick="removeSplit(this)" class="secondary">Remove Item</button>
+`;
+        inventoryFields.appendChild(warehouseSplit);
+    });
+</script>

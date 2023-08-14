@@ -90,6 +90,11 @@ const getAllFinishGoods = async () => {
     return await productRepository.getAllFinishGoods()
 }
 
+const getProductListHasStock = async () => {
+    const productNames = await productRepository.getAllFinishGoods()
+    return await productRepository.getProductListHasStock(productNames)
+}
+
 const findMaterials = async (productName: string) => {
     return await productRepository.findMaterials(productName)
 }
@@ -98,6 +103,10 @@ const getProductMaterialsWithStock = async (productName: string) => {
     const materials = await findMaterials(productName)
     const inventories = await inventoryRepository.getInvetoryOfProducts(materials.map(m => m.materialName))
     return mapForProductionForm(inventories as Inventories[], materials)
+}
+
+const getFinishGoodsWithStock = async (productName: string) => {
+    return await productRepository.getFinishGoodsWithStock(productName)
 }
 
 interface Materials {
@@ -154,4 +163,6 @@ export default {
     getAllFinishGoods,
     findMaterials,
     getProductMaterialsWithStock,
+    getFinishGoodsWithStock,
+    getProductListHasStock,
 }

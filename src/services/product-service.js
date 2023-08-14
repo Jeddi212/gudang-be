@@ -78,6 +78,10 @@ const getAllMaterials = () => __awaiter(void 0, void 0, void 0, function* () {
 const getAllFinishGoods = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_repository_1.default.getAllFinishGoods();
 });
+const getProductListHasStock = () => __awaiter(void 0, void 0, void 0, function* () {
+    const productNames = yield product_repository_1.default.getAllFinishGoods();
+    return yield product_repository_1.default.getProductListHasStock(productNames);
+});
 const findMaterials = (productName) => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_repository_1.default.findMaterials(productName);
 });
@@ -85,6 +89,9 @@ const getProductMaterialsWithStock = (productName) => __awaiter(void 0, void 0, 
     const materials = yield findMaterials(productName);
     const inventories = yield inventory_repository_1.default.getInvetoryOfProducts(materials.map(m => m.materialName));
     return mapForProductionForm(inventories, materials);
+});
+const getFinishGoodsWithStock = (productName) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_repository_1.default.getFinishGoodsWithStock(productName);
 });
 function mapForProductionForm(inventories, materials) {
     let counter = 0;
@@ -116,4 +123,6 @@ exports.default = {
     getAllFinishGoods,
     findMaterials,
     getProductMaterialsWithStock,
+    getFinishGoodsWithStock,
+    getProductListHasStock,
 };

@@ -175,6 +175,24 @@ const getAllFinishGoods = () => __awaiter(void 0, void 0, void 0, function* () {
     });
     return uniqueFinishGoods.map((item) => item.productName);
 });
+const getProductListHasStock = (productNames) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield database_1.prisma.product.findMany({
+        where: { name: { in: productNames }, Inventory: { some: {} } },
+        orderBy: { name: 'asc' }
+    });
+});
+const getFinishGoodsWithStock = (productNames) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield database_1.prisma.product.findFirst({
+        where: { name: productNames, Inventory: { some: {} } },
+        include: {
+            Inventory: {
+                select: { warehouseId: true, quantity: true },
+                orderBy: { warehouseId: 'asc' }
+            }
+        },
+        orderBy: { name: 'asc' }
+    });
+});
 exports.default = {
     findProductByName,
     createProduct,
@@ -191,4 +209,6 @@ exports.default = {
     getAllRawMaterial,
     getAllMaterials,
     getAllFinishGoods,
+    getFinishGoodsWithStock,
+    getProductListHasStock,
 };

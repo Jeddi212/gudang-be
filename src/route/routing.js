@@ -12,6 +12,8 @@ exports.privateRouter = privateRouter;
 privateRouter.get('/add-stock', view_controller_1.default.addStock);
 privateRouter.get('/production', view_controller_1.default.production);
 privateRouter.post('/production-form', view_controller_1.default.productionForm);
+privateRouter.get('/selling', view_controller_1.default.selling);
+privateRouter.post('/selling-form', view_controller_1.default.sellingForm);
 // privateRouter.post('/post/transaction', viewController.createTransaction)
 // ADMIN
 privateRouter.get('/post/warehouse', view_controller_1.default.createWarehouseForm);

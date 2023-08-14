@@ -7,6 +7,8 @@ const privateRouter = express.Router()
 privateRouter.get('/add-stock', viewController.addStock)
 privateRouter.get('/production', viewController.production)
 privateRouter.post('/production-form', viewController.productionForm)
+privateRouter.get('/selling', viewController.selling)
+privateRouter.post('/selling-form', viewController.sellingForm)
 // privateRouter.post('/post/transaction', viewController.createTransaction)
 
 // ADMIN
