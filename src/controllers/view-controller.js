@@ -200,6 +200,33 @@ const productionForm = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         next(e);
     }
 });
+const selling = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield product_service_1.default.getProductListHasStock();
+        res.render('./staff/selling', {
+            products,
+            title: 'Selling',
+            layout: './layouts/main-hyperscript'
+        });
+    }
+    catch (e) {
+        next(e);
+    }
+});
+const sellingForm = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const productName = req.body.productName;
+        const product = yield product_service_1.default.getFinishGoodsWithStock(productName);
+        res.render('./staff/selling-form', {
+            product,
+            title: 'Detail',
+            layout: './layouts/plain-layout'
+        });
+    }
+    catch (e) {
+        next(e);
+    }
+});
 // ADMIN VIEW
 const createWarehouseForm = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -257,6 +284,8 @@ exports.default = {
     addStock,
     production,
     productionForm,
+    selling,
+    sellingForm,
     createWarehouseForm,
     createProductForm,
     updateProductForm,

@@ -208,6 +208,35 @@ const productionForm = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
+const selling = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const products = await productService.getProductListHasStock()
+
+        res.render('./staff/selling', {
+            products,
+            title: 'Selling',
+            layout: './layouts/main-hyperscript'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+const sellingForm = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const productName = req.body.productName
+        const product = await productService.getFinishGoodsWithStock(productName)
+
+        res.render('./staff/selling-form', {
+            product,
+            title: 'Detail',
+            layout: './layouts/plain-layout'
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 // ADMIN VIEW
 const createWarehouseForm = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -273,6 +302,8 @@ export default {
     addStock,
     production,
     productionForm,
+    selling,
+    sellingForm,
 
     createWarehouseForm,
     createProductForm,

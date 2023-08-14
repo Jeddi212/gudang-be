@@ -1,0 +1,31 @@
+<div>
+    <form id="jsonForm" action="/api/transaction" method="POST">
+        <input type="hidden" id="event" name="event" value="OUTPUT">
+
+        <article>
+            <h3 class="reset">Product</h3>
+            <article class="reset">
+                <select name="productName" required hx-post="/selling-form" hx-target="#materialField"
+                    hx-trigger="change" onchange="updateMaxSell(this)">
+                    <option value="" disabled selected>Product</option>
+
+                    <% products.forEach(p=> { %>
+                        <option value="<%= p.name %>" data-stock="<%= p.stock %>">
+                            <%= p.name %> | stock: <%= p.stock %>
+                        </option>
+                        <% }) %>
+                </select>
+                <input type="number" id="product-quantity" name="productQuantity" min="1" value="1"
+                    oninput="validateQInput(this);validateQuantity()" required>
+            </article>
+        </article>
+
+        <div id="materialField"></div>
+
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script src="/js/selling.js"></script>
+</div>

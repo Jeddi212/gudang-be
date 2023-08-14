@@ -157,7 +157,7 @@ const findMaterials = async (productName: string) => {
     })
 }
 
-const getAllRawMaterial =async () =>{ 
+const getAllRawMaterial = async () => {
     return await prisma.product.findMany({
         select: { name: true },
         where: { NOT: { Needs: { some: {} } } },
@@ -185,6 +185,26 @@ const getAllFinishGoods = async () => {
     return uniqueFinishGoods.map((item) => item.productName)
 }
 
+const getProductListHasStock = async (productNames: string[]) => {
+    return await prisma.product.findMany({
+        where: { name: { in: productNames }, Inventory: { some: {} } },
+        orderBy: { name: 'asc' }
+    })
+}
+
+const getFinishGoodsWithStock = async (productNames: string) => {
+    return await prisma.product.findFirst({
+        where: { name: productNames, Inventory: { some: {} } },
+        include: {
+            Inventory: {
+                select: { warehouseId: true, quantity: true },
+                orderBy: { warehouseId: 'asc' }
+            }
+        },
+        orderBy: { name: 'asc' }
+    })
+}
+
 export default {
     findProductByName,
     createProduct,
@@ -201,4 +221,6 @@ export default {
     getAllRawMaterial,
     getAllMaterials,
     getAllFinishGoods,
+    getFinishGoodsWithStock,
+    getProductListHasStock,
 }
