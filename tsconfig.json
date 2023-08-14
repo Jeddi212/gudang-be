@@ -101,7 +101,7 @@
   "include": [
     "./src",
     "./",
-    "./@types"
+    "./@types",
   ],
   "files": [
     "./@types/custom.d.ts"
