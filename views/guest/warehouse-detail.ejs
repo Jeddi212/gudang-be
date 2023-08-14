@@ -37,10 +37,30 @@
                     <input type="submit" value="Update">
                 </form>
             </div>
+
+            <script>
+                htmx.on('#updateWarehouseForm', 'htmx:afterRequest', function (event) {
+                    if (event.detail.successful) {
+                        const payload = JSON.parse(event.detail.xhr.response);
+                        const location = payload.data.location;
+                        window.location.href = `/warehouse/${location}`;
+                    }
+                });
+            
+                htmx.on('#deleteWarehouse', 'htmx:afterRequest', function (event) {
+                    if (event.detail.successful) {
+                        alert('Warehouse successfully deleted');
+                        const payload = JSON.parse(event.detail.xhr.response);
+                        const location = payload.data.location;
+                        window.location.href = `/warehouse`;
+                    }
+                });
+            </script>
             <% } %>
                 <hr>
                 <article id="inventory" class="reset">
                     <h3>Inventory</h3>
+                    <figure>
                     <table>
                         <thead>
                             <tr>
@@ -54,7 +74,7 @@
                             <% warehouse.Inventory.forEach(i=> { %>
                                 <tr>
                                     <td>
-                                        <%= i.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                                        <%= i.updatedAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %>
                                     </td>
                                     <td onclick="window.location='/product/' + '<%= i.productId %>';" class="link">
                                         <%= i.productId %>
@@ -69,9 +89,11 @@
                                 <% }) %>
                         </tbody>
                     </table>
+                    </figure>
                 </article>
                 <article id="history" class="reset">
                     <h3>History</h3>
+                    <figure>
                     <table>
                         <thead>
                             <tr>
@@ -90,7 +112,7 @@
                                         <%= h.transactionId %>
                                     </td>
                                     <td>
-                                        <%= h.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                                        <%= h.updatedAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %>
                                     </td>
                                     <td onclick="window.location='/product/' + '<%= h.productId %>';" class="link">
                                         <%= h.productId %>
@@ -105,25 +127,7 @@
                                 <% }) %>
                         </tbody>
                     </table>
+                    </figure>
                 </article>
     </article>
 </div>
-
-<script>
-    htmx.on('#updateWarehouseForm', 'htmx:afterRequest', function (event) {
-        if (event.detail.successful) {
-            const payload = JSON.parse(event.detail.xhr.response);
-            const location = payload.data.location;
-            window.location.href = `/warehouse/${location}`;
-        }
-    });
-
-    htmx.on('#deleteWarehouse', 'htmx:afterRequest', function (event) {
-        if (event.detail.successful) {
-            alert('Warehouse successfully deleted');
-            const payload = JSON.parse(event.detail.xhr.response);
-            const location = payload.data.location;
-            window.location.href = `/warehouse`;
-        }
-    });
-</script>

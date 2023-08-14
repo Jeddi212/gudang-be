@@ -10,14 +10,15 @@
                 </p>
 
             </hgroup>
-            <div>
-                <span>Created at: <code><%= transactions.createdAt %></code></span>
-                <span>Updated at: <code><%= transactions.updatedAt %></code></span>
+            <div class="grid">
+                <span>Created at: <code><%= transactions.createdAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %></code></span>
+                <span>Updated at: <code><%= transactions.updatedAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %></code></span>
             </div>
         </div>
         <hr>
         <article id="history" class="reset">
             <h3>Detail</h3>
+            <figure>
             <table>
                 <thead>
                     <tr>
@@ -31,7 +32,7 @@
                     <% transactions.History.forEach(h=> { %>
                         <tr>
                             <td>
-                                <%= h.updatedAt.toLocaleString(undefined, { hour12: false }) %>
+                                <%= h.updatedAt.toLocaleString(undefined, { timeZone: "Asia/Jakarta", hour12: false }) %>
                             </td>
                             <td onclick="window.location='/product/' + '<%= h.productId %>';" class="link">
                                 <%= h.productId %>
@@ -46,5 +47,6 @@
                         <% }) %>
                 </tbody>
             </table>
+            </figure>
         </article>
 </div>

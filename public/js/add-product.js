@@ -26,6 +26,7 @@ document.getElementById('productForm').addEventListener('submit', async (event) 
     event.preventDefault();
 
     const targetElement = document.getElementById('result');
+    targetElement.setAttribute("aria-busy", "true");
 
     try {
         const dto = collectForm();
@@ -40,10 +41,17 @@ document.getElementById('productForm').addEventListener('submit', async (event) 
             body: dto,
         });
 
-        const payload = await response.json();
-        const productName = payload.data.name;
-        window.location.href = `/product/${productName}`;
+        if (response.ok) {
+            const payload = await response.json();
+            const productName = payload.data.name;
+            window.location.href = `/product/${productName}`;
+        } else {
+            const errorHTML = await response.text();
+            targetElement.innerHTML = errorHTML;
+        }
     } catch (error) {
         targetElement.innerHTML = error;
     }
+
+    targetElement.setAttribute("aria-busy", "false");
 });

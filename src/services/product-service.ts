@@ -82,7 +82,8 @@ const deleteProduct = async (name: string) => {
 }
 
 const getAllMaterials = async () => {
-    return await productRepository.getAllMaterials()
+    const materials = await productRepository.getAllRawMaterial()
+    return materials.map((item) => item.name)
 }
 
 const getAllFinishGoods = async () => {

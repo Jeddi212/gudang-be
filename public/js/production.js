@@ -138,6 +138,7 @@ document.getElementById('jsonForm').addEventListener('submit', async (event) => 
     }
 
     const targetElement = document.getElementById('result');
+    targetElement.setAttribute("aria-busy", "true");
 
     try {
         const dto = collectForm();
@@ -151,10 +152,16 @@ document.getElementById('jsonForm').addEventListener('submit', async (event) => 
             body: dto,
         });
 
-        const payload = await response.json();
-        const transactionId = payload.data.transaction.id;
-        window.location.href = `/transaction/${transactionId}`;
+        if (response.ok) {
+            const payload = await response.json();
+            const transactionId = payload.data.transaction.id;
+            window.location.href = `/transaction/${transactionId}`;
+        } else {
+            const errorHTML = await response.text();
+            targetElement.innerHTML = errorHTML;
+        }
     } catch (error) {
         targetElement.innerHTML = error;
     }
+    targetElement.setAttribute("aria-busy", "false");
 });
