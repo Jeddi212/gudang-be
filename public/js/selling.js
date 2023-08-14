@@ -16,20 +16,24 @@ function updateMaxSell(selectElement) {
     productionQuantityInput.setAttribute("max", stock);
 }
 
-function updateMax(selectElement) {
-    var selectedIndex = selectElement.selectedIndex;
-    var selectedOption = selectElement.options[selectedIndex];
-    var stock = selectedOption.getAttribute('data-stock');
+function updateMax() {
+    var qtyInputs = document.querySelectorAll('.qty');
 
-    var productionQuantityInput = document.getElementById("product-quantity");
-    var productionQuantity = parseInt(productionQuantityInput.value, 10);
+    qtyInputs.forEach(input => {
+        var selectedIndex = input.selectedIndex;
+        var selectedOption = input.options[selectedIndex];
+        var stock = selectedOption.getAttribute('data-stock');
 
-    var maxFromNeeds = productionQuantity;
-    var maxFromStock = stock;
+        var productionQuantityInput = document.getElementById("product-quantity");
+        var productionQuantity = parseInt(productionQuantityInput.value, 10);
 
-    var max = Math.min(maxFromNeeds, maxFromStock);
+        var maxFromNeeds = productionQuantity;
+        var maxFromStock = stock;
 
-    selectElement.nextElementSibling.setAttribute("max", max);
+        var max = Math.min(maxFromNeeds, maxFromStock);
+
+        input.nextElementSibling.setAttribute("max", max);
+    });
 }
 
 function validateQInput(input) {

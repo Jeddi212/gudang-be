@@ -10,7 +10,7 @@
 
         <div class="inventory-item grid">
             <input type="hidden" name="product[]" value="<%= product.name %>" required>
-            <select name="warehouse[]" required onchange="updateMax(this)">
+            <select name="warehouse[]" required onchange="updateMax()" class="qty">
                 <option value="" disabled selected>Warehouse</option>
                 <% product.Inventory.forEach(w=> { %>
                     <option value="<%= w.warehouseId %>" data-stock="<%= w.quantity %>">
@@ -31,7 +31,7 @@
         warehouseSplit.classList.add('inventory-item', 'grid');
         warehouseSplit.innerHTML = `
 <input type="hidden" name="product[]" value="<%= product.name %>" required>
-<select name="warehouse[]" required onchange="updateMax(this)">
+<select name="warehouse[]" required onchange="updateMax()" class="qty">
     <option value="" disabled selected>Warehouse</option>
     <% product.Inventory.forEach(w=> { %>
         <option value="<%= w.warehouseId %>" data-stock="<%= w.quantity %>">
